@@ -1,10 +1,10 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
 const api: AxiosInstance = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: process.env.REACT_APP_ORIGIN_URL,
 });
 export const apiAuth: AxiosInstance = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: process.env.REACT_APP_ORIGIN_URL,
 });
 
 api.interceptors.request.use(
