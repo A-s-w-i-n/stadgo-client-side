@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import UserNav from "../navbar/userNav";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { OrgDetail } from "../../domain/modals/organization";
 import axios from "axios";
 import { GrDocumentUpdate } from "react-icons/gr";
@@ -60,7 +60,10 @@ const UserProfile = () => {
     }
   };
   const updateProfile = async () => {
-    if(url){
+    if(url&&id){
+      console.log(url,"aa");
+      console.log(id,"aa");
+      console.log("jiiiii");
       
       const  data  = await api.post("/userProfileImage", { id, url });
       setLoding(true)
@@ -68,6 +71,8 @@ const UserProfile = () => {
       if(data){
         
         setImage(data.data.uplodeImg.profileImg);
+        console.log(data.data.uplodeImg);
+        
         fetchProfile()
       }
       setLoding(false)
@@ -78,8 +83,10 @@ const UserProfile = () => {
   const handleSvgClick = () => {
     fileInputRef.current.click();
   };
-  console.log(url);
-  console.log(id);
+
+  useEffect(()=>{
+    updateProfile()
+  },[url])
 
   const fetchProfile =async () =>{
    const data = await api.post("/fetchProfileImg",{id})

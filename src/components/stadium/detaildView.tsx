@@ -50,7 +50,7 @@ const DetaildView: React.FC = () => {
   
   const ownerId = carosal?._id
   const ownerid =carosal?.id
-  console.log(ownerId," ",ownerid);
+  console.log(userId," ",ownerid);
   useEffect(() => {
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
@@ -72,7 +72,32 @@ const DetaildView: React.FC = () => {
     }
     
   }
+  const existChatRoom =async () =>{
+    if(ownerid && userId){ 
+       const data = await api.post('/chat/chatRoomExist',{userId,ownerid})
+       console.log(data.data.exist);
+       
+       setChatExist(data.data.exist)
+  
+      }
+    }
+    
+    const createChat =async () => {
+      if(ownerid&&userId){
+
+        console.log(ownerid,"aaaa");
+        
+        const data =  await api.post("/chat/accessChat", { ownerid, userId })
+        if (data) {
+          navigate("/Chat");
+        }
+        }
+    };
+    useEffect(()=>{
+      existChatRoom()
+    },[ownerid])
   useEffect(()=>{
+    // existChatRoom()
     ownerUserInfo()
   },[ownerid])
 
@@ -80,24 +105,6 @@ const DetaildView: React.FC = () => {
   
   const image = carosal?.image;
   
-  const createChat = () => {
-    api.post("/chat/accessChat", { ownerid, userId }).then((result) => {
-      if (result) {
-        navigate("/Chat");
-      }
-    });
-  };
-  const existChatRoom =async () =>{
-    if(userId && ownerid){ 
-       const {data} = await api.post('/chat/charRoomExist',{userId,ownerid})
-       setChatExist(data.exist)
-  
-      }
-    }
-    
-    useEffect(()=>{
-      existChatRoom()
-    },[])
       
   
     // const emaiId = JSON.parse(localStorage.getItem("user") as string);
@@ -201,16 +208,16 @@ const DetaildView: React.FC = () => {
       <div className="text-lg mt-2">{carosal?.discription}</div>
       {/* Other info */}
       {chatExist == null ?
-      <button className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white">
-        Start Chat
+      <button className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white" onClick={createChat}>
+       
+        start chat
       </button> :
       
       <button
         className={`mt-4 py-2 px-4 rounded-lg ${
              "bg-blue-500 text-white"
         }`}
-        onClick={createChat}
-      >
+      onClick={()=>navigate('/Chat')}>
         Countinue Chat
       </button>
       }
