@@ -35,7 +35,7 @@ const OwnerLogin: React.FC = () => {
       });
 
       if (data) {
-        console.log(data, "sfd");
+        console.log(data.ownerLoginCheck, "sfd");
         const OwnerLoginCheck = data.ownerLoginCheck;
         const accessToken = data.accessToken;
 

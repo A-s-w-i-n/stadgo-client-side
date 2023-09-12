@@ -29,6 +29,7 @@ import Chat from './components/Chat/Chat';
 import Loader from './components/loader/loader';
 import SportsNews from './pages/userPage/sportsNews';
 import OwnerDashBoard from './components/owner/ownerDashBoard';
+import Notification from './components/owner/notifiaction';
 function App() {
   
 
@@ -56,11 +57,12 @@ function App() {
         <Route path='/detailedView/:id' element={<DetaildView/>}/>
         <Route path='/owner/ownerProfile' element={<OwnerProtectRouter><OwnerProfile/></OwnerProtectRouter>}/>
         <Route path='/owner/videoUplode' element={<OwnerProtectRouter><VideoUplode/></OwnerProtectRouter>}/>
-        <Route path='/Chat' element={<Chat role={'user'}></Chat>}/>
+        <Route path='/Chat/:stadiumid' element={<Chat role={'user'}></Chat>}/>
         <Route path='/owner/Chat' element={<Chat role={'owner'}></Chat>}/>
         <Route path='/loading'element={<Loader/>} />
         <Route path='/news' element={<SportsNews/>}/>
-        <Route path='/owner/ownerDashBoard' element={<OwnerDashBoard/>}/>
+        <Route path='/owner/ownerDashBoard' element={<OwnerProtectRouter><OwnerDashBoard/></OwnerProtectRouter>}/>
+        <Route path='/owner/notifiacions/:stadiumId' element={<OwnerProtectRouter><Notification/></OwnerProtectRouter>}/>
       </Routes>
     </Router>
     </>

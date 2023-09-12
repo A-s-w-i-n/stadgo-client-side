@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const INITIAL_STATE ={
     ownername : "",
     ownerEmail : "",
-    ownerId : " ",
+    ownerId : "",
     stadiumId : ""
 }
 

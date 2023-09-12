@@ -23,16 +23,13 @@ const OwnerNav = () => {
   };
   // const { userId }: any = useSelector((state: any) => state.user);
   const { ownerId }: any = useSelector((state: any) => state.owner);
-  console.log(ownerId);
+  const {stadiumId} : any = useSelector((state : any)=>state.owner)
+  console.log(stadiumId);
+  
+  
+  
 
-  // const createChat = () => {
-  //   apiAuth.post("/chat/accessChat", { ownerId, userId }).then((result) => {
-  //     if (result) {
-  //       navigate("/owner/Chat");
-  //       // setFirstChat(false)
-  //     }
-  //   });
-  // };
+
   const toggleSidebar = () => {
     setShowSidebar((prevShowSidebar) => !prevShowSidebar);
   };
@@ -96,11 +93,11 @@ const OwnerNav = () => {
             </td>
           </tr> */}
           <tr>
-            <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
+            <td className="font-bold text-2xl mt-6 cursor-pointer pt-4" onClick={()=>navigate(`/owner/notifiacions/${stadiumId}`)}>Notification</td>
           </tr>
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4"
+              className="font-bold cursor-pointer text-2xl mt-6 pt-4"
               onClick={() => navigate("/owner/Chat")}
             >
               Chat

@@ -89,7 +89,7 @@ const DetaildView: React.FC = () => {
         
         const data =  await api.post("/chat/accessChat", { ownerid, userId })
         if (data) {
-          navigate("/Chat");
+          navigate(`/Chat/${carosal?._id}`);
         }
         }
     };
@@ -217,7 +217,7 @@ const DetaildView: React.FC = () => {
         className={`mt-4 py-2 px-4 rounded-lg ${
              "bg-blue-500 text-white"
         }`}
-      onClick={()=>navigate('/Chat')}>
+      onClick={()=>navigate(`/Chat/${carosal?._id}`)}>
         Countinue Chat
       </button>
       }

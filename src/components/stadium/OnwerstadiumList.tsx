@@ -3,6 +3,7 @@ import OwnerNav from "../navbar/ownerNav";
 import { stadim } from "../../domain/modals/stadium";
 import api from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 // import { AiOutlineMenu } from "react-icons/ai";
 // import { useDispatch } from "react-redux";
 // import { ownerLogged } from "../../Redux/owner/ownerSlice";
@@ -10,10 +11,12 @@ import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
+import { ownerLogged } from "../../Redux/owner/ownerSlice";
 
 const OnwerstadiumList = () => {
   // const dispatch = useDispatch();
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
+  const dispatch = useDispatch()
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   // const [loding,setLoding] = useState<boolean>(true)
   const navigate = useNavigate();
@@ -63,6 +66,9 @@ const OnwerstadiumList = () => {
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
   const emailCheck = emailId.OwnerLoginCheck;
   const email = emailCheck.email;
+  const ownerid = emailCheck._id
+
+
 
 
   const fetchData = () => {
@@ -79,6 +85,14 @@ const OnwerstadiumList = () => {
         setPrice(fetchStadium.data.fetchStadiumData.price);
         setDiscription(fetchStadium.data.fetchStadiumData.discription);
         setId(fetchStadium.data.fetchStadiumData[0]._id)
+
+        dispatch(ownerLogged({
+          ownerId :ownerid,
+          stadiumId : fetchStadium.data.fetchStadiumData[0]._id
+        }))
+
+        
+
       })
       .catch(() => {});
     };
@@ -112,7 +126,7 @@ const updateStadiumList =async () =>{
       <OwnerNav />
 
       {stadiumData.map((item) => (
-        <div className="  h-100  border border-black mt-4 relative flex w-11/12 ml-16 max-w-[96rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div className="  h-[30rem]  border border-black mt-4 relative flex w-11/12 ml-16 max-w-[96rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
           <div className="relative border  border-black   m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-xl bg-white bg-clip-border text-gray-700">
            
             <Slider {...settings}>
