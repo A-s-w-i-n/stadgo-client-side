@@ -33,11 +33,12 @@ const OwnerHome = () => {
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
     const { data } = await api.post("/stadium/fetchStadium", { email });
-    console.log(data);
+    console.log(data.fetchStadiumData
+      );
     
     // if (detailsCheck) {
       // setOnwerPrimium(false);
-      if(data == undefined){
+      if(data.fetchStadiumData.length == 0){
         navigate('/stadiumDetails')
       }else {
         navigate("/owner/stadiumlist");

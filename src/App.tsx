@@ -30,6 +30,7 @@ import Loader from './components/loader/loader';
 import SportsNews from './pages/userPage/sportsNews';
 import OwnerDashBoard from './components/owner/ownerDashBoard';
 import Notification from './components/owner/notifiaction';
+import UserPayment from './components/user/userPayment';
 function App() {
   
 
@@ -63,6 +64,7 @@ function App() {
         <Route path='/news' element={<SportsNews/>}/>
         <Route path='/owner/ownerDashBoard' element={<OwnerProtectRouter><OwnerDashBoard/></OwnerProtectRouter>}/>
         <Route path='/owner/notifiacions/:stadiumId' element={<OwnerProtectRouter><Notification/></OwnerProtectRouter>}/>
+        <Route path='/RentConfirmation' element ={<UserProtectedRouter><UserPayment/></UserProtectedRouter>}/>
       </Routes>
     </Router>
     </>

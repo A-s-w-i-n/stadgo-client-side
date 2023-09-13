@@ -134,7 +134,7 @@ const UserProfile = () => {
         </div>
         <div className="bg-gray-400 bg-opacity-20 w-[68rem] fixed rounded-xl ml-48 h-[36rem] m flex">
           <div className="w-[30%] p-5">
-            <div className="relative mt-1 h-[540px] flex w-100  flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div className="relative mt-1 h-[540px] flex w-[30rem]  z-[999] flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
                 <img
                   src={image}
