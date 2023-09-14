@@ -9,7 +9,7 @@ const INITIAL_STATE ={
 
 
 const ownerSlice = createSlice({
-    name : " owner",
+    name : "owner",
     initialState : INITIAL_STATE,
     reducers : {
         ownerLogged : (state , action)=>{

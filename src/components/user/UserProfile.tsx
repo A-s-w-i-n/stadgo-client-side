@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import UserNav from "../navbar/userNav";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import api from "../../servises/api/axios interceptor ";
 import { OrgDetail } from "../../domain/modals/organization";
 import axios from "axios";
 import { GrDocumentUpdate } from "react-icons/gr";
 import Loader from "../loader/loader";
+import { log } from "console";
+import { stadim } from "../../domain/modals/stadium";
 
 const UserProfile = () => {
   const [datas, setData] = useState<OrgDetail | null>(null);
-  const [rentalDetails, SetRentalDetails] = useState(true);
+  const [rentalDetails, SetRentalDetails] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [stadiumDetail,setStadiumDetail] = useState<stadim>()
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
   const fileInputRef: any = useRef(null);
@@ -17,7 +21,15 @@ const UserProfile = () => {
   const check = user.LoginCheck;
   const email = user.LoginCheck.email;
 
-  console.log(SetRentalDetails);
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleClodeModal =()=>{
+    setIsModalOpen(false)
+  }
+
+  // console.log(SetRentalDetails);
   
 
   const userIdFind = JSON.parse(localStorage.getItem("user") as string);
@@ -94,6 +106,24 @@ const UserProfile = () => {
       console.log(data.data.findImg.profileImg,"image");
     
   }
+  useEffect(()=>{
+    const userDetails=async () =>{
+  
+      const data =await api.post("/fetchUsers",{email})
+      console.log(data.data.userDetail.paymentDetails);
+      SetRentalDetails(data.data.userDetail.paymentDetails)
+      
+    }
+    userDetails()
+  },[])
+
+  const RentedStadium =async (id : any) =>{
+    const data = await api.post('/stadium/detaildView',{id})
+    handleModalOpen()
+    console.log(data.data.fetchDetails);
+    setStadiumDetail(data.data.fetchDetails)
+    
+  }
   
   useEffect(() => {
 
@@ -134,7 +164,7 @@ const UserProfile = () => {
         </div>
         <div className="bg-gray-400 bg-opacity-20 w-[68rem] fixed rounded-xl ml-48 h-[36rem] m flex">
           <div className="w-[30%] p-5">
-            <div className="relative mt-1 h-[540px] flex w-[30rem]  z-[999] flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div className="relative mt-1 h-[540px] flex w-[30rem]  z-[997] flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
                 <img
                   src={image}
@@ -186,51 +216,66 @@ const UserProfile = () => {
                 </div>
               </div>
               <div className="p-6 justify-center items-center flex pt-0">
-                <button
+                {/* <button
                   className="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-ripple-light="true"
                 >
                   Details
-                </button>
+                </button> */}
               </div>
             </div>
-            {rentalDetails ? (
+            {rentalDetails ? rentalDetails.map((item :any)=>(
+             <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+             <div className="p-6">
+               <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                 PURCHASED STADIUMS
+               </h5>
+               <div className="flex gap-6  w-full h-20">          <div>   <p className="mt-2"> ORDER ID : {item?.orderId}</p></div> <div> <button className="bg-blue-300 px-3 py-2 rounded-md" onClick={()=>RentedStadium(item?.stadiumId)}> DETAILS</button></div></div>
+
+             </div>
+             <div className="p-6 justify-center items-start flex pt-0">
+              
+             </div>
+           </div>
+
+            )) 
+             : (
               <div className="border flex justify-center items-center text-center w-[24rem] rounded-xl bg-white shadow-2xl h-[16rem] mt-7 ml-6">
-                <p className="text-center">
-                  Currently There is No Rental Details
-                </p>
-              </div>
-            ) : (
-              <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                <div className="p-6">
-                  <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                    PURCHASED STADIUMS
-                  </h5>
-                  <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                    <span className="font-extrabold ">Name : </span> The place
-                    is close to
-                  </p>
-                  <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                    <span className="font-extrabold ">Name : </span> The place
-                    is close to
-                  </p>
-                  <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                    <span className="font-extrabold ">Name : </span> The place
-                    is close to
-                  </p>
-                </div>
-                <div className="p-6 justify-center items-start flex pt-0">
-                  <button
-                    className="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button"
-                    data-ripple-light="true"
-                  >
-                    Read More
-                  </button>
-                </div>
-              </div>
+              <p className="text-center">
+                CURRENTLY NO RENTAL DETAILS 
+              </p>
+            </div>
             )}
+            {isModalOpen&&
+            <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
+                <div className="bg-white rounded-lg w-full max-w-md p-6">
+                      <div className="mt-3 font-extrabold">
+                        Stadium Name : <span className="font-semibold">{stadiumDetail?.stadiumname}</span>
+                      </div>
+                      <div className="mt-3 font-extrabold">
+                        Sports Type : <span className="font-semibold">{stadiumDetail?.sportstype}</span>
+                      </div>
+                      <div className="mt-3 font-extrabold">
+                        From Date :  <span className="font-semibold">{stadiumDetail?.fromdate}</span>
+                      </div>
+                      <div className="mt-3 font-extrabold">
+                        To date :  <span className="font-semibold">{stadiumDetail?.todate}</span>
+                      </div>
+                      <div className="mt-3 font-extrabold">
+                        Price :  <span className="font-semibold">{stadiumDetail?.price}</span>
+                      </div>
+                      <div className="mt-3 font-extrabold">
+                        Discription :  <span className="font-semibold">{stadiumDetail?.discription}</span>
+                      </div>
+                     
+                      <div className="flex justify-center items-center">
+  <button className="w-24 h-10 bg-cyan-300 rounded-lg text-center"onClick={handleClodeModal}>close</button>
+</div>
+
+                    </div>
+              </div>
+}
           </div>
         </div>
       </div>

@@ -16,9 +16,6 @@ const userSlice = createSlice({
         state.email = action.payload.email
         state.userId = action.payload.userId 
      },
-    //  userLogout : (state)=>{
-    //     Object.assign(state,INITIAL_STATE)
-    //  }
     }
 })
 

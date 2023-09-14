@@ -64,7 +64,7 @@ function App() {
         <Route path='/news' element={<SportsNews/>}/>
         <Route path='/owner/ownerDashBoard' element={<OwnerProtectRouter><OwnerDashBoard/></OwnerProtectRouter>}/>
         <Route path='/owner/notifiacions/:stadiumId' element={<OwnerProtectRouter><Notification/></OwnerProtectRouter>}/>
-        <Route path='/RentConfirmation' element ={<UserProtectedRouter><UserPayment/></UserProtectedRouter>}/>
+        <Route path='/RentConfirmation/:ownerid/:id' element ={<UserProtectedRouter><UserPayment/></UserProtectedRouter>}/>
       </Routes>
     </Router>
     </>

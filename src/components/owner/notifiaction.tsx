@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 const Notification = () => {
   const {stadiumId} =useParams()
   const [notifiacions,setNotification] = useState([])
-  const [status,setStatus] = useState()
+  const [status,setStatus] = useState<boolean>(false)
   // const [accept,setAccept] = useState()
 
    

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { ownerAuth } from "../../domain/modals/owner";
 import { useNavigate } from "react-router-dom";
-import  { apiAuth } from "../../servises/api/axios interceptor ";
+import { apiAuth } from "../../servises/api/axios interceptor ";
 
 const OwnerForm: React.FC = () => {
   const navigate = useNavigate();
   const [userOtp, setUserOtp] = useState<boolean>(false);
   const [inputOtp, setInputOtp] = useState("");
-  const [otpTimer, setOtpTimer] = useState<number>(60)
+  const [otpTimer, setOtpTimer] = useState<number>(60);
   const [resendDisabled, setResendDisabled] = useState<boolean>(false);
   const [owner, setOwner] = useState<ownerAuth>({
     firstname: "",
@@ -20,13 +20,11 @@ const OwnerForm: React.FC = () => {
     location: "",
   });
   console.log(setResendDisabled);
-  
 
   const addOwner = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOwner({ ...owner, [e.target.name]: e.target.value });
   };
   console.log(resendDisabled);
-  
 
   const handleOwnerSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,26 +53,24 @@ const OwnerForm: React.FC = () => {
         companyname !== " " &&
         location !== " "
       ) {
-         await apiAuth.post("/owner/ownerRegister", {
+        await apiAuth.post("/owner/ownerRegister", {
           ...owner,
-          
         });
-        
-        
+
         handleOwnerOtp();
       }
     } catch (error) {}
   };
-  
+
   const handleOwnerOtp = async () => {
     try {
       setUserOtp(true);
-       await apiAuth.post("/otp", { ...owner });
+      await apiAuth.post("/otp", { ...owner });
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
@@ -86,10 +82,10 @@ const OwnerForm: React.FC = () => {
     return () => {
       clearTimeout(timeout);
     };
-  },[userOtp, otpTimer])
+  }, [userOtp, otpTimer]);
   // const handleResendOtp = () => {
   //   setOtpTimer(60); // Reset the timer
-  //   setResendDisabled(true); 
+  //   setResendDisabled(true);
   //   handleOwnerOtp()
   // };
 
@@ -116,6 +112,10 @@ const OwnerForm: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4 mt-5 ">
                   <input
                     type="text"
+                    id="firstName"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid first name (letters only)"
                     name="firstname"
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-3"
                     placeholder="firstname"
@@ -136,10 +136,13 @@ const OwnerForm: React.FC = () => {
                     onChange={addOwner}
                   />
                   <input
-                    type="text"
+                    type="email"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     placeholder="email"
                     name="email"
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    required
+                    title="Please enter a valid email address"
                     onChange={addOwner}
                   />
                   <input
@@ -166,6 +169,10 @@ const OwnerForm: React.FC = () => {
                   <input
                     type="text"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
+                    id="phone"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    required
+                    title="Please enter a valid phone number in the format XXX-XXX-XXXX"
                     placeholder="phone"
                     name="phone"
                     onChange={addOwner}
@@ -227,8 +234,6 @@ const OwnerForm: React.FC = () => {
                 Submit
               </button>
             </div>
-           
-            
           </div>
         </div>
       )}

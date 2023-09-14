@@ -4,7 +4,8 @@ import UserNav from "../navbar/userNav";
 import io from "socket.io-client";
 import { AiOutlineSend } from "react-icons/ai";
 
-// import { useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Chats, message } from "../../domain/modals/chat";
@@ -34,6 +35,7 @@ const Chat = (props: role) => {
 
   // const [username, setUsername] = useState("");
   const [ownername, setOwnername] = useState("");
+  const navigate = useNavigate()
   const [selectedOwnerId, setSelectedOwnerId] = useState(null);
   const [notifiactionStatus, setNotificationStatus] = useState();
   const [chatId, setChatId] = useState("");
@@ -70,7 +72,6 @@ const Chat = (props: role) => {
         setChats(data.data.allChats);
         console.log(data.data.allChats, "userchat");
       } else {
-        console.log(ownerId);
         const data = await apiAuth.get(`/chat/ownerChat/${ownerId}`);
         setChats(data.data.allChats);
         console.log(data.data.allChats, "ownerChats");
@@ -279,11 +280,12 @@ const Chat = (props: role) => {
                       ))}
                   {/* Contact entries */}
                 </div>
+                
                 {props.role === "user" &&
                   selectedOwnerId &&
                   (notifiactionStatus ? (
-                  
-                    <div className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400">
+                 
+                    <div className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400" onClick={()=>navigate(`/RentConfirmation/${ownerId}/${stadiumid}`)}>
                       <p>CONTINUE WITH PAYMENT</p>
                     </div>
                    

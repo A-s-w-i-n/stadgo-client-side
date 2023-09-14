@@ -66,14 +66,14 @@ const UserNav = () => {
               Profile
             </td>
           </tr>
-          <tr>
+          {/* <tr>
             <td
               className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
               onClick={() => navigate("/Chat")}
             >
               Chat
             </td>
-          </tr>
+          </tr> */}
           <tr>
             <td
               className="font-bold text-2xl mt-6 pt-4 cursor-pointer"

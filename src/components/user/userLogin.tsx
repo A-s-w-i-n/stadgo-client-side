@@ -158,7 +158,7 @@ const UserLogin: React.FC = () => {
             </div>
 
             <p className="mt-7 text-center cursor-pointer">
-              alredy have and account{" "}
+              alredy have an account{" "}
               <span
                 className="text-blue-400"
                 onClick={() => navigate("/Register")}
