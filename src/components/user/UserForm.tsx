@@ -150,6 +150,10 @@ const UserForm: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4 mt-5 ">
                   <input
                     type="text"
+                    id="firstName"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid first name (letters only)"
                     name="firstname"
                     className="ml-7 w-60 rounded-xl border-gray-300 border-2 p-2 mr-4 mt-3 "
                     placeholder="firstname"
@@ -157,6 +161,10 @@ const UserForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="firstName"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid last name (letters only)"
                     name="lastname"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-3"
                     placeholder="lastname"
@@ -164,16 +172,23 @@ const UserForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="ownername"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid username (letters only)"
                     name="username"
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-4"
                     placeholder="username"
                     onChange={addUser}
                   />
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     placeholder="email"
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    required
+                    title="Please enter a valid email address"
                     onChange={addUser}
                   />
                   <input
@@ -185,6 +200,10 @@ const UserForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="phone"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    required
+                    title="Please enter a valid phone number in the format XXX-XXX-XXXX"
                     name="phone"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     placeholder="phone"

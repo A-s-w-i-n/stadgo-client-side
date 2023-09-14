@@ -1,6 +1,7 @@
 import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { useSelector } from "react-redux";
 // import { useDispatch, useSelector } from "react-redux";
 // import api from "../../servises/api/axios interceptor ";
 // import { userLogout } from '../../Redux/user/userSlice';
@@ -15,6 +16,9 @@ const UserNav = () => {
     setShowSidebar((prevShowSidebar) => !prevShowSidebar);
   };
 
+  const {stadiumId} =  useSelector((state : any)=>state.user)
+  console.log(stadiumId,"aa");
+  
   const handleLogout = () => {
     localStorage.removeItem("user");
     //  dispatch(userLogout())
@@ -29,8 +33,8 @@ const UserNav = () => {
       {/* Main Navigation */}
       <div className="fixed z-50  bg-white shadow-lg w-full h-16 flex items-center">
         <img
-          className="w-28 ml-5"
-          src="/public/mainImages/STADGO-logos_black.png"
+          className="w-28 ml-5 object-cover"
+          src="/mainImages/STADGO-logos_black.png"
           alt=""
         />
         <div className="ml-auto mr-5">
@@ -66,14 +70,14 @@ const UserNav = () => {
               Profile
             </td>
           </tr>
-          {/* <tr>
+          <tr>
             <td
               className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
-              onClick={() => navigate("/Chat")}
+              onClick={() => navigate(`/Chat/${stadiumId}`)}
             >
               Chat
             </td>
-          </tr> */}
+          </tr>
           <tr>
             <td
               className="font-bold text-2xl mt-6 pt-4 cursor-pointer"

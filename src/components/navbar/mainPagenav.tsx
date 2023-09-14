@@ -21,8 +21,8 @@ const MainPagenav = () => {
       <div>
         <div className="fixed bg-gradient-to-r from-white w-full h-16 flex items-center">
           <img
-            className="w-28 ml-5"
-            src="/public/mainImages/STADGO-logos_black.png"
+            className="w-28 ml-5 object-cover"
+            src="/mainImages/STADGO-logos_black.png"
             alt=""
           />
           <button

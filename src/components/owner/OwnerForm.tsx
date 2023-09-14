@@ -123,6 +123,10 @@ const OwnerForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="firstName"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid last name (letters only)"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-3"
                     placeholder="lastname"
                     name="lastname"
@@ -130,6 +134,10 @@ const OwnerForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="ownername"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid ownername (letters only)"
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-4"
                     placeholder="ownername"
                     name="ownername"
@@ -147,6 +155,7 @@ const OwnerForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-4"
                     placeholder="password"
                     name="password"
@@ -154,6 +163,10 @@ const OwnerForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="companyname"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid company name (letters only)"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     placeholder="companyname"
                     name="companyname"
@@ -161,6 +174,10 @@ const OwnerForm: React.FC = () => {
                   />
                   <input
                     type="text"
+                    id="location"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid location (letters only)"
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-4"
                     placeholder="location"
                     name="location"

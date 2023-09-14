@@ -32,7 +32,7 @@ const AdminFetchStadium: React.FC = () => {
   return (
     <div>
       <AdminHome />
-      <div className="flex flex-row w-full bg-red-400 ">
+      <div className="flex flex-row w-full  ">
         <form action="">
          
             <div className="w-[66rem] sm:w-[50rem] xl:w-[66rem] lg:w-[58rem] md:w-[40rem] ml-72 ">

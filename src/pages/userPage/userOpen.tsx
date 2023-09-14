@@ -35,8 +35,8 @@ const UserOpening = () => {
         <div className="w-1/2  flex  items-center` justify-center">
           <div className="mt-20 w-full ">
             <img
-              className=" w-full"
-              src="/public/mainImages/userOpening.png"
+              className=" w-full object-cover"
+              src="/mainImages/userOpening.png"
               alt=""
             />
           </div>

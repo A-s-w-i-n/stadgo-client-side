@@ -55,14 +55,21 @@ const AdminLogin: React.FC = () => {
               >
                 Username
               </label>
-              <input
+               <input
+              className="w-60 rounded-xl border-gray-300 border  p-2 "
+              type="text"
+              name="email"
+              placeholder="Email"
+              onChange={handleLoginAdmin}
+            />
+              {/* <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 rounded-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 name="email"
                 type="text"
                 placeholder="Email"
                 onChange={handleLoginAdmin}
-              />
+              /> */}
             </div>
             <div className="mb-6">
               <label
@@ -72,13 +79,21 @@ const AdminLogin: React.FC = () => {
                 Password
               </label>
               <input
+              className="w-60 rounded-xl border-gray-300 border  p-2 "
+              type="text"
+              name="password"
+              placeholder="password"
+              onChange={handleLoginAdmin}
+            />
+              {/* <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 rounded-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 name="password"
                 id="password"
                 type="password"
                 placeholder="Password"
                 onChange={handleLoginAdmin}
-              />
+              /> */}
+              
             </div>
             <div className="flex items-center justify-center">
               <button className="bg-black hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

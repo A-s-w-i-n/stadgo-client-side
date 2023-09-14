@@ -65,7 +65,7 @@ const Notification = () => {
             {/* <h1>{accept}</h1> */}
             <div className="flex gap-4  items-center justify-center w-64 h-full  ">
 {/* {status ? "" :<button className="text-green-700 text-sm">DECLINE</button>} */}
-              {status ?<button className="text-blue-500 text-sm">Accepted</button>    : <button  className="text-green-500 text-sm " onClick={()=>notificationStatus(item._id)}>ACCEPT</button>}
+              {status ?<button className="text-blue-500 text-sm"></button>    : <button  className="text-green-500 text-sm " onClick={()=>notificationStatus(item._id)}>ACCEPT</button>}
             </div>
           </div>
         </div>

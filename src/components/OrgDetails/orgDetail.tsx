@@ -54,7 +54,7 @@ const OrgDetails: React.FC = () => {
         <div className="flex justify-center items-center h-screen">
           <div className="flex-1 h-full bg-white"></div>
 
-          <div className="absolute bg-white p-4 w-100 shadow-3xl rounded-2xl h-3/4">
+          <div className="absolute bg-white p-4 w-[35rem] shadow-3xl rounded-2xl h-3/4">
             <p className="text-center text-2xl text-indigo">ORG DETAILS</p>
             <div className="flex gap-4 mt-8 ">
               {" "}

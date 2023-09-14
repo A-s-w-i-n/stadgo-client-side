@@ -75,8 +75,8 @@ const OwnerHome = () => {
             <div className="w-1/2  flex  items-center` justify-center">
               <div className="mt-14 w-full ">
                 <img
-                  className=" w-11/12"
-                  src="/public/mainImages/ownerHome.png"
+                  className=" w-11/12  object-cover "
+                  src="\mainImages\ownerHome.png"
                   alt=""
                 />
               </div>

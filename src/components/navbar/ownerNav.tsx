@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 // import { Icons } from "react-toastify";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+
 // import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux";
 
@@ -43,10 +44,10 @@ const OwnerNav = () => {
       {/* Main Navigation */}
       <div className="fixed bg-white z-[999] shadow-lg w-full h-16 flex items-center">
         <img
-          className="w-28 ml-5"
-          src="/public/mainImages/STADGO-logos_black.png"
+          className="w-28 ml-5 object-cover"
+          src="/mainImages/STADGO-logos_black.png"
           alt=""
-        />
+       onClick={()=>navigate('/owner/stadiumlist')} />
 
         <div className="ml-auto mr-5">
           {/* 
