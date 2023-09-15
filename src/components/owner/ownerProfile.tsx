@@ -38,9 +38,7 @@ const OwnerProfile = () => {
       <OwnerNav />
       
       <div className="bg-white  w-full h-screen  flex   ">
-        <p className="text-center font-semibold mt-14">
-          <CgProfile />
-        </p>
+        
         <div className="bg-gray-400 bg-opacity-20 w-[68rem] fixed rounded-xl ml-48 h-[36rem] m flex">
           <div className="w-[30%] p-5">
             <div className="relative mt-1 h-[540px] flex w-[30rem]  flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
