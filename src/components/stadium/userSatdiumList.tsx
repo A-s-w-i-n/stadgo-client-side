@@ -149,7 +149,7 @@ const UserSatdiumList = () => {
           ))
         ) : (
           <p className="text-center text-gray-600 mt-10">
-            <img src="/public/mainImages/noResultFound.png" alt="" />
+            <img src="/mainImages/noResultFound.png" alt="" className="object-cover" />
           </p>
         )}
       </div>
