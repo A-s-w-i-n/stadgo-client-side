@@ -87,7 +87,7 @@ const UserPayment = () => {
             <div className="w-full flex  h-full">
             <div className="  flex-row justify-end items-end   w-11/12 h-full">
             <div className="w-full text-center  flex justify-end h-96 ">
-                <div className="w-72 h-64 rounded-lg mt-10 shadow-2xl bg-white">
+                <div className="w-72 h-72 rounded-lg mt-10 shadow-2xl bg-white">
                 <p className="font-extrabold mt-7 text-2xl">{stadium?.stadiumname}</p>
                 <p className="mt-6 font-mono">{stadium?.fromdate} -- {stadium.todate}</p>
                 <p className="mt-6">{stadium.location}</p>

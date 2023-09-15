@@ -22,7 +22,7 @@ const UserPremium: React.FC <UserPremiumProps>= ({stadium})  => {
    
   return (
     <div>
-       ;
+       
 
       <ToastContainer />
       <PayPalScriptProvider
