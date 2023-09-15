@@ -43,7 +43,7 @@ const OwnerProfile = () => {
           <div className="w-[30%] p-5">
             <div className="relative mt-1 h-[540px] flex w-[30rem]  flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
-                <img src="" alt="img-blur-shadow" className="h-56 w-72" />
+                <img  src="/mainImages/defalt profile image.png" alt="img-blur-shadow" className="h-52 w-72 object-cover" />
               </div>
               <div className="p-6">
                 <h5 className="mb-2 text-center block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
@@ -65,13 +65,7 @@ const OwnerProfile = () => {
               </div>
               
               <div className="flex p-6 items-center justify-center pt-0">
-                <button
-                  className="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  type="button"
-                  data-ripple-light="true"
-                >
-                  more
-                </button>
+               
               </div>
             </div>
           </div>
