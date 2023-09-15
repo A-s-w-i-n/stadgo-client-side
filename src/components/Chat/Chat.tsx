@@ -168,6 +168,7 @@ const Chat = (props: role) => {
 
     if (newMessage.trim().length > 0) {
       const result = await sendMessgae(newMessage, chatId, currentId);
+      setNewMessages("");
       console.log(
         newMessage,
         "||",
@@ -181,7 +182,6 @@ const Chat = (props: role) => {
         result,
         "response meassagelllllllllllllllllllllllllllllllllllllllllll"
       );
-      setNewMessages("");
       socket?.emit("newMessage", result.msg);
       console.log(result, "mkkkkkkkkkkkkkkkkkkkkkkk");
       setMessage([...message, result.msg]);
@@ -384,6 +384,7 @@ const Chat = (props: role) => {
                       className="w-full border rounded px-2 py-2"
                       type="text"
                       name="message"
+                      value={newMessage}
                       onChange={(e) => setMessageFn(e)}
                     />
                   </div>
