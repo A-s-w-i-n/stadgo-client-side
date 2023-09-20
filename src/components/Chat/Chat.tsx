@@ -238,19 +238,6 @@ const Chat = (props: role) => {
       const result = await sendMessgae(newMessage, chatId, currentId);
       setNewMessages("");
       moveChatToTop(chatId);
-      console.log(
-        newMessage,
-        "||",
-        chatId,
-        "||",
-        currentId,
-        "pppppppppppppppppppppppppppppppppppp"
-      );
-
-      console.log(
-        result,
-        "response meassagelllllllllllllllllllllllllllllllllllllllllll"
-      );
       socket?.emit("newMessage", result.msg);
       console.log(result, "mkkkkkkkkkkkkkkkkkkkkkkk");
       setMessage([...message, result.msg]);

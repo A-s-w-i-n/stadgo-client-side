@@ -49,15 +49,27 @@ const UserPayment = () => {
   const handleSetDate = async () => {
     setShowDateInput(true);
   };
+  const isDateValid = (date : any) => {
+  return date >= minDate && date <= maxDate;
+};
   const handleDateSelection = async () => {
     if (startDate && endDate) {
       console.log(startDate,"",endDate);
-      
+      const selectedStartDate = new Date(startDate);
+      const selectedEndDate = new Date(endDate);
+
+     if (isDateValid(selectedStartDate) && isDateValid(selectedEndDate)) {
       // setLoding(true);
       setChecked(true);
       setShowDateInput(false);
       setStartDate(minDate.toISOString().split('T')[0]);
       setEndDate(maxDate.toISOString().split('T')[0]);
+    }else{
+      toast.success("Selected dates are not within the available date range.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
       
     }else{
       setShowDateInput(false)
