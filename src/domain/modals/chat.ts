@@ -12,6 +12,7 @@ export interface latest {
 }
 
 export interface message {
+  timestamp: string | number | Date;
   _id: string;
   User: string;
   Owner: string;

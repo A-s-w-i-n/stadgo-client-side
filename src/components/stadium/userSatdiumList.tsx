@@ -12,7 +12,7 @@ const UserSatdiumList = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
   const [loading,setLoading] = useState<boolean>(true)
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredStadiums, setFilteredStadiums] =
     useState<stadim[]>(stadiumData);
   const navigate = useNavigate();

@@ -58,14 +58,14 @@ const UserPremium: React.FC <UserPremiumProps>= ({stadium})  => {
              const orderId =data?.orderID
              const stadiumId =stadium?._id
              const stadiumPrice = stadium?.price
-             
-                
+             const date = new Date().toLocaleString()
+             console.log(date);
                 const emailId = JSON.parse(
                   localStorage.getItem("user") as string
                 );
                 const email = emailId.LoginCheck.email;
 
-                const update = await api.post("/userPayment", { stadiumId,orderId,email });
+                const update = await api.post("/userPayment", {stadiumId,orderId,email,userId,stadiumPrice});
                 console.log(update);
                 const ownerUpdate = await api.post('/owner/ownerPayment',{stadiumId,orderId,ownerId,userId,stadiumPrice})
                 console.log(ownerUpdate);
@@ -74,8 +74,6 @@ const UserPremium: React.FC <UserPremiumProps>= ({stadium})  => {
                 
                 
                 if (update) {
-                
-
                   toast.success("payment completed", {
                     position: "top-right",
                     autoClose: 3000,

@@ -16,6 +16,8 @@ interface userinfos {
 const OwnerDashBoard = () => {
   const [userinfo, setUserInfo] = useState<userinfos[]>([]);
   const [price,totalPrice] = useState()
+  const [userDetail,setUserDetail] = useState<any>()
+  const [userDetails,showUserDetails] = useState<boolean>(true)
   const [objectCounts,setObjectCounts] = useState()
   const [ownerInfo, setOnwerInfo] = useState<any>();
   const userEmail = JSON.parse(localStorage.getItem("owner") as string);
@@ -28,12 +30,11 @@ const OwnerDashBoard = () => {
 
   const fetchOwnerById = async () => {
     const { data } = await api.post("/owner/fetchOwner", { email });
-
     setUserInfo(data.ownerDetail[0].User);
-    console.log(data.ownerDetail[0].User);
-
+    
     setOnwerInfo(data.ownerDetail[0].paymentDetails);
-    const paymentDetails = data.ownerDetail[0].paymentDetails; // Assuming this is your array
+    console.log(data.ownerDetail[0].paymentDetails);
+    const paymentDetails = data.ownerDetail[0].paymentDetails
 
     const objectCount = paymentDetails.length
     console.log(objectCount,"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
@@ -48,7 +49,6 @@ const OwnerDashBoard = () => {
       0
     );
     totalPrice(totalStadiumPrice)
-    console.log(totalStadiumPrice);
 
     console.log(data.ownerDetail[0].paymentDetails, "aaaa");
 
@@ -62,6 +62,15 @@ const OwnerDashBoard = () => {
     };
     stadium();
   }, []);
+
+  const  fetchUserPayment =async(id  : any) =>{
+    const fetch = await api.post('/fetchProfileImg',{id})
+    showUserDetails(false)
+    console.log(fetch.data);
+    
+    setUserDetail(fetch.data.findImg)
+    
+  }
 
   useEffect(() => {
     fetchOwnerById();
@@ -129,7 +138,7 @@ const OwnerDashBoard = () => {
               </div>
             </div>
             <div className="w-1/2 text-center h-[17.2rem] ">
-              <p className="font-mono font-semibold"> NO. OF BUYERS </p>
+              <p className="font-mono font-semibold">NO. OF BUYERS </p>
               <div className="w-full h-[15.7rem] flex  items-center justify-center">
                 <div className="bg-white rounded-lg flex font-mono justify-center items-center text-center shadow-xl w-40 h-40">
                   <p className="text-4xl">{objectCounts}</p>
@@ -141,12 +150,12 @@ const OwnerDashBoard = () => {
             <div></div>
           </div>
 
-          <div className="flex   h-[17.2rem]">
+          <div className="flex w-[80rem]   h-[17.2rem]">
             <p className="text-6xl">
               <LiaMoneyBillWaveSolid />
             </p>
-            <div className="w-full border border-black  h-[17.2rem]">
-              <div className="relative   overflow-scroll h-[17.2rem]  overflow-x-auto">
+            <div className="w-[full] border border-black  h-[17.2rem]">
+              <div className="relative   overflow-scroll h-[17.2rem]   overflow-x-auto">
                 <table className="w-full  text-sm text-left text-white-500 dark:text-gray-400">
                   <thead className="text-xs  text-gray-700 uppercase  dark:bg-white dark:text-black-400">
                     <tr>
@@ -157,7 +166,13 @@ const OwnerDashBoard = () => {
                         Amount
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        User Id
+                        Payment Date
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                       Rent Start Date
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Ending Date
                       </th>
                     </tr>
                   </thead>
@@ -174,7 +189,16 @@ const OwnerDashBoard = () => {
                           {items?.stadiumPrice}
                         </td>
                         <td className="px-6 py-4 dark:text-black">
-                          {items?.userId}
+                          {items?.date}
+                        </td>
+                        <td className="px-6 py-4 dark:text-black">
+                          {items?.startDate}
+                        </td>
+                        <td className="px-6 py-4 dark:text-black">
+                          {items?.endDate}
+                        </td>
+                        <td className="px-6 py-4 dark:text-black">
+                        <button className="bg-black py-2 px-3 rounded-sm text-white" onClick={()=>fetchUserPayment(items?.userId)}>User Details</button>
                         </td>
                       </tr>
                     ))}
@@ -183,11 +207,37 @@ const OwnerDashBoard = () => {
               </div>
             </div>
           </div>
-          {/* <div className="bg-violet-400 flex w-full h-[17.2rem]">
-            <p className="text-6xl">
-              <BsGraphUpArrow />
-            </p>
-          </div> */}
+          {userDetails ?  <div className="flex w-full h-[17.2rem]">
+          <p className="text-6xl text-white">
+          <BsGraphUpArrow />
+             </p>
+          <div className="w-[20rem] justify-center text-center  items-start flex  ml-[16rem] border border-black  h-[17.2rem]">
+            <p className=" flex items-center mt-32 font-extrabold text-2xl ">Click User Details</p>
+            {/* <p>OrderId : {userDetail}</p> */}
+            </div>
+          </div> :userDetail &&
+          
+          <div className="flex w-full h-[17.2rem]">
+          <p className="text-6xl text-white">
+          <BsGraphUpArrow />
+             </p>
+          <div className="w-[20rem]   justify-center ml-[16rem] border border-black  h-[17.2rem]">
+            <div className="flex justify-center">
+              <div className="w-32 h-32 rounded-full flex justify-center items-center shadow-2xl shadow-gray-400 bg-gray-100">
+             <img className="w-28 object-fill  rounded-full h-28 "  src={userDetail?.profileImg} alt="https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" />
+            </div>
+            </div>
+            <div className="flex flex-col items-center">
+  <p className="mt-5 font-serif">Name: {(userDetail?.username).toLocaleUpperCase()}</p>
+  <p className="mt-2 font-serif">Email: {userDetail?.email}</p>
+  <p className="mt-2 font-serif">Phone: {userDetail.phone}</p>
+</div>
+            {/* <p>OrderId : {userDetail}</p> */}
+            </div>
+          </div>
+          } 
+
+          
         </div>
       </div>
     </div>

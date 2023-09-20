@@ -37,6 +37,7 @@ function App() {
   return (
     <>
     <Router>
+    
       <Routes>
         <Route path='/' element={<UserOpening/>}/>
         <Route path='/adminLogin' element={<AdminLogin/>}/>

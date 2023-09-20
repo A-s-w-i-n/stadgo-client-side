@@ -4,7 +4,6 @@ import UserNav from "../navbar/userNav";
 import io from "socket.io-client";
 import { AiOutlineSend } from "react-icons/ai";
 
-
 import { useNavigate } from "react-router-dom";
 import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -16,6 +15,7 @@ import { useParams } from "react-router-dom";
 interface role {
   role: string;
 }
+
 const Chat = (props: role) => {
   const EndPoint = process.env.REACT_APP_ORIGIN_URL as string;
 
@@ -26,19 +26,26 @@ const Chat = (props: role) => {
   };
   // const [chat, setChat] = useState("");
   const [message, setMessage] = useState<message[]>([]);
+  const [initialChat,setInitialChat] = useState<any>()
   const [chats, setChats] = useState<Chats[]>([]);
   const { userId, username } = useSelector((state: any) => state.user);
   const { ownerId } = useSelector((state: any) => state.owner);
   console.log(ownerId);
-  
+
   console.log(username);
 
   // const [username, setUsername] = useState("");
   const [ownername, setOwnername] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedOwnerId, setSelectedOwnerId] = useState(null);
   const [notifiactionStatus, setNotificationStatus] = useState();
+
+
   const [chatId, setChatId] = useState("");
+  const [unreadMessages, setUnreadMessages] = useState<{
+    [key: string]: number;
+  }>({});
+
   const [newMessage, setNewMessages] = useState("");
   const [selectUser, setSelcetUser] = useState<Chats>();
   const currentId = props.role === "user" ? userId : ownerId;
@@ -71,14 +78,54 @@ const Chat = (props: role) => {
 
         setChats(data.data.allChats);
         console.log(data.data.allChats, "userchat");
-      } else {
+
+        // chats.map( (item : any)=>{ 
+        //   console.log("hiii");
+          
+        //  if(ownerId == item?.Owner?._id && userId == item.User ) {
+        //    const chatId = item._id
+        //    console.log(chatId,"ssssssssssssssssssssssssss");
+
+        //     apiAuth.get(`/message/${chatId}`).then((data)=>{
+        //       console.log(data.data.messages); 
+        //       setMessage(data.data.messages)     
+        //    });  
+        //  }
+        // })
+       
+
+       
+      } else { 
+
         const data = await apiAuth.get(`/chat/ownerChat/${ownerId}`);
         setChats(data.data.allChats);
         console.log(data.data.allChats, "ownerChats");
       }
+      // const chatId =
+      // const data = api.post('/message',{})
     };
     fetch();
   }, []);
+  useEffect(()=>{
+     chats.map( (item : any)=>{ 
+          console.log("hiii");
+          
+         if(ownerId == item?.Owner?._id && userId == item.User ) {
+           const chatId = item._id
+           console.log(chatId,"ssssssssssssssssssssssssss");
+
+            apiAuth.get(`/message/${chatId}`).then((data)=>{
+              console.log(data.data.messages); 
+            setMessage(data.data.messages) 
+            })
+          }
+
+           }); 
+  },[chats])
+
+
+  // const initialChat =  () =>{
+  
 
   const filteredChats = chats.filter((chat: any) => {
     const ownerName = chat.Owner?.ownername || "";
@@ -90,7 +137,8 @@ const Chat = (props: role) => {
   });
 
   const handleSendNotification = async () => {
-    setLoding(true)
+
+    setLoding(true);
     const data = await api.post("/notification/create", {
       username,
       ownerId,
@@ -109,8 +157,8 @@ const Chat = (props: role) => {
     // console.log(data.data.find?.request, "a");
     setNotificationStatus(data.data.find?.request);
 
-    if(notifiactionStatus == true){
-      setLoding(false)
+    if (notifiactionStatus == true) {
+      setLoding(false);
     }
   };
   useEffect(() => {
@@ -124,6 +172,7 @@ const Chat = (props: role) => {
       console.log("ddddddddddd=", newMessage.Owner);
 
       if (chatId !== newMessage.chat?._id) {
+        
         console.log("chatIddddd===", chatId);
         console.log("newMessage.chat?._id=======", newMessage.chat?._id);
 
@@ -138,6 +187,18 @@ const Chat = (props: role) => {
     console.log(chatId, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     setLoding(true);
     const { data } = await apiAuth.get(`/message/${chatId}`);
+    data.messages.forEach((message: { createdAt: string | number | Date }) => {
+      const createdAtDate = new Date(message.createdAt);
+      const formattedTime = `${createdAtDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${createdAtDate
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+      console.log(formattedTime);
+      message.createdAt = formattedTime;
+    });
     console.log(
       data.messages,
       "vvvvvccccccccccccccccccccccccccccccccccccccccccccccccccc"
@@ -163,12 +224,20 @@ const Chat = (props: role) => {
     return data;
     // handleMessageFetch(chatId);
   };
+
+  const moveChatToTop = (chatId: any) => {
+    const updatedChats = chats.filter((chat) => chat._id !== chatId);
+    const movedChat: any = chats.find((chat) => chat._id === chatId);
+    setChats([movedChat, ...updatedChats]);
+  };
+
   const handleMessageSend = async () => {
     console.log("neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
     if (newMessage.trim().length > 0) {
       const result = await sendMessgae(newMessage, chatId, currentId);
       setNewMessages("");
+      moveChatToTop(chatId);
       console.log(
         newMessage,
         "||",
@@ -223,7 +292,11 @@ const Chat = (props: role) => {
                   {props.role === "user"
                     ? filteredChats?.map((item: any) => (
                         <div>
-                          <div className=" flex w-full  bg-slate-100 hover:bg-slate-300 list-none mt-4 h-14  border">
+                          <div
+                            className={`flex w-full  bg-slate-100 hover:bg-slate-300 list-none mt-4 h-14  border ${
+                              unreadMessages[item._id] ? "unread-chat" : ""
+                            }`}
+                          >
                             <div className="flex  w-8 h-8 mt-3 ml-1 border  border-black rounded-full  "></div>
                             <li
                               className=" w-[14rem]  h-full"
@@ -280,22 +353,23 @@ const Chat = (props: role) => {
                       ))}
                   {/* Contact entries */}
                 </div>
-                
+
                 {props.role === "user" &&
                   selectedOwnerId &&
                   (notifiactionStatus ? (
-                 
-                    <div className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400" onClick={()=>navigate(`/RentConfirmation/${ownerId}/${stadiumid}`)}>
+                    <div
+                      className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400"
+                      onClick={() =>
+                        navigate(`/RentConfirmation/${ownerId}/${stadiumid}`)
+                      }
+                    >
                       <p>CONTINUE WITH PAYMENT</p>
                     </div>
-                   
+                  ) : loding ? (
+                    <div className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400">
+                      <p>REQUEST PROCESSING....</p>
+                    </div>
                   ) : (
-                    loding?<div
-                    className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400"
-                    
-                  >
-                    <p>REQUEST PROCESSING....</p>
-                  </div> :
                     <div
                       className="your-div-styles text-center flex items-center justify-center cursor-pointer hover:bg-blue-500 rounded-sm w-full h-10 bg-blue-400"
                       onClick={handleSendNotification}
@@ -309,22 +383,7 @@ const Chat = (props: role) => {
               <div className="w-2/3 border flex flex-col">
                 {/* Header */}
                 <div className="py-2 px-3 bg-gray-200 flex flex-row justify-between items-center">
-                  {/* <div className="flex items-center">
-                    <div>
-                      <img
-                        className="w-10 h-10 rounded-full"
-                        src="https://darrenjameseeley.files.wordpress.com/2014/09/expendables3.jpeg"
-                        alt="Chat Avatar"
-                      />
-                    </div>
-                  
-                    <div className="ml-4">
-                      <p className="text-gray-800">New Movie! Expendables 4</p>
-                      <p className="text-xs text-gray-700 mt-1">
-                        Andrés, Tom, Harrison, Arnold, Sylvester
-                      </p>
-                    </div>
-                  </div> */}
+            
 
                   <div className="flex"></div>
                 </div>
@@ -348,7 +407,10 @@ const Chat = (props: role) => {
                           }`}
                           style={{ maxWidth: "80%" }} // Limit the width of the chat bubble
                         >
-                          {item?.content}
+                          <div>
+                            <p>{item?.content}</p>
+                          </div>
+                          <p className="text-xs text-end">{item.createdAt}</p>
                         </div>
                       </div>
                     ))}
@@ -368,7 +430,10 @@ const Chat = (props: role) => {
                           }`}
                           style={{ maxWidth: "80%" }} // Limit the width of the chat bubble
                         >
-                          {item?.content}
+                          <div>
+                            <p>{item?.content}</p>
+                          </div>
+                          <p className="text-xs text-end">{item.createdAt}</p>
                         </div>
                       </div>
                     ))}
