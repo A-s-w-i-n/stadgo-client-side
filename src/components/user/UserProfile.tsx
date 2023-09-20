@@ -12,7 +12,7 @@ const UserProfile = () => {
   const [datas, setData] = useState<OrgDetail | null>(null);
   const [rentalDetails, SetRentalDetails] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [stadiumDetail,setStadiumDetail] = useState<stadim>()
+  const [Rental,setRental] = useState<any>()
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
   const fileInputRef: any = useRef(null);
@@ -117,11 +117,21 @@ const UserProfile = () => {
     userDetails()
   },[])
 
-  const RentedStadium =async (id : any) =>{
-    const data = await api.post('/stadium/detaildView',{id})
-    handleModalOpen()
-    console.log(data.data.fetchDetails);
-    setStadiumDetail(data.data.fetchDetails)
+  const RentedStadium =async (orderId : any) =>{
+    const data =await api.post("/fetchUsers",{email})
+    console.log(data.data.userDetail);
+    const detail = data.data.userDetail.paymentDetails
+     detail.map((item : any)=>{
+      console.log(item.orderId,"",orderId);
+      
+      if(item.orderId == orderId)
+      setRental(data.data.userDetail.paymentDetails)
+    console.log(data.data.userDetail.paymentDetails);
+    
+  })
+  handleModalOpen()
+    console.log(data.data.userDetail.paymentDetails);
+    
     
   }
   
@@ -231,7 +241,7 @@ const UserProfile = () => {
                <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                  PURCHASED STADIUMS
                </h5>
-               <div className="flex gap-6  w-full h-20">          <div>   <p className="mt-2"> ORDER ID : {item?.orderId}</p></div> <div> <button className="bg-blue-300 px-3 py-2 rounded-md" onClick={()=>RentedStadium(item?.stadiumId)}> DETAILS</button></div></div>
+               <div className="flex gap-6  w-full h-20">          <div>   <p className="mt-2"> ORDER ID : {item?.orderId}</p></div> <div> <button className="bg-blue-300 px-3 py-2 rounded-md" onClick={()=>RentedStadium(item.orderId)}> DETAILS</button></div></div>
 
              </div>
              <div className="p-6 justify-center items-start flex pt-0">
@@ -241,6 +251,7 @@ const UserProfile = () => {
 
             )) 
              : (
+              
               <div className="border flex justify-center items-center text-center w-[24rem] rounded-xl bg-white shadow-2xl h-[16rem] mt-7 ml-6">
               <p className="text-center">
                 CURRENTLY NO RENTAL DETAILS 
@@ -248,25 +259,26 @@ const UserProfile = () => {
             </div>
             )}
             {isModalOpen&&
+            Rental.map((item : any)=>(
+
+           
             <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
                 <div className="bg-white rounded-lg w-full max-w-md p-6">
                       <div className="mt-3 font-extrabold">
-                        Stadium Name : <span className="font-semibold">{stadiumDetail?.stadiumname}</span>
+                        Stadium Name : <span className="font-semibold">{item?.stadiumId}</span>
                       </div>
                       <div className="mt-3 font-extrabold">
-                        Sports Type : <span className="font-semibold">{stadiumDetail?.sportstype}</span>
+                        Price : <span className="font-semibold">{item?.stadiumPrice}</span>
                       </div>
                       <div className="mt-3 font-extrabold">
-                        From Date :  <span className="font-semibold">{stadiumDetail?.fromdate}</span>
+                        From Date :  <span className="font-semibold">{item?.startDate}</span>
                       </div>
                       <div className="mt-3 font-extrabold">
-                        To date :  <span className="font-semibold">{stadiumDetail?.todate}</span>
+                        To date :  <span className="font-semibold">{item?.endDate}</span>
                       </div>
+                      
                       <div className="mt-3 font-extrabold">
-                        Price :  <span className="font-semibold">{stadiumDetail?.price}</span>
-                      </div>
-                      <div className="mt-3 font-extrabold">
-                        Discription :  <span className="font-semibold">{stadiumDetail?.discription}</span>
+                        Rental Date :  <span className="font-semibold">{item?.date}</span>
                       </div>
                      
                       <div className="flex justify-center items-center">
@@ -275,6 +287,7 @@ const UserProfile = () => {
 
                     </div>
               </div>
+               ))
 }
           </div>
         </div>
