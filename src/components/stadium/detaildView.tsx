@@ -5,6 +5,7 @@ import UserNav from "../navbar/userNav";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
+import { useDispatch } from "react-redux";
 // import {GoogleMap,Marker} from '@react-google-maps/api'
 
 
@@ -12,7 +13,9 @@ import { stadim } from "../../domain/modals/stadium";
 // import { userData } from "../../domain/modals/userData";
 // import { toast } from "react-toastify";
 import Loader from "../loader/loader";
+import { ownerLogged } from "../../Redux/owner/ownerSlice";
 const DetaildView: React.FC = () => {
+  const dispatch = useDispatch()
   // const [usersPremium, setUserPremium] = useState(false);
   // const [checkDetail, setCheckDetail] = useState<userData>();
   const [chatExist,setChatExist] = useState()
@@ -55,8 +58,14 @@ const DetaildView: React.FC = () => {
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
         setCarosal(result.data.fetchDetails);
+        console.log(result.data.fetchDetails);
         console.log(result.data.fetchDetails._id);
         setLoding(false)
+        dispatch(ownerLogged({
+          ownerId :result.data.fetchDetails.id,
+          stadiumId :result.data.fetchDetails.stadiumid
+        }))
+
       });
     }
     ownerUserInfo()
