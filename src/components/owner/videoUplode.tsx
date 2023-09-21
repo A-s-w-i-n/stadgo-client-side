@@ -143,7 +143,7 @@ useEffect(()=>{
                   className="bg-cyan-400  px-3 py-2 rounded-2xl"
                   onClick={openUplodeVideoModal}
                 >
-                  UPLODE
+                  UPLOADE
                 </button>
               </div>
                 </div>

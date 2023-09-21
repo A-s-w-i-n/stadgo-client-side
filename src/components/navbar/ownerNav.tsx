@@ -112,7 +112,7 @@ const OwnerNav = () => {
               className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
               onClick={() => navigate("/owner/videoUplode")}
             >
-              Uplode Video
+              Upload Video
             </td>
           </tr>
           <tr>
