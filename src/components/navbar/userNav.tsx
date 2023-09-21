@@ -2,6 +2,9 @@ import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import {CgProfile} from 'react-icons/cg'
+import {MdOutlineStadium} from 'react-icons/md'
+import {IoLogOutOutline} from 'react-icons/io5'
 // import { useDispatch, useSelector } from "react-redux";
 // import api from "../../servises/api/axios interceptor ";
 // import { userLogout } from '../../Redux/user/userSlice';
@@ -62,28 +65,28 @@ const UserNav = () => {
 
         {/* Add your list items here */}
         <table className="p-4 mt-5 ml-8">
-          <tr>
+          <tr className="flex">
             <td
-              className="font-bold text-2xl mt-6 pt-4 cursor-pointer "
+              className="font-bold flex gap-1  text-2xl mt-6  cursor-pointer "
               onClick={() => navigate("/userProfile")}
             >
-              Profile
+             <p className="flex gap-4"><span className="mt-[0.4rem] "><CgProfile/></span> Profile</p>
             </td>
           </tr>
-          <tr>
+          {/* <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
+              className="font-bold flex text-2xl mt-6 pt-4 cursor-pointer"
               onClick={() => navigate(`/Chat/${stadiumId}`)}
             >
               Chat
             </td>
-          </tr>
+          </tr> */}
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
+              className="font-bold flex text-2xl mt-3 pt-4 cursor-pointer"
               onClick={() => navigate("/stadiumList")}
             >
-              Stadium
+              <p className="flex gap-4"><span className="mt-[0.4rem] "><MdOutlineStadium/></span>Stadium</p>
             </td>
           </tr>
         
@@ -93,7 +96,7 @@ const UserNav = () => {
               className="font-bold text-2xl pt-4 cursor-pointer"
               onClick={handleLogout}
             >
-              Logout
+             <p className="flex gap-4"><span className="mt-[0.4rem]"><IoLogOutOutline/></span>Logout</p> 
             </td>
           </tr>
           {/* Add more items as needed */}

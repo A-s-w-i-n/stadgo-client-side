@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 // import { Icons } from "react-toastify";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+import {CgProfile} from 'react-icons/cg'
+import {IoMdNotificationsOutline} from 'react-icons/io'
+import {BsChatDots} from 'react-icons/bs'
+import {HiOutlineUpload} from 'react-icons/hi'
+import {RxDashboard} from 'react-icons/rx'
+import {IoLogOutOutline} from 'react-icons/io5'
 
 // import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux";
@@ -77,12 +83,12 @@ const OwnerNav = () => {
 
         {/* Add your list items here */}
         <table className="p-4 mt-5 ml-8">
-          <tr>
+          <tr className="flex">
             <td
-              className="font-bold text-2xl mt-6 pt-4 cursor-pointer "
+              className="font-bold flex text-2xl mt-6 pt-4 cursor-pointer "
               onClick={() => navigate("/owner/ownerProfile")}
             >
-              Profile
+              <p className="flex gap-4"><span  className="mt-[0.4rem]"><CgProfile/></span>Profile</p>
             </td>
           </tr>
           {/* <tr>
@@ -94,14 +100,15 @@ const OwnerNav = () => {
             </td>
           </tr> */}
           <tr>
-            <td className="font-bold text-2xl mt-6 cursor-pointer pt-4" onClick={()=>navigate(`/owner/notifiacions/${stadiumId}`)}>Notification</td>
+            <td className="font-bold flex text-2xl mt-1 cursor-pointer pt-4" onClick={()=>navigate(`/owner/notifiacions/${stadiumId}`)}>
+              <p className="flex gap-4"><span className="mt-[0.4rem]"><IoMdNotificationsOutline/></span>Notification</p></td>
           </tr>
           <tr>
             <td
-              className="font-bold cursor-pointer text-2xl mt-6 pt-4"
+              className="font-bold  flex cursor-pointer text-2xl mt-1 pt-4"
               onClick={() => navigate("/owner/Chat")}
             >
-              Chat
+             <p className="flex gap-4"> <span className="mt-[0.4rem]"><BsChatDots/></span>Chat</p>
             </td>
           </tr>
           {/* <tr>
@@ -109,18 +116,18 @@ const OwnerNav = () => {
   </tr> */}
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
+              className="font-bold text-2xl flex  pt-4 cursor-pointer"
               onClick={() => navigate("/owner/videoUplode")}
             >
-              Upload Video
+             <p  className="flex gap-4"><span className="mt-[0.4rem]"><HiOutlineUpload/></span>Upload Video</p> 
             </td>
           </tr>
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
+              className="font-bold text-2xl flex pt-4 cursor-pointer"
               onClick={() => navigate("/owner/ownerDashBoard")}
             >
-              Dash Board
+             <p className="flex gap-4"><span className="mt-[0.4rem]"><RxDashboard/></span>Dash Board</p> 
             </td>
           </tr>
           <tr>
@@ -129,10 +136,10 @@ const OwnerNav = () => {
 
           <tr>
             <td
-              className="font-bold text-2xl pt-4 cursor-pointer"
+              className="font-bold text-2xl flex pt-4 cursor-pointer"
               onClick={handleLogout}
             >
-              Logout
+             <p className="flex gap-4"><span className="mt-[0.4rem]"><IoLogOutOutline/></span>Logout</p> 
             </td>
           </tr>
           {/* Add more items as needed */}
