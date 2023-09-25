@@ -27,7 +27,6 @@ const AdminLogin: React.FC = () => {
     try {
       const { data } = await apiAuth.post("/admin/adminLogin", { ...adminLogin });
       if (data) {
-        console.log(data);
         const adminToken = data.accessToken;
         const admindata = data.adminLoginCheck;
 

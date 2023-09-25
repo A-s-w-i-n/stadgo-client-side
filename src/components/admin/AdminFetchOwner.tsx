@@ -17,8 +17,6 @@ const AdminFetchOwner: React.FC = () => {
 
     try {
       const ownerBlock = await apiAuth.post("/admin/blockOwner", { id });
-
-      console.log(ownerBlock);
     } catch (error) {}
   };
   const handleOwnerUnblock = async (
@@ -29,8 +27,6 @@ const AdminFetchOwner: React.FC = () => {
 
     try {
       const OwnerUnblock = await apiAuth.post("/admin/unBlockOwner", { id });
-
-      console.log(OwnerUnblock);
     } catch (error) {
       console.log(error);
       
@@ -41,7 +37,6 @@ const AdminFetchOwner: React.FC = () => {
     apiAuth
       .get("/admin/fetchOwner")
       .then((fetchOwner) => {
-        console.log(fetchOwner.data.ownerFetch);
 
         setOnwerData(fetchOwner.data.ownerFetch);
       })

@@ -5,7 +5,7 @@ import { OrgDetail } from "../../domain/modals/organization";
 import axios from "axios";
 import { GrDocumentUpdate } from "react-icons/gr";
 import Loader from "../loader/loader";
-import { log } from "console";
+
 import { stadim } from "../../domain/modals/stadium";
 
 const UserProfile = () => {
@@ -29,18 +29,15 @@ const UserProfile = () => {
     setIsModalOpen(false)
   }
 
-  // console.log(SetRentalDetails);
   
 
   const userIdFind = JSON.parse(localStorage.getItem("user") as string);
-  console.log(userIdFind.LoginCheck._id);
 
   const id = userIdFind.LoginCheck._id;
 
   const handleFecthOrg = async () => {
     const { data } = await api.post("/org/fetchOrg", { email });
     setData(data.fetchOrg);
-    console.log(data.fetchOrg);
   };
   const handleProfileImageChange = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -60,36 +57,26 @@ const UserProfile = () => {
             "https://api.cloudinary.com/v1_1/dkuqvuhss/image/upload?upload_preset=stadGOimage",
             formData
             );
-          console.log(result.data.secure_url);
           imageUrl.push(result.data.secure_url);
           setUrl(result.data.secure_url);
           updateProfile()
           setLoding(false)
         } catch (error) {
-          console.log(error);
         }
       }
     }
   };
   const updateProfile = async () => {
     if(url&&id){
-      console.log(url,"aa");
-      console.log(id,"aa");
-      console.log("jiiiii");
-      
       const  data  = await api.post("/userProfileImage", { id, url });
       setLoding(true)
 
       if(data){
         
         setImage(data.data.uplodeImg.profileImg);
-        console.log(data.data.uplodeImg);
         
         fetchProfile()
       }
-      setLoding(false)
-      console.log(data.data.uplodeImg.profileImg);
-      console.log(data,"lllll");
     }
   };
   const handleSvgClick = () => {
@@ -103,14 +90,12 @@ const UserProfile = () => {
   const fetchProfile =async () =>{
    const data = await api.post("/fetchProfileImg",{id})
       setImage(data.data.findImg.profileImg)
-      console.log(data.data.findImg.profileImg,"image");
     
   }
   useEffect(()=>{
     const userDetails=async () =>{
   
       const data =await api.post("/fetchUsers",{email})
-      console.log(data.data.userDetail.paymentDetails);
       SetRentalDetails(data.data.userDetail.paymentDetails)
       
     }
@@ -119,18 +104,14 @@ const UserProfile = () => {
 
   const RentedStadium =async (orderId : any) =>{
     const data =await api.post("/fetchUsers",{email})
-    console.log(data.data.userDetail);
     const detail = data.data.userDetail.paymentDetails
      detail.map((item : any)=>{
-      console.log(item.orderId,"",orderId);
       
       if(item.orderId == orderId)
       setRental(data.data.userDetail.paymentDetails)
-    console.log(data.data.userDetail.paymentDetails);
     
   })
   handleModalOpen()
-    console.log(data.data.userDetail.paymentDetails);
     
     
   }

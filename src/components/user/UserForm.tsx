@@ -68,10 +68,8 @@ const UserForm: React.FC = () => {
   //         navigate("/userhome");
   //       }
   //     } catch (error) {
-  //       console.error("Token not found");
   //     }
   //   } else {
-  //     console.log(credentialResponse);
   //   }
   // };
   useEffect(() => {
@@ -109,8 +107,6 @@ const UserForm: React.FC = () => {
         phone !== " " &&
         email !== " "
       ) {
-        console.log("its workinnnnnng");
-        console.log(user);
 
          await apiAuth.post("/userRegister", { ...user });
         handleUserOtp();
@@ -123,7 +119,6 @@ const UserForm: React.FC = () => {
       setUserOtp(true);
        await apiAuth.post("/otp", { ...user });
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -223,7 +218,6 @@ const UserForm: React.FC = () => {
                           type="icon"
                           onSuccess={googleSignup}
                           onError={() => {
-                            console.log("Login Failed");
                           }}
                         />
                       </GoogleOAuthProvider> */}

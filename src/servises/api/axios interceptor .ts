@@ -12,7 +12,6 @@ api.interceptors.request.use(
     const User = JSON.parse(localStorage.getItem("user") as string);
     if (User) {
       const tokens = User.token;
-      console.log(tokens, "rrrrrr");
 
       if (tokens) {
         config.headers["authorization"] = `Bearer ${tokens}`;
@@ -23,7 +22,6 @@ api.interceptors.request.use(
     if (Owner) {
       const ownerTokens = Owner.accessToken;
       
-      console.log("hiiiii");
       if (ownerTokens) {
         config.headers["ownerauthorization"] = `Bearer ${ownerTokens}`;
       }

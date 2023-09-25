@@ -13,69 +13,17 @@ const AdminDashBord = () => {
   const count = async () => {
     const userCount = await apiAuth.get("/admin/fetchUser");
     setUsercount(userCount.data.usersFetch.length);
-    console.log(userCount.data.usersFetch.length, "this is the data");
     const ownerCount = await apiAuth.get("/admin/fetchOwner");
-    console.log(ownerCount.data.ownerFetch.length);
     setOwnercount(ownerCount.data.ownerFetch.length);
-
     const stadiumcount = await apiAuth.get("/stadium/fetchStadiumList");
-    console.log(stadiumcount.data);
-    
     setStadiumCount(stadiumcount.data.fetchList.length);
   };
-
   useEffect(() => {
     count();
   }, []);
 
 
-  // const dataBarHorizontal = {
-  //   type: "bar",
-  //   data: {
-  //     labels: ["January", "February", "March", "April", "May", "June", "July"],
-  //     datasets: [
-  //       {
-  //         label: "Traffic",
-  //         data: [30, 15, 62, 65, 61, 65, 40],
-  //       },
-  //     ],
-  //   },
-  // };
-  // const optionsBarHorizontal = {
-  //   options: {
-  //     indexAxis: "y",
-  //     scales: {
-  //       x: {
-  //         stacked: true,
-  //         grid: {
-  //           display: true,
-  //           borderDash: [2],
-  //           zeroLineColor: "rgba(0,0,0,0)",
-  //           zeroLineBorderDash: [2],
-  //           zeroLineBorderDashOffset: [2],
-  //         },
-  //         ticks: {
-  //           color: "rgba(0,0,0, 0.5)",
-  //         },
-  //       },
-  //       y: {
-  //         stacked: true,
-  //         grid: {
-  //           display: false,
-  //         },
-  //         ticks: {
-  //           color: "rgba(0,0,0, 0.5)",
-  //         },
-  //       },
-  //     },
-  //   },
-  // };
-  // useEffect(() => {
-  //   const chartElement = document.getElementById("bar-chart-horizontal");
-  //   if (chartElement) {
-  //     new Chart(chartElement, dataBarHorizontal, optionsBarHorizontal);
-  //   }
-  // }, []);
+  
   return (
     <div>
       <AdminHome />

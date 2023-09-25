@@ -28,7 +28,6 @@ const UserLogin: React.FC = () => {
     email: "",
     password: "",
   });
-  console.log(userLogin);
 
   useEffect(() => {
     let user = localStorage.getItem("user");
@@ -43,7 +42,6 @@ const UserLogin: React.FC = () => {
   //   if (credential) {
   //     try {
   //       const decode: jwtPaylode = jwt_Decode(credential);
-  //       console.log(decode);
   //       const Guser = {
   //         firstname: decode.name,
   //         lastname: decode.name.split("")[0],
@@ -64,10 +62,8 @@ const UserLogin: React.FC = () => {
   //       } else {
   //       }
   //     } catch (error) {
-  //       console.error("Token not found");
   //     }
   //   } else {
-  //     console.log(credentialResponse);
   //   }
   // };
 
@@ -81,13 +77,11 @@ const UserLogin: React.FC = () => {
     e.preventDefault();
 
     try {
-      console.log("hiiiii");
       
       const { data } = await apiAuth.post("/login", { ...userLogin });
       if (data) {
         const LoginCheck = data.LoginCheck;
         const token = data.accessToken;
-        console.log(data.message);
         if (data.message) {
           if (data.message) genarateError(data.message);
         }
@@ -150,7 +144,6 @@ const UserLogin: React.FC = () => {
                     type="icon"
                     onSuccess={googleLogin}
                     onError={() => {
-                      console.log("Login Failed");
                     }}
                   />
                 </GoogleOAuthProvider>

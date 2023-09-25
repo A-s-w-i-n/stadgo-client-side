@@ -14,20 +14,16 @@ const maxApiCalls = 5;
 
 const fetchingNews = async () => {
   if (apiCalls >= maxApiCalls) {
-    console.log("Reached the maximum number of API calls for today.");
     return;
   }
 
   try {
     const news = await axios.get(`https://gnews.io/api/v4/top-headlines?country=in&category=sports&apikey=${apiKey}`);
-    console.log(news.data);
 setNews(news.data)
     apiCalls++; // Increment the API call counter
   } catch (error) {
-    console.error("Error fetching news:", error);
   }
 };
-console.log(news,"aa");
 
 
 // Schedule the initial API call and set the time interval

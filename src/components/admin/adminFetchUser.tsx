@@ -4,7 +4,7 @@ import AdminHome from "./adminHome";
 import { userData } from "../../domain/modals/userData";
 
 const AdminFetchUser: React.FC = () => {
-  const itemPerpage = 8;
+  const itemPerpage = 5;
   const [userData, setStudetData] = useState<userData[]>([]);
   const [currentPage, setCurrentpage] = useState<number>(1);
 
@@ -16,8 +16,6 @@ const AdminFetchUser: React.FC = () => {
 
     try {
       const userBlock = await apiAuth.post("/admin/blockUser", { id });
-
-      console.log(userBlock);
     } catch (error) {}
   };
   const handleUserUnblock = async (
@@ -25,19 +23,15 @@ const AdminFetchUser: React.FC = () => {
     id: string
   ) => {
     e.preventDefault();
-
     try {
       const UserUnblock = await apiAuth.post("/admin/unBlockUser", { id });
 
-      console.log(UserUnblock);
     } catch (error) {}
   };
   useEffect(() => {
     apiAuth
       .get("/admin/fetchUser")
       .then((fetchUser) => {
-        console.log("fdsfsdfdsf");
-        console.log(fetchUser.data, "this is the data");
         setStudetData(fetchUser.data.usersFetch);
       })
       .catch(() => {});

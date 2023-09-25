@@ -26,20 +26,16 @@ const Chat = (props: role) => {
   };
   // const [chat, setChat] = useState("");
   const [message, setMessage] = useState<message[]>([]);
-  const [initialChat,setInitialChat] = useState<any>()
+  const [initialChat, setInitialChat] = useState<any>();
   const [chats, setChats] = useState<Chats[]>([]);
   const { userId, username } = useSelector((state: any) => state.user);
   const { ownerId } = useSelector((state: any) => state.owner);
-  console.log(ownerId);
-
-  console.log(username);
 
   // const [username, setUsername] = useState("");
   const [ownername, setOwnername] = useState("");
   const navigate = useNavigate();
   const [selectedOwnerId, setSelectedOwnerId] = useState(null);
   const [notifiactionStatus, setNotificationStatus] = useState();
-
 
   const [chatId, setChatId] = useState("");
   const [unreadMessages, setUnreadMessages] = useState<{
@@ -53,11 +49,6 @@ const Chat = (props: role) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loding, setLoding] = useState(false);
   const { stadiumid } = useParams();
-  console.log(chatId, "chatId");
-  console.log(ownerId, "aa");
-
-  console.log(selectUser);
-  console.log(ownername);
 
   useEffect(() => {
     socket.emit("setup", currentId);
@@ -65,7 +56,6 @@ const Chat = (props: role) => {
 
   const setMessageFn = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessages(e.target.value);
-    console.log("kkkkkkkkkkkkkkkkkkkk", newMessage);
   };
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -77,55 +67,42 @@ const Chat = (props: role) => {
         const data = await apiAuth.get(`/chat/userChat/${userId}`);
 
         setChats(data.data.allChats);
-        console.log(data.data.allChats, "userchat");
 
-        // chats.map( (item : any)=>{ 
+        // chats.map( (item : any)=>{
         //   console.log("hiii");
-          
+
         //  if(ownerId == item?.Owner?._id && userId == item.User ) {
         //    const chatId = item._id
         //    console.log(chatId,"ssssssssssssssssssssssssss");
 
         //     apiAuth.get(`/message/${chatId}`).then((data)=>{
-        //       console.log(data.data.messages); 
-        //       setMessage(data.data.messages)     
-        //    });  
+        //       console.log(data.data.messages);
+        //       setMessage(data.data.messages)
+        //    });
         //  }
         // })
-       
-
-       
-      } else { 
-
+      } else {
         const data = await apiAuth.get(`/chat/ownerChat/${ownerId}`);
         setChats(data.data.allChats);
-        console.log(data.data.allChats, "ownerChats");
       }
       // const chatId =
       // const data = api.post('/message',{})
     };
     fetch();
   }, []);
-  useEffect(()=>{
-     chats.map( (item : any)=>{ 
-          console.log("hiii");
-          
-         if(ownerId == item?.Owner?._id && userId == item.User ) {
-           const chatId = item._id
-           console.log(chatId,"ssssssssssssssssssssssssss");
+  useEffect(() => {
+    chats.map((item: any) => {
+      if (ownerId == item?.Owner?._id && userId == item.User) {
+        const chatId = item._id;
 
-            apiAuth.get(`/message/${chatId}`).then((data)=>{
-              console.log(data.data.messages); 
-            setMessage(data.data.messages) 
-            })
-          }
-
-           }); 
-  },[chats])
-
+        apiAuth.get(`/message/${chatId}`).then((data) => {
+          setMessage(data.data.messages);
+        });
+      }
+    });
+  }, [chats]);
 
   // const initialChat =  () =>{
-  
 
   const filteredChats = chats.filter((chat: any) => {
     const ownerName = chat.Owner?.ownername || "";
@@ -137,7 +114,6 @@ const Chat = (props: role) => {
   });
 
   const handleSendNotification = async () => {
-
     setLoding(true);
     const data = await api.post("/notification/create", {
       username,
@@ -146,7 +122,6 @@ const Chat = (props: role) => {
       stadiumid,
     });
     findStatus();
-    console.log(data);
   };
   const findStatus = async () => {
     const data = await api.post("/notification/userNotification", {
@@ -154,7 +129,6 @@ const Chat = (props: role) => {
       userId,
       stadiumid,
     });
-    // console.log(data.data.find?.request, "a");
     setNotificationStatus(data.data.find?.request);
 
     if (notifiactionStatus == true) {
@@ -167,16 +141,7 @@ const Chat = (props: role) => {
 
   useEffect(() => {
     socket.on("message Received", (newMessage: message) => {
-      console.log("got a new messageeeeeeeeeeeeeeee", newMessage);
-      console.log("ddddddddddd=", newMessage.User);
-      console.log("ddddddddddd=", newMessage.Owner);
-
       if (chatId !== newMessage.chat?._id) {
-        
-        console.log("chatIddddd===", chatId);
-        console.log("newMessage.chat?._id=======", newMessage.chat?._id);
-
-        // console.log(`message from ${newMessage.user}${newMessage.owner}`);
       } else {
         setMessage([...message, newMessage]);
       }
@@ -184,7 +149,6 @@ const Chat = (props: role) => {
   }, [socket, message]);
 
   const handleMessageFetch = async (chatId: string) => {
-    console.log(chatId, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     setLoding(true);
     const { data } = await apiAuth.get(`/message/${chatId}`);
     data.messages.forEach((message: { createdAt: string | number | Date }) => {
@@ -196,13 +160,9 @@ const Chat = (props: role) => {
         .getMinutes()
         .toString()
         .padStart(2, "0")}`;
-      console.log(formattedTime);
       message.createdAt = formattedTime;
     });
-    console.log(
-      data.messages,
-      "vvvvvccccccccccccccccccccccccccccccccccccccccccccccccccc"
-    );
+
     setMessage(data.messages);
 
     socket.emit("join-chat", chatId);
@@ -232,34 +192,28 @@ const Chat = (props: role) => {
   };
 
   const handleMessageSend = async () => {
-    console.log("neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-
     if (newMessage.trim().length > 0) {
       const result = await sendMessgae(newMessage, chatId, currentId);
       setNewMessages("");
       moveChatToTop(chatId);
       socket?.emit("newMessage", result.msg);
-      console.log(result, "mkkkkkkkkkkkkkkkkkkkkkkk");
       setMessage([...message, result.msg]);
     }
   };
 
-  // useEffect(() => {}, [message]);
-  // console.log(message);
-
   return (
-    <div className="h-[41rem]  flex flex-col">
+    <div className="h-[41rem]   flex flex-col">
       {loding && <Loader />}
       {props.role === "user" ? <UserNav /> : <OwnerNav />}
 
-      <div className="mt-32   w-full">
+      <div className="mt-32    w-full">
         <div className="container mx-auto   mt-[-128px]">
           <div className="fixed ml-4 h-[36rem]  w-[78rem]">
             <div className="flex border border-gray-300  rounded shadow-lg h-full">
               {/* Left */}
-              <div className="w-1/3 border flex flex-col">
+              <div className="lg:w-1/3 md:w-1/6 sm:w-1/12 border  flex flex-col">
                 {/* Header */}
-                <div className="py-2 px-3  bg-gray-200 flex flex-row justify-between items-center">
+                <div className=" py-2 px-3  bg-gray-200  flex flex-row justify-between items-center">
                   <div className="flex"></div>
                 </div>
 
@@ -275,16 +229,15 @@ const Chat = (props: role) => {
                 </div>
 
                 {/* Contacts */}
-                <div className="bg-gray-300 overflow-auto   flex-1">
+                <div className="lg:w-full bg-gray-300  overflow-auto  flex-1 ">
                   {props.role === "user"
                     ? filteredChats?.map((item: any) => (
                         <div>
                           <div
-                            className={`flex w-full  bg-slate-100 hover:bg-slate-300 list-none mt-4 h-14  border ${
+                            className={`flex w-full  bg-slate-100 hover:bg-slate-300 list-none mt-1 h-14  border ${
                               unreadMessages[item._id] ? "unread-chat" : ""
                             }`}
                           >
-                            <div className="flex  w-8 h-8 mt-3 ml-1 border  border-black rounded-full  "></div>
                             <li
                               className=" w-[14rem]  h-full"
                               key={item._id}
@@ -297,19 +250,32 @@ const Chat = (props: role) => {
                                 setOwnername(item.Owner);
                               }}
                             >
-                              <div className="flex font-extrabold   font-serif  ml-6">
-                                {item.Owner?.ownername}
+                              <div className="flex w-[25rem] h-full">
+                                <div className="flex  w-8 h-8 mt-3 ml-1 border border-black rounded-full">
+                                  <img
+                                    className="rounded-2xl w-full object-cover"
+                                    src="/mainImages/default profile image.jpg"
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="flex flex-col ml-5">
+                                  <div className="flex  font-extrabold font-serif">
+                                    {item.Owner?.ownername}
+                                  </div>
+                                  <div className="mt-auto">
+                                    <span className="h-5 w-10  font-thin text-xs text-slate-600">
+                                      {item.latestMessage?.content}
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
-                              <span className="felx mt-4 ml-6  font-thin text-xs text-slate-600">
-                                {item.latestMessage?.content}
-                              </span>
                             </li>
                           </div>
                         </div>
                       ))
                     : filteredChatsUser?.map((item: any) => (
                         <div>
-                          <div className="flex w-full  bg-slate-100 hover:bg-slate-300 list-none mt-4 h-14  border">
+                          <div className="flex w-full  bg-slate-100 hover:bg-slate-300 list-none mt-1 h-14  border">
                             <div
                               className="flex w-full h-10"
                               key={item._id}
@@ -327,12 +293,15 @@ const Chat = (props: role) => {
                                 />
                               </div>
 
-                              <div className="flex font-extrabold h-7  font-serif ml-6  ">
-                                {item.User?.username}
-                              </div>
-
-                              <div className="flex mt-8 w-[6rem] font-thin text-xs text-slate-600 ">
-                                {item.latestMessage?.content}
+                              <div className="flex flex-col ml-5">
+                                <div className="flex  font-extrabold font-serif">
+                                  {item.User?.username}
+                                </div>
+                                <div className="mt-auto">
+                                  <span className="h-5 w-10  font-thin text-xs text-slate-600">
+                                    {item.latestMessage?.content}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -367,11 +336,9 @@ const Chat = (props: role) => {
               </div>
 
               {/* Right */}
-              <div className="w-2/3 border flex flex-col">
+              <div className="lg:w-2/3 md:w-2/4 sm:w-2/12 border flex flex-col">
                 {/* Header */}
                 <div className="py-2 px-3 bg-gray-200 flex flex-row justify-between items-center">
-            
-
                   <div className="flex"></div>
                 </div>
 
@@ -397,7 +364,7 @@ const Chat = (props: role) => {
                           <div>
                             <p>{item?.content}</p>
                           </div>
-                          <p className="text-xs text-end">{item.createdAt}</p>
+                          <p className="text-[.5rem] text-end">{item.createdAt}</p>
                         </div>
                       </div>
                     ))}
@@ -407,20 +374,24 @@ const Chat = (props: role) => {
                     {message.map((item, index) => (
                       <div
                         key={index}
-                        className={`flex items-center mb-4 mx-7 ${
+                        className={`flex   items-center mb-4 mx-7 ${
                           item.Owner ? "justify-end" : "justify-start"
                         }`}
                       >
                         <div
-                          className={`bg-slate-400 rounded-lg p-2 ${
-                            item.Owner ? "text-left" : "text-right"
+                          className={`bg-slate-400  rounded-t-sm  rounded-lg p-2 ${
+                            item.Owner
+                              ? "text-left  rounded-tl-lg"
+                              : "text-right bg-gray-800 rounded-tr-lg"
                           }`}
                           style={{ maxWidth: "80%" }} // Limit the width of the chat bubble
                         >
                           <div>
-                            <p>{item?.content}</p>
+                            <p className="text-white">{item?.content}</p>
                           </div>
-                          <p className="text-xs text-end">{item.createdAt}</p>
+                          <p className="text-xs text-end text-white">
+                            {item.createdAt}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -441,7 +412,7 @@ const Chat = (props: role) => {
                     />
                   </div>
                   <div
-                    className="bg-blue-500 text-white px-3 py-3 rounded-lg"
+                    className="bg-black text-white px-3 py-3 rounded-lg"
                     onClick={handleMessageSend}
                   >
                     <AiOutlineSend />

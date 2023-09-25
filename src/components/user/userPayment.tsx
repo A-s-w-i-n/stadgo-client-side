@@ -14,7 +14,7 @@ interface UserPremiumProps {
 const userIdFind = JSON.parse(localStorage.getItem("user") as string);
 
 const userId = userIdFind?.LoginCheck._id;
-console.log(userId);
+
 
 
 const UserPayment = () => {
@@ -26,7 +26,7 @@ const UserPayment = () => {
   const [showDateInput, setShowDateInput] = useState(false);
   const [owner, setOwner] = useState<any>("");
   const [checked, setChecked] = useState(false);
-  console.log(ownerId);
+  
 
   const { ownerid, id } = useParams();
 
@@ -36,7 +36,7 @@ const UserPayment = () => {
 
   const handleChange = (e:any) => {
     setChecked(e.target.checked);
-    console.log(e.target.checked);
+
     if (!e.target.checked) {
       setShowDateInput(false); 
     }
@@ -54,7 +54,6 @@ const UserPayment = () => {
 };
   const handleDateSelection = async () => {
     if (startDate && endDate) {
-      console.log(startDate,"",endDate);
       const selectedStartDate = new Date(startDate);
       const selectedEndDate = new Date(endDate);
 
@@ -78,7 +77,6 @@ const UserPayment = () => {
   useEffect(() => {
     const ownerDetails = async () => {
       const data = await api.post("/owner/fetchOwnerById", { ownerid });
-      console.log(data.data.fetch);
       setOwner(data.data.fetch[0]);
     };
     ownerDetails();
@@ -86,9 +84,8 @@ const UserPayment = () => {
 
   useEffect(() => {
     const stadiumDetails = async () => {
-      console.log("hiiiiiiiiiiiiiii");
       const data = await api.post("/stadium/detaildView", { id });
-      console.log(data.data.fetchDetails);
+      
       setStadium(data.data.fetchDetails);
     };
     stadiumDetails();
@@ -230,21 +227,19 @@ const UserPayment = () => {
 
                                 .capture()
                                 .then(async function () {
-                                  console.log(data);
-                                  console.log(stadium, "hhh");
+                                
 
                                   const orderId = data?.orderID;
                                   const stadiumId = stadium?._id;
                                   const stadiumPrice = stadium?.price;
                                   const date = new Date().toLocaleString();
-                                  console.log(date);
+                                 
 
                                   const emailId = JSON.parse(
                                     localStorage.getItem("user") as string
                                   );
                                   const email = emailId.LoginCheck.email;
-                                  console.log(startDate,"",endDate);
-                                  console.log(userId);
+                                 
                                   
                                   const update = await api.post(
                                     "/userPayment",
@@ -259,7 +254,7 @@ const UserPayment = () => {
                                       endDate
                                     }
                                   );
-                                  console.log(update);
+                                 
                                   const ownerUpdate = await api.post(
                                     "/owner/ownerPayment",
                                     {
@@ -273,12 +268,12 @@ const UserPayment = () => {
                                       endDate
                                     }
                                   );
-                                  console.log(ownerUpdate);
+                                 
                                   const changeStatus = await api.post(
                                     "/notification/updateStatusByUser",
                                     { ownerId, userId }
                                   );
-                                  console.log(changeStatus);
+                              
 
                                   if (update) {
                                     toast.success("payment completed", {

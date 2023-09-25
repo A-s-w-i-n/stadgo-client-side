@@ -9,8 +9,6 @@ const OwnerProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [incomeDetails,setIncomeDetails] = useState(true)
   const owner = JSON.parse(localStorage.getItem("owner") as string);
-  console.log(owner);
-  console.log(setIncomeDetails);
   
 
   const check = owner.OwnerLoginCheck;
@@ -26,7 +24,6 @@ const OwnerProfile = () => {
   const handleFetchStadium = async () => {
     const { data } = await api.post("/stadium/fetchStadium", { email });
     setStadiumDetail(data.fetchStadiumData[0]);
-    console.log(data.fetchStadiumData, "aaa");
   };
   useEffect(() => {
     handleFetchStadium();

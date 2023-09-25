@@ -28,14 +28,12 @@ const OwnerLogin: React.FC = () => {
     e.preventDefault();
 
     try {
-      console.log("hii");
       
       const { data } = await apiAuth.post("/owner/ownerLogin", {
         ...ownerLogin,
       });
 
       if (data) {
-        console.log(data.ownerLoginCheck, "sfd");
         const OwnerLoginCheck = data.ownerLoginCheck;
         const accessToken = data.accessToken;
 

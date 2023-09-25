@@ -3,6 +3,7 @@ import AWS from "aws-sdk";
 import api from "../../servises/api/axios interceptor ";
 // import { useNavigate } from "react-router-dom";
 import { stadim } from "../../domain/modals/stadium";
+import { ToastContainer, toast } from "react-toastify";
 import OwnerNav from "../navbar/ownerNav";
 import Loader from "../loader/loader";
 
@@ -25,7 +26,6 @@ const VideoUpload = () => {
    
     if (e.target.files && e.target.files.length>0 ) {
       setLoding(true)
-      console.log("jiii");
       
       setSelectedFile(e.target.files[0]);
       setLoding(false)
@@ -34,7 +34,6 @@ const VideoUpload = () => {
   };
 
   const uploadVideoToS3 = async (file: File) => {
-    console.log("working");
     
     const s3 = new AWS.S3({
       accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -51,14 +50,11 @@ const VideoUpload = () => {
     try {
       setLoding(true)
       const response = await s3.upload(params ).promise();
-      console.log("File uploaded:", response.Location);
       setVideoUplode(response.Location);
       setLoding(false)
     } catch (error) {
-      console.error("Error uploading file:", error);
     }
   };
-console.log(selectedFile);
 
   const handleUpload = () => {
     if (selectedFile) {
@@ -67,7 +63,10 @@ console.log(selectedFile);
         uploadVideoToS3(selectedFile);
         setLoding(true)
       }else{
-        console.log("Selected file is not a valid video");
+        toast.success("Upload video formate", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         
       }
     }
@@ -81,11 +80,9 @@ console.log(selectedFile);
 
     
       api.post("/stadium/fetchStadium", { email }).then((result) => {
-        console.log(result.data.fetchStadiumData[0]._id);
 
         setStadiumInfo(result.data.fetchStadiumData);
         // setLoding(false)
-        // console.log(stadiumInfo[0].video);
     });
   
 
@@ -118,24 +115,23 @@ useEffect(()=>{
     <div>
       {loding&&<Loader/>}
       <OwnerNav />
-      <div>
+      <ToastContainer />
+      <div className="">
         {stadiumInfo.map((item) => (
-          <div className="flex w-full h-full  ">
-            <div className="  w-[30rem] ml-[6rem]      rounded overflow-hidden shadow-lg">
+          <div  className="flex w-full h-full   ">
+            <div className="  w-full     rounded ">
+              <div className="lg:flex gap-3 h-[36rem] md:grid">
+              <div className="flex">
               <img
                 className="w-full rounded-2xl"
                 src={item.image[0]}
                 alt="Sunset in the mountains"
               />
-              <video
-                className="grid w-full rounded-2xl mt-9"
-                controls
-                width="400"
-                src={item.video}
-                />
-                </div>
-<div className="flex">
-              <div className="flex justify-betwee items-center    px-6 py-4">
+              
+
+              </div>
+              <div className="lg:flex md:grid">
+              <div className="lg:flex justify-betwee items-center    px-6 py-4 md:grid">
                 <div className="font-bold  text-xl text-center mb-2">
                   {item.stadiumname}
               <div className=" items-center justify-center px-6 pt-4 pb-5">
@@ -143,12 +139,24 @@ useEffect(()=>{
                   className="bg-cyan-400  px-3 py-2 rounded-2xl"
                   onClick={openUplodeVideoModal}
                 >
-                  UPLOADE
+                  UPLOAD
                 </button>
               </div>
                 </div>
               </div>
               </div>
+              <div className="flex ">
+              <video
+                className="object-cover w-full rounded-2xl"
+                controls
+                width="400"
+                height="400"
+                src={item.video}
+                />
+                </div>
+                </div>
+                </div>
+
           </div>
         ))}
         {uplodeVideoModal && (

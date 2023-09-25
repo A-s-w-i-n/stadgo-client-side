@@ -20,7 +20,6 @@ const UserNav = () => {
   };
 
   const {stadiumId} =  useSelector((state : any)=>state.user)
-  console.log(stadiumId,"aa");
   
   const handleLogout = () => {
     localStorage.removeItem("user");

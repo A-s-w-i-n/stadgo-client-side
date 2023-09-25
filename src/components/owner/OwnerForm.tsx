@@ -19,12 +19,10 @@ const OwnerForm: React.FC = () => {
     password: "",
     location: "",
   });
-  console.log(setResendDisabled);
 
   const addOwner = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOwner({ ...owner, [e.target.name]: e.target.value });
   };
-  console.log(resendDisabled);
 
   const handleOwnerSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,8 +38,6 @@ const OwnerForm: React.FC = () => {
         location,
         password,
       } = owner;
-      console.log(owner);
-      console.log("heloooooooooooooo");
 
       if (
         firstname !== " " &&

@@ -16,7 +16,6 @@ const UserSatdiumList = () => {
   const [filteredStadiums, setFilteredStadiums] =
     useState<stadim[]>(stadiumData);
   const navigate = useNavigate();
-  console.log(selectedFilter);
   
 
   const fetchStadium = () => {
@@ -46,16 +45,13 @@ const UserSatdiumList = () => {
     }else{
       const stadiumlocationFilter = await api.post('/stadium/stadiumLocationFilter',{location})
       setFilteredStadiums(stadiumlocationFilter.data.filter)
-      console.log(stadiumlocationFilter.data.filter);
     }
   };
 
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const filter = e.target.selectedOptions;
-    console.log(filter);
 
     if (filter[0].value == "option1") {
-      console.log(filter[0].value);
 
       fetchStadium();
     } else {
@@ -69,11 +65,9 @@ const UserSatdiumList = () => {
         secondValue,
       });
       setFilteredStadiums(filterdata.data.filter);
-      console.log(filterdata.data.filter);
     }
   };
 
-  // console.log(filter[0].value);
 
   return (
     <div className=''>

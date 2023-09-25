@@ -76,8 +76,7 @@ const OnwerstadiumList = () => {
     api
       .post("/stadium/fetchStadium", { email })
       .then((fetchStadium) => {
-        console.log(fetchStadium.data.fetchStadiumData[0],"gggggggggggggggggggggggg");
-        console.log(fetchStadium.data.fetchStadiumData[0]._id,"gggggggggggggggggggggggg");
+       
         setStadiumData(fetchStadium.data.fetchStadiumData);
         setEditStadiumName(fetchStadium.data.fetchStadiumData.stadiumname);
         setSportsType(fetchStadium.data.fetchStadiumData.sportstype);

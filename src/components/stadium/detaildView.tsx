@@ -53,13 +53,10 @@ const DetaildView: React.FC = () => {
   
   const ownerId = carosal?._id
   const ownerid =carosal?.id
-  console.log(userId," ",ownerid);
   useEffect(() => {
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
         setCarosal(result.data.fetchDetails);
-        console.log(result.data.fetchDetails);
-        console.log(result.data.fetchDetails._id);
         setLoding(false)
         dispatch(ownerLogged({
           ownerId :result.data.fetchDetails.id,
@@ -72,11 +69,9 @@ const DetaildView: React.FC = () => {
   }, []);
   const ownerUserInfo = async () =>{
  
-    console.log(ownerid,'ffff');
     
       if(ownerid&&userId){
       const userInfos =await api.post('/owner/userList',{userId,ownerid})
-      console.log(userInfos);
       
     }
     
@@ -84,7 +79,6 @@ const DetaildView: React.FC = () => {
   const existChatRoom =async () =>{
     if(ownerid && userId){ 
        const data = await api.post('/chat/chatRoomExist',{userId,ownerid})
-       console.log(data.data.exist);
        
        setChatExist(data.data.exist)
   
@@ -94,7 +88,6 @@ const DetaildView: React.FC = () => {
     const createChat =async () => {
       if(ownerid&&userId){
 
-        console.log(ownerid,"aaaa");
         
         const data =  await api.post("/chat/accessChat", { ownerid, userId })
         if (data) {
@@ -143,7 +136,6 @@ const DetaildView: React.FC = () => {
 
   // const fullLocation = `${carosal?.stadiumname} ${carosal?.location}`
   // const fullLocation = " eden gardens kolkata west bengal "
-  // console.log(fullLocation);
 
   // useEffect(()=>{
 
@@ -152,7 +144,6 @@ const DetaildView: React.FC = () => {
   //   geoCoder.geocode({address :fullLocation},(result,status)=>{
   //     if(status === "OK" && result!.length>0){
   //       const location  = result![0].geometry.location
-  //       console.log(location);
         
   //       const latitude =location.lat()
   //       const longitude = location.lng()
@@ -160,7 +151,6 @@ const DetaildView: React.FC = () => {
   //     }
   //   })
   // },[])
-  // console.log(stadiumLatLng);
 
   
   
@@ -169,8 +159,8 @@ const DetaildView: React.FC = () => {
     <div className="">
       {loding&&<Loader/>}
     <UserNav />
-    <div className="flex w-full space-x-4 mt-8">
-      <div className="flex-1">
+    <div className="lg:flex md:flex sm:grid  w-full space-x-4 mt-8">
+      <div className="flex-1 ">
      
         {image && image.length>0 && (
           <Slider {...settings}>
@@ -202,8 +192,8 @@ const DetaildView: React.FC = () => {
           </Slider>
         )}
       </div>
-      <div className="flex-1">
-        <video className="w-full h-[26rem] rounded-md" controls autoPlay src={carosal?.video} />
+      <div className="flex-1 ">
+        <video className="w-full   object-cover h-[26rem] rounded-md" controls autoPlay src={carosal?.video} />
       </div>
     </div>
     <div className="bg-gray-100 p-4 rounded-lg mt-8 text-center">

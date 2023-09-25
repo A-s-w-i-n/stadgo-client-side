@@ -21,7 +21,6 @@ const UserHome: React.FC = () => {
   // };
   const emaiId = JSON.parse(localStorage.getItem("user") as string);
   const email = emaiId.LoginCheck.email;
-  console.log(email);
 
   const handleFetchUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,10 +46,8 @@ const UserHome: React.FC = () => {
   // }, []);
 
   const handleUserOrgCheck = async () => {
-    console.log("hiii");
 
     const { data } = await api.post("/org/fetchOrg", { email });
-    console.log(data);
 
     if (data.fetchOrg == null) {
       navigate("/orgDetail");
@@ -64,12 +61,12 @@ const UserHome: React.FC = () => {
       <form onSubmit={handleFetchUser}>
         <div>
           <div>
-            <div>
+            <div className="lg:w-full md:w-1/2 sm:w-2/3  ">
               <MainPagenav />
             </div>
-            <div className="h-screen flex  justify-center">
-              <div className="w-1/2  flex  items-center` justify-center">
-                <div className="mt-20 w-full ">
+            <div className="lg:h-screen  lg:w-full  md:flex  md:w-[44rem] sm:grid      justify-center">
+              <div className="lg:w-1/2   lg:flex md:flex md:1/4     items-center` justify-center">
+                <div className="lg:w-full  lg:mt-20 sm:mt-10   md:flex-col ">
                   <img
                     className=" w-full object-cover"
                     src="/mainImages/userHome.png"
@@ -77,22 +74,22 @@ const UserHome: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="w-1/2 h-screen flex ml-10  items-center">
-                <div className="">
-                  <p className="font-serif text-5xl">WELCOME TO STAD GO</p>
-                  <p className="ml-2 mt-3">EXPLORE THE STADIUM’S </p>
-                </div>
-
-                <div className="absolute bottom-48 mb-30">
+              <div className="lg:w-1/2 lg:h-screen grid  sm:w-2/3     items-center">
+                <div className=" w-[40rem] h-30 lg:mt-24   sm:mt-1" >
+                  <p className="font-serif object-cover md:text-3xl lg:ml-0 md:ml-0 sm:ml-10 lg:text-5xl sm:text-5xl">WELCOME TO STAD GO</p>
+                  <p className="ml-2 mt-3 lg:ml-0 md:ml-0 sm:ml-10">EXPLORE THE STADIUM’S </p>
                   <button
-                    className="rounded-full fixed bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  bottom-9 font-serif  text-lg"
+                    className="rounded-full bg-black mt-4 px-6 py-3 lg:ml-0 md:ml-0 sm:ml-10 bottom-9 font-serif  text-lg"
                     onClick={handleUserOrgCheck}
                   >
                     {/* {checkDetail ?  */}
-                    Explore
+                   <p className="text-white"> Explore</p> 
                     {/* : "Buy Premium"} {""} */}
                   </button>
                 </div>
+
+                
+               
               </div>
             </div>
           </div>

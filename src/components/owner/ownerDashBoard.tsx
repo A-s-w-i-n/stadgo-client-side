@@ -6,7 +6,10 @@ import { MdOutlineStadium } from "react-icons/md";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { BsGraphUpArrow } from "react-icons/bs";
 import api from "../../servises/api/axios interceptor ";
+import {AiOutlineArrowLeft} from 'react-icons/ai'
+import {AiOutlineArrowRight} from 'react-icons/ai'
 import { useSelector } from "react-redux";
+import { count } from "console";
 
 interface userinfos {
   username: string;
@@ -15,6 +18,8 @@ interface userinfos {
 }
 const OwnerDashBoard = () => {
   const [userinfo, setUserInfo] = useState<userinfos[]>([]);
+  const [pagination,setPagination] = useState<number>(0)
+  const [counts,setCounts] = useState<any>([])
   const [price,totalPrice] = useState()
   const [userDetail,setUserDetail] = useState<any>()
   const [userDetails,showUserDetails] = useState<boolean>(true)
@@ -26,18 +31,27 @@ const OwnerDashBoard = () => {
   const { stadiumId } = useSelector((state: any) => state.owner);
 
   const id = stadiumId;
-  console.log(id, "aaaa");
 
-  const fetchOwnerById = async () => {
-    const { data } = await api.post("/owner/fetchOwner", { email });
-    setUserInfo(data.ownerDetail[0].User);
+  const fetchOwnerById = async (item :any) => {
+    const { data } = await api.post("/owner/fetchOwner", { email,item });
+    console.log(data.ownerDetail.totalCount);
+    setPagination(data.ownerDetail.totalCount)
+
+    let count = []
+    for (let i=1;i<=pagination;i++){
+      count.push(i)
+    }
+    console.log(count);
+    setCounts(count)
     
-    setOnwerInfo(data.ownerDetail[0].paymentDetails);
-    console.log(data.ownerDetail[0].paymentDetails);
-    const paymentDetails = data.ownerDetail[0].paymentDetails
+    
+
+    setUserInfo(data.ownerDetail.result[0].User);
+    
+    setOnwerInfo(data.ownerDetail.result[0].paymentDetails);
+    const paymentDetails = data.ownerDetail.result[0].paymentDetails
 
     const objectCount = paymentDetails.length
-    console.log(objectCount,"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
     setObjectCounts(objectCount)
     
     const totalStadiumPrice = paymentDetails.reduce(
@@ -50,15 +64,11 @@ const OwnerDashBoard = () => {
     );
     totalPrice(totalStadiumPrice)
 
-    console.log(data.ownerDetail[0].paymentDetails, "aaaa");
 
-    console.log(data);
   };
   useEffect(() => {
     const stadium = async () => {
-      console.log("hii");
       const data = await api.post("/stadium/detaildView", { id });
-      console.log(data.data);
     };
     stadium();
   }, []);
@@ -66,14 +76,11 @@ const OwnerDashBoard = () => {
   const  fetchUserPayment =async(id  : any) =>{
     const fetch = await api.post('/fetchProfileImg',{id})
     showUserDetails(false)
-    console.log(fetch.data);
-    
     setUserDetail(fetch.data.findImg)
-    
   }
 
   useEffect(() => {
-    fetchOwnerById();
+    fetchOwnerById(1);
   }, []);
 
   return (
@@ -81,15 +88,15 @@ const OwnerDashBoard = () => {
       <div>
         <OwnerNav />
 
-        <div className="   overflow-auto grid grid-cols-2 h- gap-6 ">
-          <div className="flex w-full  h-[17.2rem]">
+        <div className="overflow-auto lg:grid grid-cols-2 sm:grid md:grid  h- gap-6 ">
+          <div className="flex w-full   h-[17.2rem]">
             <p className="text-6xl">
               <GiClick />
             </p>
-            <div className="w-full  h-[17.2rem]">
+            <div className="w-full   h-[17.2rem]">
               <div className="relative  border border-black  overflow-scroll h-[17.2rem]  overflow-x-auto">
-                <table className="w-full  text-sm text-left text-white-500 dark:text-gray-400">
-                  <thead className="text-xs  text-gray-700 uppercase  dark:bg-white dark:text-black-400">
+                <table className="w-full  text-sm text-left  text-white-500 dark:text-gray-400">
+                  <thead className="text-xs  text-gray-700 uppercase   dark:bg-white dark:text-black-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
                         User Name
@@ -119,6 +126,40 @@ const OwnerDashBoard = () => {
                         </td>
                       </tr>
                     ))}
+                    <nav>
+  <ul className="flex">
+    
+    
+    {/* <li>
+      <a
+        className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+        href=""
+        aria-label="Previous"
+      >
+        <span className="material-icons text-sm"><AiOutlineArrowLeft/></span>
+      </a>
+    </li> */}
+    {counts.map((item : any)=>(
+      <li>
+      <a
+        // className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+        href="#"
+       onClick={()=>fetchOwnerById(item)} >
+       
+      </a>
+    </li>
+      ))}
+    {/* <li>
+      <a
+        className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+        href="#"
+        aria-label="Next"
+      >
+        <span className="material-icons text-sm"><AiOutlineArrowRight/></span>
+      </a>
+    </li> */}
+  </ul>
+</nav>
                   </tbody>
                 </table>
               </div>

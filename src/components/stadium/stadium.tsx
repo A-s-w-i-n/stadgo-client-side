@@ -37,15 +37,12 @@ const Stadium = () => {
             "https://api.cloudinary.com/v1_1/dkuqvuhss/image/upload?upload_preset=stadGOimage",
             formData
           );
-          console.log(result.data.secure_url);
 
-          console.log("hiiiii");
 
           imageUrl.push(result.data.secure_url);
 
           setStadium({ ...stadium, image: imageUrl });
         } catch (error) {
-          console.log(error);
         }
       }
     }
@@ -69,7 +66,6 @@ const Stadium = () => {
           discription,
           location,
         } = stadium;
-        console.log(stadium);
 
         if (
           stadiumname !== "" &&
@@ -84,7 +80,6 @@ const Stadium = () => {
         ) {
           const emialId = JSON.parse(localStorage.getItem("owner") as string);
           const email = emialId.OwnerLoginCheck.email;
-          console.log(email);
 
           const id = emialId.OwnerLoginCheck._id;
 

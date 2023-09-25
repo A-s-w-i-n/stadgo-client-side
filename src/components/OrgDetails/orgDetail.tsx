@@ -31,7 +31,6 @@ const OrgDetails: React.FC = () => {
         const emailId = JSON.parse(localStorage.getItem("user") as string);
         const email = emailId.LoginCheck.email;
         // const userId = emailId.LoginCheck._id;
-        console.log(emailId.LoginCheck.email);
         const { data } = await api.post("/org/orgDetails", {
           ...orgDetail,
           email,

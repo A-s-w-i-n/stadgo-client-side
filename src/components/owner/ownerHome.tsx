@@ -16,7 +16,6 @@ const OwnerHome = () => {
   const userEmail = JSON.parse(localStorage.getItem("owner") as string);
   const emailId = userEmail.OwnerLoginCheck;
   const email = emailId.email;
-  console.log(email);
 
  
 
@@ -33,8 +32,7 @@ const OwnerHome = () => {
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
     const { data } = await api.post("/stadium/fetchStadium", { email });
-    console.log(data.fetchStadiumData
-      );
+   
     
     // if (detailsCheck) {
       // setOnwerPrimium(false);
@@ -50,7 +48,6 @@ const OwnerHome = () => {
 
     try {
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -59,7 +56,6 @@ const OwnerHome = () => {
       .post("/owner/fetchOwner", { email })
       .then((fetchData) => {
         // setDetailsCheck(fetchData.data.ownerDetail.premium);
-        console.log(fetchData.data, "fetch");
       })
       .catch(() => {});
   }, []);

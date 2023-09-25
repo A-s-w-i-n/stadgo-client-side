@@ -13,9 +13,7 @@ const UserPremium: React.FC <UserPremiumProps>= ({stadium})  => {
   const navigate = useNavigate();
   const { ownerId } = useSelector((state: any) => state.owner);
    
-  console.log(ownerId);
   const userIdFind = JSON.parse(localStorage.getItem("user") as string);
-  console.log(stadium,"aaaaa");
 
   const userId = userIdFind.LoginCheck._id;
   

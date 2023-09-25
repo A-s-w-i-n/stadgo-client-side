@@ -13,8 +13,6 @@ const AdminFetchStadium: React.FC = () => {
     apiAuth
       .get("/stadium/fetchStadiumList")
       .then((fetchOwner) => {
-        console.log(fetchOwner.data.fetchList);
-
         setOnwerData(fetchOwner.data.fetchList);
       })
       .catch(() => {});
