@@ -75,7 +75,7 @@ const OwnerLogin: React.FC = () => {
               onChange={handleLoginOwner}
             />
           </div>
-          <div>
+          <div className=" h-20">
             <input
               className="w-60 rounded-xl border-gray-300 border m-14 p-2 mt-9"
               type="text"
@@ -84,15 +84,15 @@ const OwnerLogin: React.FC = () => {
               onChange={handleLoginOwner}
             />
           </div>
-          <div>
-            <button className="rounded-full ml-36 bg-cyan-300 py-3 px-3 ...">
-              submit
+          <div className="mt-3">
+          <button className="rounded-full ml-[7rem]  border-2 font-bold text-xl bg-black  border-black text-white hover:bg-transparent hover:text-black h-12 px-10">
+              Login
             </button>
           </div>
-          <p className="mt-7 text-center">
+          <p className="mt-7 text-center text-white ">
             alredy have and account{" "}
             <span
-              className="text-blue-400"
+              className="text-black underline  cursor-pointer"
               onClick={() => navigate("/Register")}
             >
               signup

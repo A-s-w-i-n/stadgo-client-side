@@ -127,11 +127,11 @@ const UserProfile = () => {
       <UserNav />
       <div className="bg-white  w-full h-screen  flex   ">
         <div
-          className="flex items-center justify-center cursor-pointer  w-[10rem] mb-6 bg-cyan-300 h-10 mt-10 ml-5 rounded-lg fixed"
+          className="flex items-center justify-center cursor-pointer  w-[10rem] mb-6 bg-black h-10 mt-10 ml-5 rounded-lg fixed"
           onClick={handleSvgClick}
         >
           <GrDocumentUpdate style={{ width: "16px" }} />
-          <span className="ml-3"> Upload Profle </span>
+          <span className="ml-3 text-white"> Upload Profle </span>
           <div className="ml-3 p-2 rounded-md bg-primary text-white hover:bg-primary-dark transition-colors duration-300">
             <input
               type="file"

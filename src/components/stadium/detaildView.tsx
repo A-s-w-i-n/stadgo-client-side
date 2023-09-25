@@ -207,17 +207,17 @@ const DetaildView: React.FC = () => {
       <div className="text-lg mt-2">{carosal?.discription}</div>
       {/* Other info */}
       {chatExist == null ?
-      <button className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white" onClick={createChat}>
+      <button className="mt-4 py-2 px-4 rounded-lg bg-black text-white" onClick={createChat}>
        
         start chat
       </button> :
       
       <button
         className={`mt-4 py-2 px-4 rounded-lg ${
-             "bg-blue-500 text-white"
+             "bg-black text-white"
         }`}
       onClick={()=>navigate(`/Chat/${carosal?._id}`)}>
-        Countinue Chat
+       <p className="text-white">Countinue Chat</p> 
       </button>
       }
         {/* {chatExist == null ? "START CHAT" : "Continue Chat"} */}

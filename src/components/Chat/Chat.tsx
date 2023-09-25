@@ -357,7 +357,7 @@ const Chat = (props: role) => {
                       >
                         <div
                           className={`bg-slate-400 rounded-lg p-2 ${
-                            item.User ? "text-left" : "text-right"
+                            item.User ? "text-left " : "text-right "
                           }`}
                           style={{ maxWidth: "80%" }} // Limit the width of the chat bubble
                         >
@@ -407,6 +407,7 @@ const Chat = (props: role) => {
                       className="w-full border rounded px-2 py-2"
                       type="text"
                       name="message"
+                      placeholder="Insert your message here"
                       value={newMessage}
                       onChange={(e) => setMessageFn(e)}
                     />

@@ -110,7 +110,7 @@ const UserLogin: React.FC = () => {
         <div className="flex justify-center h-full">
           <div className="w-1/2 p-4 bg-whilte-600"></div>
         </div>
-        <div className="absolute top-64 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 h-96  shadow-xl rounded-2xl p-4 bg-opacity-30 ">
+        <div className="absolute top-64 left-1/2  transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 h-96  shadow-xl rounded-2xl p-4 bg-opacity-30 ">
           <p className="text-center text-2xl">USER</p>
 
           <div className="">
@@ -122,18 +122,18 @@ const UserLogin: React.FC = () => {
               onChange={handleLoginUser}
             />
           </div>
-          <div>
+          <div className=" h-20">
             <input
-              className="w-60 rounded-xl border-gray-300 border m-14 p-2 mt-9"
+              className="w-60 rounded-xl  border-gray-300 border m-14 p-2 mt-9"
               type="text"
               name="password"
               placeholder="password"
               onChange={handleLoginUser}
             />
           </div>
-          <div className="items-center justify-center">
-            <button className="rounded-full ml-36 bg-cyan-300 py-3 px-3">
-              submit
+          <div className="items-center   mt-3 justify-center">
+            <button className="rounded-full ml-[7rem] border-2 font-semibold text-xl bg-black  border-black text-white hover:bg-transparent hover:text-black h-12 px-10">
+              Login
             </button>
             {/* <h3 className="text-center my-2 ">or</h3> */}
             <div className="flex justify-center items-center ">
@@ -150,10 +150,10 @@ const UserLogin: React.FC = () => {
               </button> */}
             </div>
 
-            <p className="mt-7 text-center cursor-pointer">
+            <p className="mt-7 text-center text-white ">
               alredy have an account{" "}
               <span
-                className="text-blue-400"
+                className="text-black underline  cursor-pointer"
                 onClick={() => navigate("/Register")}
               >
                 signup

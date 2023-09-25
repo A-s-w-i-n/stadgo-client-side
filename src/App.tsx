@@ -61,7 +61,7 @@ function App() {
         <Route path='/owner/videoUplode' element={<OwnerProtectRouter><VideoUplode/></OwnerProtectRouter>}/>
         <Route path='/Chat/:stadiumid' element={<Chat role={'user'}></Chat>}/>
         <Route path='/owner/Chat' element={<Chat role={'owner'}></Chat>}/>
-        <Route path='/loading'element={<Loader/>} />
+        <Route path='/loading'element={<Loader/>}/>
         <Route path='/news' element={<SportsNews/>}/>
         <Route path='/owner/ownerDashBoard' element={<OwnerProtectRouter><OwnerDashBoard/></OwnerProtectRouter>}/>
         <Route path='/owner/notifiacions/:stadiumId' element={<OwnerProtectRouter><Notification/></OwnerProtectRouter>}/>

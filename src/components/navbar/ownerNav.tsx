@@ -67,7 +67,7 @@ const OwnerNav = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed bg-cyan-200 z-[999] h-screen w-64 right-0 top-16 transition-transform transform ${
+        className={`fixed bg-gray-800 z-[999] h-screen w-64 right-0 top-16 transition-transform transform ${
           showSidebar ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -87,7 +87,7 @@ const OwnerNav = () => {
               className="font-bold flex text-2xl mt-6 pt-4 cursor-pointer "
               onClick={() => navigate("/owner/ownerProfile")}
             >
-              <p className="flex gap-4"><span  className="mt-[0.4rem]"><CgProfile/></span>Profile</p>
+              <p className="flex gap-4 text-white"><span  className="mt-[0.4rem]"><CgProfile/></span>Profile</p>
             </td>
           </tr>
           {/* <tr>
@@ -100,14 +100,14 @@ const OwnerNav = () => {
           </tr> */}
           <tr>
             <td className="font-bold flex text-2xl mt-1 cursor-pointer pt-4" onClick={()=>navigate(`/owner/notifiacions/${stadiumId}`)}>
-              <p className="flex gap-4"><span className="mt-[0.4rem]"><IoMdNotificationsOutline/></span>Notification</p></td>
+              <p className="flex gap-4 text-white"><span className="mt-[0.4rem]"><IoMdNotificationsOutline/></span>Notification</p></td>
           </tr>
           <tr>
             <td
               className="font-bold  flex cursor-pointer text-2xl mt-1 pt-4"
               onClick={() => navigate("/owner/Chat")}
             >
-             <p className="flex gap-4"> <span className="mt-[0.4rem]"><BsChatDots/></span>Chat</p>
+             <p className="flex gap-4 text-white"> <span className="mt-[0.4rem]"><BsChatDots/></span>Chat</p>
             </td>
           </tr>
           {/* <tr>
@@ -118,7 +118,7 @@ const OwnerNav = () => {
               className="font-bold text-2xl flex  pt-4 cursor-pointer"
               onClick={() => navigate("/owner/videoUplode")}
             >
-             <p  className="flex gap-4"><span className="mt-[0.4rem]"><HiOutlineUpload/></span>Upload Video</p> 
+             <p  className="flex gap-4 text-white"><span className="mt-[0.4rem]"><HiOutlineUpload/></span>Upload Video</p> 
             </td>
           </tr>
           <tr>
@@ -126,7 +126,7 @@ const OwnerNav = () => {
               className="font-bold text-2xl flex pt-4 cursor-pointer"
               onClick={() => navigate("/owner/ownerDashBoard")}
             >
-             <p className="flex gap-4"><span className="mt-[0.4rem]"><RxDashboard/></span>Dash Board</p> 
+             <p className="flex gap-4 text-white"><span className="mt-[0.4rem]"><RxDashboard/></span>Dash Board</p> 
             </td>
           </tr>
           <tr>
@@ -138,7 +138,7 @@ const OwnerNav = () => {
               className="font-bold text-2xl flex pt-4 cursor-pointer"
               onClick={handleLogout}
             >
-             <p className="flex gap-4"><span className="mt-[0.4rem]"><IoLogOutOutline/></span>Logout</p> 
+             <p className="flex gap-4 text-white"><span className="mt-[0.4rem]"><IoLogOutOutline/></span>Logout</p> 
             </td>
           </tr>
           {/* Add more items as needed */}

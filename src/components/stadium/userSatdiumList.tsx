@@ -133,10 +133,10 @@ const UserSatdiumList = () => {
               </div>
               <div className="flex justify-center gap-7 p-6 pt-2">
                 <button
-                  className="bg-cyan-300 rounded-xl px-5 py-3"
+                  className="bg-black rounded-xl px-5 py-3"
                   onClick={() => navigate(`/detailedView/${item._id}`)}
                 >
-                  Check Details
+                 <p className="text-white">Check Details</p> 
                 </button>
               </div>
             </div>

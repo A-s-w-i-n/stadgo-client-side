@@ -6,8 +6,9 @@ import { MdOutlineStadium } from "react-icons/md";
 import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 import { BsGraphUpArrow } from "react-icons/bs";
 import api from "../../servises/api/axios interceptor ";
-import {AiOutlineArrowLeft} from 'react-icons/ai'
-import {AiOutlineArrowRight} from 'react-icons/ai'
+import { useNavigate } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { count } from "console";
 
@@ -18,12 +19,13 @@ interface userinfos {
 }
 const OwnerDashBoard = () => {
   const [userinfo, setUserInfo] = useState<userinfos[]>([]);
-  const [pagination,setPagination] = useState<number>(0)
-  const [counts,setCounts] = useState<any>([])
-  const [price,totalPrice] = useState()
-  const [userDetail,setUserDetail] = useState<any>()
-  const [userDetails,showUserDetails] = useState<boolean>(true)
-  const [objectCounts,setObjectCounts] = useState()
+  const navigate = useNavigate();
+  const [pagination, setPagination] = useState<number>(0);
+  const [counts, setCounts] = useState<any>([]);
+  const [price, totalPrice] = useState();
+  const [userDetail, setUserDetail] = useState<any>();
+  const [userDetails, showUserDetails] = useState<boolean>(true);
+  const [objectCounts, setObjectCounts] = useState();
   const [ownerInfo, setOnwerInfo] = useState<any>();
   const userEmail = JSON.parse(localStorage.getItem("owner") as string);
   const emailId = userEmail.OwnerLoginCheck;
@@ -32,39 +34,32 @@ const OwnerDashBoard = () => {
 
   const id = stadiumId;
 
-  const fetchOwnerById = async (item :any) => {
-    const { data } = await api.post("/owner/fetchOwner", { email,item });
-    console.log(data.ownerDetail.totalCount);
-    setPagination(data.ownerDetail.totalCount)
+  const fetchOwnerById = async (item: any) => {
+    const { data } = await api.post("/owner/fetchOwner", { email, item });
+    console.log(data);
+    setPagination(data.ownerDetail.totalCount);
+    const totalCount =data.ownerDetail.totalCount
 
-    let count = []
-    for (let i=1;i<=pagination;i++){
-      count.push(i)
+    let count = [];
+    for (let i = 0; i <= totalCount; i++) {
+      count.push(i);
     }
     console.log(count);
-    setCounts(count)
-    
-    
+    setCounts(count);
+    setUserInfo(data.ownerDetail.modifiedOwners[0].User);
+    setOnwerInfo(data.ownerDetail.modifiedOwners[0].paymentDetails);
+    const paymentDetails = data.ownerDetail.modifiedOwners[0].paymentDetails;
+    const objectCount = paymentDetails.length;
+    setObjectCounts(objectCount);
 
-    setUserInfo(data.ownerDetail.result[0].User);
-    
-    setOnwerInfo(data.ownerDetail.result[0].paymentDetails);
-    const paymentDetails = data.ownerDetail.result[0].paymentDetails
-
-    const objectCount = paymentDetails.length
-    setObjectCounts(objectCount)
-    
     const totalStadiumPrice = paymentDetails.reduce(
       (total: any, payment: any) => {
         const stadiumPrice = parseFloat(payment.stadiumPrice);
-
         return total + stadiumPrice;
       },
       0
     );
-    totalPrice(totalStadiumPrice)
-
-
+    totalPrice(totalStadiumPrice);
   };
   useEffect(() => {
     const stadium = async () => {
@@ -73,11 +68,11 @@ const OwnerDashBoard = () => {
     stadium();
   }, []);
 
-  const  fetchUserPayment =async(id  : any) =>{
-    const fetch = await api.post('/fetchProfileImg',{id})
-    showUserDetails(false)
-    setUserDetail(fetch.data.findImg)
-  }
+  const fetchUserPayment = async (id: any) => {
+    const fetch = await api.post("/fetchProfileImg", { id });
+    showUserDetails(false);
+    setUserDetail(fetch.data.findImg);
+  };
 
   useEffect(() => {
     fetchOwnerById(1);
@@ -88,7 +83,7 @@ const OwnerDashBoard = () => {
       <div>
         <OwnerNav />
 
-        <div className="overflow-auto lg:grid grid-cols-2 sm:grid md:grid  h- gap-6 ">
+        <div className="overflow-auto lg:grid grid-cols-2 sm:grid md:grid   gap-6 ">
           <div className="flex w-full   h-[17.2rem]">
             <p className="text-6xl">
               <GiClick />
@@ -107,6 +102,9 @@ const OwnerDashBoard = () => {
                       <th scope="col" className="px-6 py-3">
                         Phone
                       </th>
+                      <th scope="col" className="px-6 py-3">
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -124,13 +122,19 @@ const OwnerDashBoard = () => {
                         <td className="px-6 py-4 dark:text-black">
                           {items?.phone}
                         </td>
+                        <td className="px-6 py-4 dark:text-black">
+                          <button
+                            className="bg-black px-4 py-2 text-white rounded-md"
+                            onClick={() => navigate("/owner/Chat")}
+                          >
+                            chat
+                          </button>
+                        </td>
                       </tr>
                     ))}
                     <nav>
-  <ul className="flex">
-    
-    
-    {/* <li>
+                      <ul className="flex">
+                        {/* <li>
       <a
         className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
         href=""
@@ -139,17 +143,23 @@ const OwnerDashBoard = () => {
         <span className="material-icons text-sm"><AiOutlineArrowLeft/></span>
       </a>
     </li> */}
-    {counts.map((item : any)=>(
-      <li>
-      <a
-        // className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
-        href="#"
-       onClick={()=>fetchOwnerById(item)} >
-       
-      </a>
-    </li>
-      ))}
-    {/* <li>
+                        {counts.map((item: any) => (
+                          <li>
+                            <a
+                              className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                              href=""
+                              onClick={(e) =>{
+                                e.preventDefault()
+                                fetchOwnerById(item+1)
+                                setPagination(item)
+                              }
+                              } 
+                            >
+                              {item+1}
+                            </a>
+                          </li>
+                        ))}
+                        {/* <li>
       <a
         className="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
         href="#"
@@ -158,8 +168,8 @@ const OwnerDashBoard = () => {
         <span className="material-icons text-sm"><AiOutlineArrowRight/></span>
       </a>
     </li> */}
-  </ul>
-</nav>
+                      </ul>
+                    </nav>
                   </tbody>
                 </table>
               </div>
@@ -170,24 +180,24 @@ const OwnerDashBoard = () => {
               <MdOutlineStadium />
             </p>
             <div className="w-full h-[17.2rem] flex border border-black">
-            <div className=" w-1/2 text-center   h-[17.2rem]">
-              <p className="font-mono font-semibold"> Total Income</p>
-              <div className="w-full h-[15.7rem] flex  items-center justify-center">
-                <div className="bg-white flex font-mono justify-center items-center text-center rounded-lg shadow-xl w-40 h-40">
-                  <p className="text-4xl">{price}</p>
+              <div className=" w-1/2 text-center   h-[17.2rem]">
+                <p className="font-mono font-semibold"> Total Income</p>
+                <div className="w-full h-[15.7rem] flex  items-center justify-center">
+                  <div className="bg-white flex font-mono justify-center items-center text-center rounded-lg shadow-xl w-40 h-40">
+                    <p className="text-4xl">{price}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="w-1/2 text-center h-[17.2rem] ">
+                <p className="font-mono font-semibold">NO. OF BUYERS </p>
+                <div className="w-full h-[15.7rem] flex  items-center justify-center">
+                  <div className="bg-white rounded-lg flex font-mono justify-center items-center text-center shadow-xl w-40 h-40">
+                    <p className="text-4xl">{objectCounts}</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="w-1/2 text-center h-[17.2rem] ">
-              <p className="font-mono font-semibold">NO. OF BUYERS </p>
-              <div className="w-full h-[15.7rem] flex  items-center justify-center">
-                <div className="bg-white rounded-lg flex font-mono justify-center items-center text-center shadow-xl w-40 h-40">
-                  <p className="text-4xl">{objectCounts}</p>
-                </div>
-              </div>
-            </div>
-            </div>
-            
+
             <div></div>
           </div>
 
@@ -195,9 +205,9 @@ const OwnerDashBoard = () => {
             <p className="text-6xl">
               <LiaMoneyBillWaveSolid />
             </p>
-            <div className="w-[full] border border-black  h-[17.2rem]">
-              <div className="relative   overflow-scroll h-[17.2rem]   overflow-x-auto">
-                <table className="w-full  text-sm text-left text-white-500 dark:text-gray-400">
+            <div className="lg:w-[59rem] border    border-black  h-[17.2rem]">
+              <div className="relative   overflow-scroll h-[17.2rem] lg:w-[59rem] md:w-[45rem] sm:w-[20rem]   overflow-x-auto">
+                <table className="lg:w-full md:1/2 sm:h-2/4 text-sm text-left text-white-500 dark:text-gray-400">
                   <thead className="text-xs  text-gray-700 uppercase  dark:bg-white dark:text-black-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
@@ -210,7 +220,7 @@ const OwnerDashBoard = () => {
                         Payment Date
                       </th>
                       <th scope="col" className="px-6 py-3">
-                       Rent Start Date
+                        Rent Start Date
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Ending Date
@@ -239,7 +249,12 @@ const OwnerDashBoard = () => {
                           {items?.endDate}
                         </td>
                         <td className="px-6 py-4 dark:text-black">
-                        <button className="bg-black py-2 px-3 rounded-sm text-white" onClick={()=>fetchUserPayment(items?.userId)}>User Details</button>
+                          <button
+                            className="bg-black py-2 px-3 rounded-sm text-white"
+                            onClick={() => fetchUserPayment(items?.userId)}
+                          >
+                            User Details
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -248,37 +263,48 @@ const OwnerDashBoard = () => {
               </div>
             </div>
           </div>
-          {userDetails ?  <div className="flex w-full h-[17.2rem]">
-          <p className="text-6xl text-white">
-          <BsGraphUpArrow />
-             </p>
-          <div className="w-[20rem] justify-center text-center  items-start flex  ml-[16rem] border border-black  h-[17.2rem]">
-            <p className=" flex items-center mt-32 font-extrabold text-2xl ">Click User Details</p>
-            {/* <p>OrderId : {userDetail}</p> */}
+          {userDetails ? (
+            <div className="flex w-full   h-[17.2rem]">
+              <p className="text-6xl text-white">
+                <BsGraphUpArrow />
+              </p>
+              <div className="w-[20rem] justify-center text-center  items-start flex  ml-[16rem] border border-black  h-[17.2rem]">
+                <p className=" flex items-center mt-32 font-extrabold text-2xl ">
+                  Click User Details
+                </p>
+                {/* <p>OrderId : {userDetail}</p> */}
+              </div>
             </div>
-          </div> :userDetail &&
-          
-          <div className="flex w-full h-[17.2rem]">
-          <p className="text-6xl text-white">
-          <BsGraphUpArrow />
-             </p>
-          <div className="w-[20rem]   justify-center ml-[16rem] border border-black  h-[17.2rem]">
-            <div className="flex justify-center">
-              <div className="w-32 h-32 rounded-full flex justify-center items-center shadow-2xl shadow-gray-400 bg-gray-100">
-             <img className="w-28 object-fill  rounded-full h-28 "  src={userDetail?.profileImg} alt="https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" />
-            </div>
-            </div>
-            <div className="flex flex-col items-center">
-  <p className="mt-5 font-serif">Name: {(userDetail?.username).toLocaleUpperCase()}</p>
-  <p className="mt-2 font-serif">Email: {userDetail?.email}</p>
-  <p className="mt-2 font-serif">Phone: {userDetail.phone}</p>
-</div>
-            {/* <p>OrderId : {userDetail}</p> */}
-            </div>
-          </div>
-          } 
-
-          
+          ) : (
+            userDetail && (
+              <div className="flex w-full h-[17.2rem]">
+                <p className="text-6xl text-white">
+                  <BsGraphUpArrow />
+                </p>
+                <div className="w-[20rem]   justify-center ml-[16rem] border border-black  h-[17.2rem]">
+                  <div className="flex justify-center">
+                    <div className="w-32 h-32 rounded-full flex justify-center items-center shadow-2xl shadow-gray-400 bg-gray-100">
+                      <img
+                        className="w-28 object-fill  rounded-full h-28 "
+                        src={userDetail?.profileImg}
+                        alt="https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <p className="mt-5 font-serif">
+                      Name: {(userDetail?.username).toLocaleUpperCase()}
+                    </p>
+                    <p className="mt-2 font-serif">
+                      Email: {userDetail?.email}
+                    </p>
+                    <p className="mt-2 font-serif">Phone: {userDetail.phone}</p>
+                  </div>
+                  {/* <p>OrderId : {userDetail}</p> */}
+                </div>
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

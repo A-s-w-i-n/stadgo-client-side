@@ -49,7 +49,7 @@ const UserNav = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed z-50 bg-cyan-200 h-screen w-64 right-0 top-16 transition-transform transform ${
+        className={`fixed z-50 bg-gray-800 h-screen w-64 right-0 top-16 transition-transform transform ${
           showSidebar ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -69,7 +69,7 @@ const UserNav = () => {
               className="font-bold flex gap-1  text-2xl mt-6  cursor-pointer "
               onClick={() => navigate("/userProfile")}
             >
-             <p className="flex gap-4"><span className="mt-[0.4rem] "><CgProfile/></span> Profile</p>
+             <p className="flex gap-4 text-white"><span className="mt-[0.4rem] "><CgProfile/></span> Profile</p>
             </td>
           </tr>
           {/* <tr>
@@ -85,7 +85,7 @@ const UserNav = () => {
               className="font-bold flex text-2xl mt-3 pt-4 cursor-pointer"
               onClick={() => navigate("/stadiumList")}
             >
-              <p className="flex gap-4"><span className="mt-[0.4rem] "><MdOutlineStadium/></span>Stadium</p>
+              <p className="flex gap-4 text-white"><span className="mt-[0.4rem] "><MdOutlineStadium/></span>Stadium</p>
             </td>
           </tr>
         
@@ -95,7 +95,7 @@ const UserNav = () => {
               className="font-bold text-2xl pt-4 cursor-pointer"
               onClick={handleLogout}
             >
-             <p className="flex gap-4"><span className="mt-[0.4rem]"><IoLogOutOutline/></span>Logout</p> 
+             <p className="flex gap-4 text-white"><span className="mt-[0.4rem]"><IoLogOutOutline/></span>Logout</p> 
             </td>
           </tr>
           {/* Add more items as needed */}

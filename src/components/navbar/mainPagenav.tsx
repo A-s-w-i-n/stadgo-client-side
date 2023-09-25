@@ -27,9 +27,9 @@ const MainPagenav = () => {
           />
           <button
             onClick={handleLogout}
-            className="ml-auto mr-5 rounded-xl py-2 px-3 bg-cyan-300"
+            className="ml-auto mr-5 rounded-xl py-2 px-3 bg-black"
           >
-            Logout
+           <p className="text-white">Logout</p> 
           </button>
         </div>
       </div>

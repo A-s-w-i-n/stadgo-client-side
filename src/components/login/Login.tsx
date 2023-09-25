@@ -33,7 +33,7 @@ function Login() {
         <button
           className={`${
             userLogin ? "bg-cyan-300" : ""
-          } rounded-full bg-neutral-200 hover:bg-cyan-300 mt-2 px-6 py-2 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300 `}
+          } rounded-full bg-neutral-200 hover:bg-black hover:text-white mt-2 px-6 py-2 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300 `}
           onClick={handleshowuser}
         >
           USER
@@ -41,7 +41,7 @@ function Login() {
         <button
           className={`${
             ownerLogin ? "bg-cyan-300" : ""
-          } rounded-full bg-neutral-200 hover:bg-cyan-300 px-3 mt-2 py-2 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300`}
+          } rounded-full bg-neutral-200 hover:bg-black hover:text-white px-3 mt-2 py-2 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300`}
           onClick={handleShowOwner}
         >
           OWNER

@@ -193,7 +193,7 @@ const OwnerForm: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-6 ml-48">
                   <div className="flex flex-col items-center justify-center">
-                    <button className="rounded-full bg-cyan-300 px-3 py-2  transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
+                    <button className="rounded-full bg-black px-3 py-2  transition ease-in-out delay-150 text-white hover:-translate-y-1 hover:scale-110 hover:bg-transparent hover:border-2 border-black duration-300">
                       REGISTER
                     </button>
                     <h3 className="text-center my-2">or</h3>
@@ -240,7 +240,7 @@ const OwnerForm: React.FC = () => {
             </div>
             <div className="flex justify-center items-center">
               <button
-                className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
+                className="bg-black px-3 mt-3 py-2 rounded-lg just "
                 onClick={verifyOtp}
                 // disabled ={otpTimer >0}
               >

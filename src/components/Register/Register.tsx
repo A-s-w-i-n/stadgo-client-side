@@ -32,7 +32,7 @@ function Register() {
         <button
           className={`${
             showUser ? "bg-cyan-300" : ""
-          } rounded-full bg-neutral-200 hover:bg-cyan-300 px-6 py-2 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300 `}
+          } rounded-full bg-neutral-200 hover:bg-black hover:text-white px-6 py-2 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300 `}
           onClick={handleShowUser}
         >
           USER
@@ -40,7 +40,7 @@ function Register() {
         <button
           className={`${
             showOwner ? "bg-cyan-300" : ""
-          } rounded-full bg-neutral-200 hover:bg-cyan-300 px-3 py-2 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300`}
+          } rounded-full bg-neutral-200 hover:bg-black hover:text-white px-3 py-2 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover: bg-cyan-300 duration-300`}
           onClick={handleShowOwner}
         >
           OWNER
