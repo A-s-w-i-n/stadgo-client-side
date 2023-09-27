@@ -52,6 +52,8 @@ const OwnerForm: React.FC = () => {
         await apiAuth.post("/owner/ownerRegister", {
           ...owner,
         });
+        console.log(owner);
+        
 
         handleOwnerOtp();
       }
@@ -144,7 +146,7 @@ const OwnerForm: React.FC = () => {
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     placeholder="email"
                     name="email"
-                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     required
                     title="Please enter a valid email address"
                     onChange={addOwner}
@@ -240,7 +242,7 @@ const OwnerForm: React.FC = () => {
             </div>
             <div className="flex justify-center items-center">
               <button
-                className="bg-black px-3 mt-3 py-2 rounded-lg just "
+                className="bg-black px-3 mt-3 text-white py-2 rounded-lg just "
                 onClick={verifyOtp}
                 // disabled ={otpTimer >0}
               >

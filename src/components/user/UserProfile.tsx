@@ -12,11 +12,11 @@ const UserProfile = () => {
   const [datas, setData] = useState<OrgDetail | null>(null);
   const [rentalDetails, SetRentalDetails] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [Rental,setRental] = useState<any>()
+  const [Rental, setRental] = useState<any>();
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
   const fileInputRef: any = useRef(null);
-  const [loding,setLoding] = useState<boolean>(false)
+  const [loding, setLoding] = useState<boolean>(false);
   const user = JSON.parse(localStorage.getItem("user") as string);
   const check = user.LoginCheck;
   const email = user.LoginCheck.email;
@@ -25,11 +25,9 @@ const UserProfile = () => {
     setIsModalOpen(true);
   };
 
-  const handleClodeModal =()=>{
-    setIsModalOpen(false)
-  }
-
-  
+  const handleClodeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const userIdFind = JSON.parse(localStorage.getItem("user") as string);
 
@@ -41,41 +39,39 @@ const UserProfile = () => {
   };
   const handleProfileImageChange = async (
     e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      if (e.target.files) {
+  ) => {
+    if (e.target.files) {
       const formData = new FormData();
       const imageUrl = [];
       const files = e.target.files;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-       
+
         formData.append("file", file);
         formData.append("uplode_preset", "stadGOimage");
         try {
-          setLoding(true)
+          setLoding(true);
           const result = await axios.post(
             "https://api.cloudinary.com/v1_1/dkuqvuhss/image/upload?upload_preset=stadGOimage",
             formData
-            );
+          );
           imageUrl.push(result.data.secure_url);
           setUrl(result.data.secure_url);
-          updateProfile()
-          setLoding(false)
-        } catch (error) {
-        }
+          updateProfile();
+          setLoding(false);
+        } catch (error) {}
       }
     }
   };
   const updateProfile = async () => {
-    if(url&&id){
-      const  data  = await api.post("/userProfileImage", { id, url });
-      setLoding(true)
+    if (url && id) {
+      const data = await api.post("/userProfileImage", { id, url });
+      setLoding(true);
 
-      if(data){
-        
+      if (data) {
         setImage(data.data.uplodeImg.profileImg);
-        
-        fetchProfile()
+
+        fetchProfile();
       }
     }
   };
@@ -83,47 +79,40 @@ const UserProfile = () => {
     fileInputRef.current.click();
   };
 
-  useEffect(()=>{
-    updateProfile()
-  },[url])
-
-  const fetchProfile =async () =>{
-   const data = await api.post("/fetchProfileImg",{id})
-      setImage(data.data.findImg.profileImg)
-    
-  }
-  useEffect(()=>{
-    const userDetails=async () =>{
-  
-      const data =await api.post("/fetchUsers",{email})
-      SetRentalDetails(data.data.userDetail.paymentDetails)
-      
-    }
-    userDetails()
-  },[])
-
-  const RentedStadium =async (orderId : any) =>{
-    const data =await api.post("/fetchUsers",{email})
-    const detail = data.data.userDetail.paymentDetails
-     detail.map((item : any)=>{
-      
-      if(item.orderId == orderId)
-      setRental(data.data.userDetail.paymentDetails)
-    
-  })
-  handleModalOpen()
-    
-    
-  }
-  
   useEffect(() => {
+    updateProfile();
+  }, [url]);
 
-    fetchProfile()
+  const fetchProfile = async () => {
+    const data = await api.post("/fetchProfileImg", { id });
+    setImage(data.data.findImg.profileImg);
+    setLoding(false);
+  };
+  useEffect(() => {
+    const userDetails = async () => {
+      const data = await api.post("/fetchUsers", { email });
+      SetRentalDetails(data.data.userDetail.paymentDetails);
+    };
+    userDetails();
+  }, []);
+
+  const RentedStadium = async (orderId: any) => {
+    const data = await api.post("/fetchUsers", { email });
+    const detail = data.data.userDetail.paymentDetails;
+    detail.map((item: any) => {
+      if (item.orderId == orderId)
+        setRental(data.data.userDetail.paymentDetails);
+    });
+    handleModalOpen();
+  };
+
+  useEffect(() => {
+    fetchProfile();
     handleFecthOrg();
   }, []);
   return (
     <div>
-      {loding && <Loader/>}
+      {loding && <Loader />}
       <UserNav />
       <div className="bg-white  w-full h-screen  flex   ">
         <div
@@ -157,11 +146,7 @@ const UserProfile = () => {
           <div className="w-[30%] p-5">
             <div className="relative mt-1 h-[540px] flex w-[30rem]  z-[997] flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
-                <img
-                  src={image}
-                  alt="img-blur-shadow"
-                  className="h-56 w-72"
-                />
+                <img src={image} alt="img-blur-shadow" className="h-56 w-72" />
               </div>
               <div className="p-6">
                 <h5 className="mb-2 text-center block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
@@ -216,60 +201,78 @@ const UserProfile = () => {
                 </button> */}
               </div>
             </div>
-            {rentalDetails ? rentalDetails.map((item :any)=>(
-             <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-             <div className="p-6">
-               <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                 PURCHASED STADIUMS
-               </h5>
-               <div className="flex gap-6  w-full h-20">          <div>   <p className="mt-2"> ORDER ID : {item?.orderId}</p></div> <div> <button className="bg-blue-300 px-3 py-2 rounded-md" onClick={()=>RentedStadium(item.orderId)}> DETAILS</button></div></div>
-
-             </div>
-             <div className="p-6 justify-center items-start flex pt-0">
-              
-             </div>
-           </div>
-
-            )) 
-             : (
-              
-              <div className="border flex justify-center items-center text-center w-[24rem] rounded-xl bg-white shadow-2xl h-[16rem] mt-7 ml-6">
-              <p className="text-center">
-                CURRENTLY NO RENTAL DETAILS 
-              </p>
-            </div>
-            )}
-            {isModalOpen&&
-            Rental.map((item : any)=>(
-
-           
-            <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
-                <div className="bg-white rounded-lg w-full max-w-md p-6">
-                      <div className="mt-3 font-extrabold">
-                        Stadium Name : <span className="font-semibold">{item?.stadiumId}</span>
+            {rentalDetails ? (
+              rentalDetails.map((item: any) => (
+                <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                  <div className="p-6">
+                    <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                      PURCHASED STADIUMS
+                    </h5>
+                    <div className="flex gap-6  w-full h-20">
+                      {" "}
+                      <div>
+                        {" "}
+                        <p className="mt-2"> ORDER ID : {item?.orderId}</p>
+                      </div>{" "}
+                      <div>
+                        {" "}
+                        <button
+                          className="bg-blue-300 px-3 py-2 rounded-md"
+                          onClick={() => RentedStadium(item.orderId)}
+                        >
+                          {" "}
+                          DETAILS
+                        </button>
                       </div>
-                      <div className="mt-3 font-extrabold">
-                        Price : <span className="font-semibold">{item?.stadiumPrice}</span>
-                      </div>
-                      <div className="mt-3 font-extrabold">
-                        From Date :  <span className="font-semibold">{item?.startDate}</span>
-                      </div>
-                      <div className="mt-3 font-extrabold">
-                        To date :  <span className="font-semibold">{item?.endDate}</span>
-                      </div>
-                      
-                      <div className="mt-3 font-extrabold">
-                        Rental Date :  <span className="font-semibold">{item?.date}</span>
-                      </div>
-                     
-                      <div className="flex justify-center items-center">
-  <button className="w-24 h-10 bg-cyan-300 rounded-lg text-center"onClick={handleClodeModal}>close</button>
-</div>
-
                     </div>
+                  </div>
+                  <div className="p-6 justify-center items-start flex pt-0"></div>
+                </div>
+              ))
+            ) : (
+              <div className="border flex justify-center items-center text-center w-[24rem] rounded-xl bg-white shadow-2xl h-[16rem] mt-7 ml-6">
+                <p className="text-center">CURRENTLY NO RENTAL DETAILS</p>
               </div>
-               ))
-}
+            )}
+            {isModalOpen &&
+              Rental.map((item: any) => (
+                <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
+                  <div className="bg-white rounded-lg w-full max-w-md p-6">
+                    <div className="mt-3 font-extrabold">
+                      Stadium Name :{" "}
+                      <span className="font-semibold">{item?.stadiumname}</span>
+                    </div>
+                    <div className="mt-3 font-extrabold">
+                      Price :{" "}
+                      <span className="font-semibold">
+                        {item?.stadiumPrice}
+                      </span>
+                    </div>
+                    <div className="mt-3 font-extrabold">
+                      From Date :{" "}
+                      <span className="font-semibold">{item?.startDate}</span>
+                    </div>
+                    <div className="mt-3 font-extrabold">
+                      To date :{" "}
+                      <span className="font-semibold">{item?.endDate}</span>
+                    </div>
+
+                    <div className="mt-3 font-extrabold">
+                      Rental Date :{" "}
+                      <span className="font-semibold">{item?.date}</span>
+                    </div>
+
+                    <div className="flex justify-center items-center">
+                      <button
+                        className="w-24 h-10 bg-cyan-300 rounded-lg text-center"
+                        onClick={handleClodeModal}
+                      >
+                        close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>

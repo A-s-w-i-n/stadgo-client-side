@@ -124,7 +124,7 @@ const OwnerDashBoard = () => {
                         </td>
                         <td className="px-6 py-4 dark:text-black">
                           <button
-                            className="bg-black px-4 py-2 text-white rounded-md"
+                            className="bg-black px-4 py-2 text-white rounded-sm"
                             onClick={() => navigate("/owner/Chat")}
                           >
                             chat
@@ -208,8 +208,8 @@ const OwnerDashBoard = () => {
             <div className="lg:w-[59rem] border    border-black  h-[17.2rem]">
               <div className="relative   overflow-scroll h-[17.2rem] lg:w-[59rem] md:w-[45rem] sm:w-[20rem]   overflow-x-auto">
                 <table className="lg:w-full md:1/2 sm:h-2/4 text-sm text-left text-white-500 dark:text-gray-400">
-                  <thead className="text-xs  text-gray-700 uppercase  dark:bg-white dark:text-black-400">
-                    <tr>
+                  <thead className="text-xs  text-gray-700 uppercase   dark:bg-white dark:text-black-400">
+                    <tr className="lg:w-full md:w-1/2 sm:h-1/4">
                       <th scope="col" className="px-6 py-3">
                         Order Id
                       </th>
@@ -264,7 +264,7 @@ const OwnerDashBoard = () => {
             </div>
           </div>
           {userDetails ? (
-            <div className="flex w-full   h-[17.2rem]">
+            <div className="flex ml-8 w-[37.5rem]   h-[17.2rem]">
               <p className="text-6xl text-white">
                 <BsGraphUpArrow />
               </p>

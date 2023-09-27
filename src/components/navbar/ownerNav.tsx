@@ -31,6 +31,8 @@ const OwnerNav = () => {
   // const { userId }: any = useSelector((state: any) => state.user);
   const { ownerId }: any = useSelector((state: any) => state.owner);
   const {stadiumId} : any = useSelector((state : any)=>state.owner)
+  console.log(stadiumId);
+  
   
   
   

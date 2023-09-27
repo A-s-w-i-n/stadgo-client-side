@@ -29,10 +29,33 @@ const VideoUpload = () => {
       
       setSelectedFile(e.target.files[0]);
       setLoding(false)
-     
+      
     }
   };
+  
+  const handleUpload =async () => {
+    if (selectedFile) {
+      if(selectedFile.type.startsWith('video/')){
+        setLoding(true)
 
+        try {
+         await uploadVideoToS3(selectedFile);
+          fetchVideo()
+          closeUplodeVideoModal()
+          
+        } catch (error) {
+          
+        }
+
+      }else{
+        toast.success("Upload video formate", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        
+      }
+    }
+  };
   const uploadVideoToS3 = async (file: File) => {
     
     const s3 = new AWS.S3({
@@ -56,33 +79,15 @@ const VideoUpload = () => {
     }
   };
 
-  const handleUpload = () => {
-    if (selectedFile) {
-      if(selectedFile.type.startsWith('video/')){
-
-        uploadVideoToS3(selectedFile);
-        setLoding(true)
-      }else{
-        toast.success("Upload video formate", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        
-      }
-    }
-  };
 
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
   const emailCheck = emailId.OwnerLoginCheck;
   const email = emailCheck.email;
 
   const fetchVideo=()=>{
-
-    
       api.post("/stadium/fetchStadium", { email }).then((result) => {
-
         setStadiumInfo(result.data.fetchStadiumData);
-        // setLoding(false)
+         // setLoding(false)
     });
   
 

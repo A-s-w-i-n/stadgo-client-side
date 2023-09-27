@@ -17,17 +17,6 @@ const OwnerHome = () => {
   const emailId = userEmail.OwnerLoginCheck;
   const email = emailId.email;
 
- 
-
-  // const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
-  // const openPaymentModal = () => {
-  //   setIsPaymentModalOpen(true);
-  // };
-
-  // const closePaymentModal = () => {
-  //   setIsPaymentModalOpen(false);
-  // };
 
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +73,7 @@ const OwnerHome = () => {
               </div>
               <div className="absolute bottom-0 mb-48">
                 <button
-                  className="rounded-full fixed bg-cyan-300 hover:bg-cyan-400 px-6 py-3 mb-48 bottom-9 font-serif  text-lg"
+                  className="rounded-full fixed bg-black text-white hover:bg-transparent hover:border border-black hover:text-black  px-6 py-3 mb-48 bottom-9 font-serif  text-lg"
                   onClick={handleFetchDetail}
                 >
                   {/* {detailsCheck ?  */}

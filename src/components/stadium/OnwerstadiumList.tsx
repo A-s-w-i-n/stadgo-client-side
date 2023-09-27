@@ -86,12 +86,12 @@ const OnwerstadiumList = () => {
         setDiscription(fetchStadium.data.fetchStadiumData.discription);
         setId(fetchStadium.data.fetchStadiumData[0]._id)
 
+        
+        
         dispatch(ownerLogged({
           ownerId :ownerid,
           stadiumId : fetchStadium.data.fetchStadiumData[0]._id
         }))
-
-        
 
       })
       .catch(() => {});
@@ -99,9 +99,8 @@ const OnwerstadiumList = () => {
     
   useEffect(() => {
     fetchData();
-  }, []);
+  },[]);
 const updateStadiumList =async () =>{
- 
   await api.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
   fetchData()
   handleModalClose()
