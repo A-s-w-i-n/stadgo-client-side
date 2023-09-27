@@ -108,9 +108,9 @@ const UserLogin: React.FC = () => {
     <div className="relative h-screen  ">
       <form action="" onSubmit={handleLogin}>
         <div className="flex justify-center h-full">
-          <div className="w-1/2 p-4 bg-whilte-600"></div>
+          <div className="w-1/2 p-4  bg-whilte-600"></div>
         </div>
-        <div className="absolute top-64 left-1/2  transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 h-96  shadow-xl rounded-2xl p-4 bg-opacity-30 ">
+        <div className="absolute top-64 left-1/2   transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 h-96  shadow-xl rounded-2xl p-4 bg-opacity-30 ">
           <p className="text-center text-2xl">USER</p>
 
           <div className="">

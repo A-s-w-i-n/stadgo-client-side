@@ -141,7 +141,7 @@ useEffect(()=>{
                   {item.stadiumname}
               <div className=" items-center justify-center px-6 pt-4 pb-5">
                 <button
-                  className="bg-cyan-400  px-3 py-2 rounded-2xl"
+                  className="bg-black text-white  px-3 py-2 rounded-2xl"
                   onClick={openUplodeVideoModal}
                 >
                   UPLOAD
@@ -214,7 +214,7 @@ useEffect(()=>{
               </div>
               <div>
                 <button
-                  className="bg-cyan-400 px-3 py-3 rounded-2xl"
+                  className="bg-black text-white px-3 py-3 rounded-2xl"
                   onClick={closeUplodeVideoModal}
                 >
                   close

@@ -64,7 +64,7 @@ const UserPayment = () => {
       setStartDate(minDate.toISOString().split('T')[0]);
       setEndDate(maxDate.toISOString().split('T')[0]);
     }else{
-      toast.success("Selected dates are not within the available date range.", {
+      toast.error("Selected dates are not within the available date range.", {
         position: "top-right",
         autoClose: 3000,
       });
@@ -94,6 +94,7 @@ const UserPayment = () => {
   return (
     <div>
       <UserNav />
+      <ToastContainer/>
       <div className="w-full flex h-screen">
         <div className="w-1/2 h-full">
           <div className="w-full h-10 flex justify-center">
@@ -201,7 +202,7 @@ const UserPayment = () => {
                     <span className="mt-10">
                       {" "}
                       <div>
-                        <ToastContainer />
+                        
                         <PayPalScriptProvider
                           options={{
                             clientId: process.env
