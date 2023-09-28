@@ -11,20 +11,17 @@ const UserOpening = () => {
   };
   return (
     <div>
-      <div>
-        <Navdesign />
-      </div>
-      <div className="h-screen flex  justify-center">
-        <div className="w-1/2 h-screen flex ml-10 text-5xl items-center">
-          <div className="">
-            <p className="font-serif">
+      <div className="h-screen flex  items-center   justify-center">
+        <div className="w-1/2  h-44 mt-3      ml-10 text-5xl ">
+          <div className="  items-center">
+            <p className="font-serif ">
               Discover the perfect venue that suits your needs
             </p>
           </div>
 
-          <div className="absolute bottom-0 mb-4">
+          <div className="">
             <button
-              className="rounded-full bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  font-serif  text-lg"
+              className="rounded-xl bg-black text-white hover:bg-transparent hover:border hover:border-black hover:text-black w-24 h-10   font-serif  text-lg"
               onClick={buttoClick}
             >
               Lets Go
@@ -32,8 +29,8 @@ const UserOpening = () => {
           </div>
         </div>
 
-        <div className="w-1/2  flex  items-center` justify-center">
-          <div className="mt-20 w-full ">
+        <div className="w-1/2  flex  items-center  justify-center">
+          <div className="mt-20  w-full ">
             <img
               className=" w-full object-cover"
               src="/mainImages/userOpening.png"

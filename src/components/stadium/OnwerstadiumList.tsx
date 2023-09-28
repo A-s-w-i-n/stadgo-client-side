@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 import { ownerLogged } from "../../Redux/owner/ownerSlice";
+import { toast,ToastContainer } from "react-toastify";
 
 const OnwerstadiumList = () => {
   // const dispatch = useDispatch();
@@ -101,10 +102,18 @@ const OnwerstadiumList = () => {
     fetchData();
   },[]);
 const updateStadiumList =async () =>{
+  if (new Date(fromdate) >= new Date(todate)) {
+    toast.error("End date must be greater than start date", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+    return;
+  }
   await api.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
   fetchData()
   handleModalClose()
 }
+
 
 
 
@@ -120,13 +129,14 @@ const updateStadiumList =async () =>{
   // };
 
   return (
-    <div>
+    <div className="h-screen w-screen">
       {/* {loding&&<Loader/>} */}
       <OwnerNav />
+      <ToastContainer/>
 
       {stadiumData.map((item) => (
-        <div className="  h-[36rem]    relative flex w-full max-w-[96rem] flex-row  bg-white bg-clip-border text-gray-700 shadow-md">
-          <div className="relative     m-0 w-[85.2rem] shrink-0 overflow-hidden   bg-white bg-clip-border text-gray-700">
+        <div className="  h-screen  object-cover   relative flex w-screen  flex-row  bg-white bg-clip-border text-gray-700 shadow-md">
+          <div className="relative    bg-red-300  w-screen h-screen  overflow-hidden   bg-white bg-clip-border text-gray-700">
            
             <Slider {...settings}>
               {item.image && (
@@ -135,20 +145,20 @@ const updateStadiumList =async () =>{
                     <img
                       src={item.image[0]}
                       alt=""
-                      className="w-full  h-[36.8rem] "
+                      className="w-full object-cover  h-full "
                     />
                   </div>
                   <div>
                     <img
                       src={item.image[1]}
                       alt=""
-                      className="w-full  h-[36.8rem]  "
+                      className="w-full object-cover   h-full  "
                     />
                   </div>
                   <div>
                     <img
                       src={item.image[2]}
-                      className="w-full  h-[36.8rem]    "
+                      className="w-full object-cover   h-full    "
                     />
                   </div>
                 </Slider>

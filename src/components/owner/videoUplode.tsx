@@ -10,7 +10,7 @@ import Loader from "../loader/loader";
 const VideoUpload = () => {
   // const navigate = useNavigate();
   const [stadiumInfo, setStadiumInfo] = useState<stadim[]>([]);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null | any>(null);
   const [uplodeVideo, setVideoUplode] = useState<string>("");
   const [uplodeVideoModal, setuplodeVideoModal] = useState(false);
   const [loding,setLoding] = useState<boolean>(false)
@@ -25,9 +25,19 @@ const VideoUpload = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
    
     if (e.target.files && e.target.files.length>0 ) {
-      setLoding(true)
-      
       setSelectedFile(e.target.files[0]);
+      setLoding(true)
+      const maxSize = 25 * 1024 * 1024;
+      if (selectedFile?.size <= maxSize) {
+        setSelectedFile(selectedFile);
+      } else {
+        // File size exceeds the limit
+        toast.error("File size exceeds the 25MB limit.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+      
       setLoding(false)
       
     }
@@ -98,18 +108,29 @@ useEffect(()=>{
 },[])
 
   const uplodeVideos = async () => {
-    handleUpload();
-    const id = stadiumInfo[0]._id;
-    if (uplodeVideo) {
-      const uplode = await api.post("/owner/videoUplode", {
-        uplodeVideo,
-        id,
+
+    const maxSize = 25 * 1024 * 1024;
+    if (selectedFile?.size <= maxSize) {
+      handleUpload();
+      const id = stadiumInfo[0]._id;
+      if (uplodeVideo) {
+        const uplode = await api.post("/owner/videoUplode", {
+          uplodeVideo,
+          id,
+        });
+        fetchVideo()
+        if (uplode.status) {
+          closeUplodeVideoModal();
+          // stadiumInfo[0].video;
+        }
+    }
+    }else{
+      toast.error("File size exceeds the 25MB limit.", {
+        position: "top-right",
+        autoClose: 3000,
       });
-      fetchVideo()
-      if (uplode.status) {
-        closeUplodeVideoModal();
-        // stadiumInfo[0].video;
-      }
+
+
     } 
   };
   // useEffect(()=>{

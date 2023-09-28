@@ -26,7 +26,11 @@ api.interceptors.request.use(
         config.headers["ownerauthorization"] = `Bearer ${ownerTokens}`;
       }
     }
-
+    const admin =JSON.parse(localStorage.getItem("admins") as string)
+    if(admin){
+      const adminToken =admin?.adminToken
+      config.headers["adminauthorization"] = `Bearer ${adminToken}`
+    }
     return config;
   },
   (error: AxiosError) => {

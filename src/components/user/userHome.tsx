@@ -46,9 +46,7 @@ const UserHome: React.FC = () => {
   // }, []);
 
   const handleUserOrgCheck = async () => {
-
     const { data } = await api.post("/org/fetchOrg", { email });
-
     if (data.fetchOrg == null) {
       navigate("/orgDetail");
     } else {

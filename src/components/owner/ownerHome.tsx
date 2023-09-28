@@ -66,21 +66,21 @@ const OwnerHome = () => {
                 />
               </div>
             </div>
-            <div className="w-1/2 h-screen flex ml-10  items-center">
-              <div className="">
+            <div className="w-1/2 h-screen flex ml-10    items-center">
+              <div className="w-full h-36 mt-10 ">
                 <p className="font-serif text-5xl">WELCOME TO STUD GO</p>
                 <p className="ml-2 mt-3">EXPLORE THE STADIUM’S </p>
-              </div>
-              <div className="absolute bottom-0 mb-48">
+              <div className="mt-2 ">
                 <button
-                  className="rounded-full fixed bg-black text-white hover:bg-transparent hover:border border-black hover:text-black  px-6 py-3 mb-48 bottom-9 font-serif  text-lg"
+                  className="rounded-full  bg-black text-white hover:bg-transparent hover:border border-black hover:text-black  px-6 py-3 mb-48 bottom-9 font-serif  text-lg"
                   onClick={handleFetchDetail}
                 >
-                  {/* {detailsCheck ?  */}
+                
                   
                   Stadium
-                   {/* "Buy Premium"} */}
+                 
                 </button>
+              </div>
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const Stadium = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Stadium = () => {
     email: " ",
     id: "",
   });
+  const [dateValidation, setDateValidation] = useState<boolean>(true);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -48,7 +50,16 @@ const Stadium = () => {
     }
   };
   const addStadium = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStadium({ ...stadium, [e.target.name]: e.target.value });
+
+   const { name, value } = e.target;
+
+  if (name === "fromdate") {
+    setStadium({ ...stadium, fromdate: value });
+  } else if (name === "todate") {
+    setStadium({ ...stadium, todate: value });
+  } else {
+    setStadium({ ...stadium, [name]: value });
+  }
   };
   const handleAddStadium = useCallback(
     async (e: React.FormEvent) => {
@@ -77,7 +88,10 @@ const Stadium = () => {
           discription !== "" &&
           location !== "" &&
           image.length > 0
-        ) {
+          ) {
+          const fromDateObj = new Date(fromdate);
+      const toDateObj = new Date(todate);
+      if (fromDateObj < toDateObj) {
           const emialId = JSON.parse(localStorage.getItem("owner") as string);
           const email = emialId.OwnerLoginCheck.email;
 
@@ -91,6 +105,13 @@ const Stadium = () => {
           if (data) {
             navigate("/owner/stadiumlist");
           }
+        }else{
+          toast.error("End date must be greater than start date", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+      
+        }
         }
       } catch (error) {}
     },
@@ -100,6 +121,7 @@ const Stadium = () => {
   return (
     <div>
       <MainPagenav />
+      <ToastContainer/>
       <form action="" onSubmit={handleAddStadium} encType="multipart/form-data">
         <div className="flex justify-center items-center h-screen">
           <div className="flex-1 h-full bg-white"></div>
@@ -113,6 +135,11 @@ const Stadium = () => {
                 <input
                   className="peer h-full w-full rounded-[7px] border border-gray-200  border-t-transparent   bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
+                  id="stadiumname"
+                  pattern="[A-Za-z]+"
+                  title="Please enter a valid username (letters only)"
+                  required
+                  type="text"
                   name="stadiumname"
                   onChange={addStadium}
                 />
@@ -124,6 +151,11 @@ const Stadium = () => {
                 <input
                   className="peer h-full w-full rounded-[7px] border border-gray-200  border-t-transparent   bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
+
+                  id="discription"
+                  pattern="[1-9][0-9]*"
+                  title="Please enter a price (numbers only)"
+                  required
                   name="maxcapacity"
                   onChange={addStadium}
                 />
@@ -139,6 +171,11 @@ const Stadium = () => {
                 <input
                   className="peer h-full w-full rounded-[7px] border border-gray-200     border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
+                  id="sportstype"
+                  pattern="[A-Za-z]+"
+                  title="Please enter a valid username (letters only)"
+                  required
+                  type="text"
                   name="sportstype"
                   onChange={addStadium}
                 />
@@ -150,6 +187,11 @@ const Stadium = () => {
                 <input
                   className="peer h-full w-full rounded-[7px] border border-gray-200 border-t-transparent   bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
+                  id="location"
+                  pattern="[A-Za-z]+"
+                  title="Please enter a valid username (letters only)"
+                  required
+                  type="text"
                   name="location"
                   onChange={addStadium}
                 />
@@ -166,6 +208,12 @@ const Stadium = () => {
                   className="peer h-full w-full rounded-[7px] border border-gray-200  border-t-transparent   bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
                   name="price"
+                  
+                  id="discription"
+                  pattern="[1-9][0-9]*"
+                  title="Please enter a price (numbers only)"
+                  required
+                  
                   onChange={addStadium}
                 />
                 <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
@@ -178,6 +226,7 @@ const Stadium = () => {
                   placeholder=" "
                   type="file"
                   multiple
+                  required
                   name="image"
                   onChange={handleImageChange}
                 />
@@ -195,6 +244,7 @@ const Stadium = () => {
                   placeholder=" "
                   name="fromdate"
                   type="date"
+                  required
                   onChange={addStadium}
                 />
                 <label className="before:content[' '] after:content[' '] pointer-events-none  absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
@@ -207,6 +257,7 @@ const Stadium = () => {
                   placeholder=" "
                   name="todate"
                   type="date"
+                  required
                   onChange={addStadium}
                 />
                 <label className="before:content[' '] after:content[' '] pointer-events-none  absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
@@ -220,6 +271,11 @@ const Stadium = () => {
                   className="peer h-full w-full rounded-[7px] border border-gray-200 border-t-transparent   bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   placeholder=" "
                   name="discription"
+                  id="discription"
+                  pattern="[A-Za-z]+"
+                  title="Please enter a valid username (letters only)"
+                  required
+                  type="text"
                   onChange={addStadium}
                 />
                 <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">

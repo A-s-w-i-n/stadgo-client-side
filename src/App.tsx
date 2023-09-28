@@ -31,6 +31,7 @@ import SportsNews from './pages/userPage/sportsNews';
 import OwnerDashBoard from './components/owner/ownerDashBoard';
 import Notification from './components/owner/notifiaction';
 import UserPayment from './components/user/userPayment';
+import AdminProtectRouter from './pages/ProtectRouter/adminProtectRouter';
 function App() {
   
 
@@ -41,14 +42,14 @@ function App() {
       <Routes>
         <Route path='/' element={<UserOpening/>}/>
         <Route path='/adminLogin' element={<AdminLogin/>}/>
-        <Route path='/adminhome' element={<AdminHome/>}/>
+        <Route path='/adminhome' element={<AdminProtectRouter><AdminHome/></AdminProtectRouter>}/>
         <Route path='/userHome' element={<UserProtectedRouter><UserHome/></UserProtectedRouter>}/>
         <Route path='/ownerHome' element={<OwnerProtectRouter><OwnerHome/></OwnerProtectRouter>}/>
         <Route path='/Register' element={<Register/>}/>
         <Route path='/admin/fetchUser' element={<AdminFetchUser/>}/>
         <Route path='/admin/fetchOwner' element ={<AdminFetchOwner/>}/>
         <Route path='/admin/fetchStadium' element={<AdminFetchStadium/>}/>
-        <Route path='/admin/adminDashboard' element={<AdminDashBord/>}/>
+        <Route path='/admin/adminDashboard' element={<AdminProtectRouter><AdminDashBord/></AdminProtectRouter>}/>
         <Route path='/Login' element={<Login/>}/>
         <Route path='/orgDetail' element={<UserProtectedRouter><OrgDetail/></UserProtectedRouter>}/>
         <Route path='/stadiumDetails' element={<OwnerProtectRouter><Stadium/></OwnerProtectRouter>}/>
@@ -56,7 +57,7 @@ function App() {
         <Route path='/stadiumList' element={<UserProtectedRouter><UserSatdiumList/></UserProtectedRouter>}/>
         {/* <Route path='/owner/premium' element={<OwnerProtectRouter><Paypal/></OwnerProtectRouter>}/> */}
         <Route path='/userProfile' element={<UserProtectedRouter><UserProfile/></UserProtectedRouter>}/>
-        <Route path='/detailedView/:id' element={<DetaildView/>}/>
+        <Route path='/detailedView/:id' element={<UserProtectedRouter><DetaildView/></UserProtectedRouter>}/>
         <Route path='/owner/ownerProfile' element={<OwnerProtectRouter><OwnerProfile/></OwnerProtectRouter>}/>
         <Route path='/owner/videoUplode' element={<OwnerProtectRouter><VideoUplode/></OwnerProtectRouter>}/>
         <Route path='/Chat/:stadiumid' element={<Chat role={'user'}></Chat>}/>

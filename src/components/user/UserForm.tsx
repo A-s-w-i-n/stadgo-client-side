@@ -154,17 +154,17 @@ const UserForm: React.FC = () => {
                     placeholder="firstname"
                     onChange={addUser}
                   />
-                  <input
-                    type="text"
-                    id="firstName"
-                    pattern="[A-Za-z]+"
-                    required
-                    title="Please enter a valid last name (letters only)"
-                    name="lastname"
-                    className="w-60 rounded-xl border-gray-300 border p-2 mt-3"
-                    placeholder="lastname"
-                    onChange={addUser}
-                  />
+                 <input
+  type="password"
+  id="password"
+  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
+  required
+  title="Password must contain at least 8 characters, including at least one lowercase letter, one uppercase letter, one numeric digit, and one special character (!@#$%^&*)"
+  name="password"
+  className="w-60 rounded-xl border-gray-300 border p-2 mt-3"
+  placeholder="Password"
+  onChange={addUser}
+/>
                   <input
                     type="text"
                     id="ownername"
@@ -196,9 +196,9 @@ const UserForm: React.FC = () => {
                   <input
                     type="text"
                     id="phone"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                     required
-                    title="Please enter a valid phone number in the format XXX-XXX-XXXX"
+                    title="Please enter a valid phone number in the format XXXXXXXXXX"
                     name="phone"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     placeholder="phone"

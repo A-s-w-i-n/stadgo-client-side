@@ -202,18 +202,18 @@ const Chat = (props: role) => {
   };
 
   return (
-    <div className="h-[41rem]   flex flex-col">
+    <div className="h-screenflex flex-col">
       {loding && <Loader />}
       {props.role === "user" ? <UserNav /> : <OwnerNav />}
 
+        <div className="container mx-auto  mt-[-128px]">
       <div className="mt-32    w-full">
-        <div className="container mx-auto   mt-[-128px]">
-          <div className="fixed ml-4 h-[36rem]  w-[78rem]">
-            <div className="flex border border-gray-300  rounded shadow-lg h-full">
+          <div className=" ml-4 h-[36rem]   w-[78rem]">
+            <div className="flex  border lg:w-full md:w-8/12 sm:w-full    rounded shadow-lg h-full">
               {/* Left */}
-              <div className="lg:w-1/3 md:w-1/6 sm:w-1/12 border  flex flex-col">
+              <div className="lg:w-1/3 md:w-full sm:w-1/12 border  flex flex-col">
                 {/* Header */}
-                <div className=" py-2 px-3  bg-gray-200  flex flex-row justify-between items-center">
+                <div className=" py-2 px-3   bg-gray-200  flex flex-row justify-between items-center">
                   <div className="flex"></div>
                 </div>
 
@@ -229,7 +229,7 @@ const Chat = (props: role) => {
                 </div>
 
                 {/* Contacts */}
-                <div className="lg:w-full bg-gray-300  overflow-auto  flex-1 ">
+                <div className="lg:w-full bg-gray-300 overflow-x-auto overflow-auto  flex-1 ">
                   {props.role === "user"
                     ? filteredChats?.map((item: any) => (
                         <div>

@@ -1,16 +1,28 @@
 // import React, { useState } from "react";
 // import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 // import api from "../../servises/axios";
+import {useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
 import AdminNav from "../navbar/adminNav";
 
 function AdminHome() {
   const navigate = useNavigate();
 
+  // const admin =JSON.parse( localStorage.getItem("admins")as string)
+  //  console.log(admin);
+
+  // useEffect(()=>{
+  //   if(admin){
+  //   //  navigate('/adminHome')
+  //   }else{
+  //    navigate('/adminlogin')
+  //   }
+  // },[])
   const handleAdminLogout = () => {
-    localStorage.removeItem("admin");
+    localStorage.removeItem("admins");
     navigate("/adminlogin");
   };
+  
 
   return (
     <div>

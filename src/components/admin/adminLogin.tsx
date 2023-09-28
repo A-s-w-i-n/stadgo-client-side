@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import  { apiAuth } from "../../servises/api/axios interceptor ";
+import  api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin: React.FC = () => {
@@ -8,12 +8,23 @@ const AdminLogin: React.FC = () => {
     email: "",
     password: "",
   });
+  const admin =JSON.parse( localStorage.getItem("admins")as string)
+  console.log(admin);
+
+ useEffect(()=>{
+   if(admin){
+    navigate('/adminHome')
+   }else{
+    navigate('/adminlogin')
+   }
+ },[])
 
   useEffect(() => {
-    let admin = localStorage.getItem("admin");
+    let admin = localStorage.getItem("admins");
 
-    if (admin) {
-      navigate("/adminhome");
+    if (!admin) {
+      navigate('/adminlogin')
+    }else{
     }
   }, []);
 
@@ -29,8 +40,7 @@ const AdminLogin: React.FC = () => {
       if (data) {
         const adminToken = data.accessToken;
         const admindata = data.adminLoginCheck;
-
-        localStorage.setItem("admin", JSON.stringify(adminToken, admindata));
+        localStorage.setItem("admins", JSON.stringify({adminToken, admindata}));
         if (data) {
           navigate("/adminhome");
         }

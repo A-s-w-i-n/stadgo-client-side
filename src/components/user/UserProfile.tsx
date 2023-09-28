@@ -29,6 +29,12 @@ const UserProfile = () => {
     setIsModalOpen(false);
   };
 
+  const organizationModalOpen =()=>{
+   
+  }
+  const organizationModalclose =()=>{
+   
+  }
   const userIdFind = JSON.parse(localStorage.getItem("user") as string);
 
   const id = userIdFind.LoginCheck._id;
@@ -105,7 +111,9 @@ const UserProfile = () => {
     });
     handleModalOpen();
   };
-
+  const organizationEdit = () =>{
+    organizationModalOpen()
+  }
   useEffect(() => {
     fetchProfile();
     handleFecthOrg();
@@ -114,9 +122,9 @@ const UserProfile = () => {
     <div>
       {loding && <Loader />}
       <UserNav />
-      <div className="bg-white  w-full h-screen  flex   ">
+      <div className="   w-full h-screen  flex   ">
         <div
-          className="flex items-center justify-center cursor-pointer  w-[10rem] mb-6 bg-black h-10 mt-10 ml-5 rounded-lg fixed"
+          className="flex items-center justify-center cursor-pointer  w-40 mb-6 bg-black h-10 mt-10 ml-5 rounded-lg "
           onClick={handleSvgClick}
         >
           <GrDocumentUpdate style={{ width: "16px" }} />
@@ -142,11 +150,12 @@ const UserProfile = () => {
             onChange={handleProfileImageChange}
           /> */}
         </div>
-        <div className="bg-gray-400 bg-opacity-20 w-[68rem] fixed rounded-xl ml-48 h-[36rem] m flex">
+        <div className="bg-gray-400 bg-opacity-20 w-10/12 mt-3 rounded-xl ml-10 h-[36rem] m flex">
           <div className="w-[30%] p-5">
             <div className="relative mt-1 h-[540px] flex w-[30rem]  z-[997] flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
                 <img src={image} alt="img-blur-shadow" className="h-56 w-72" />
+                
               </div>
               <div className="p-6">
                 <h5 className="mb-2 text-center block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
@@ -182,98 +191,98 @@ const UserProfile = () => {
                     {datas?.organizationname}
                   </p>
                   <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                    <span className="font-extrabold ">Name : </span>{" "}
+                    <span className="font-extrabold ">organization Type : </span>{" "}
                     {datas?.sportstype}
                   </p>
                   <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                    <span className="font-extrabold ">Name : </span>{" "}
+                    <span className="font-extrabold ">sports Type : </span>{" "}
                     {datas?.country}
                   </p>
                 </div>
               </div>
               <div className="p-6 justify-center items-center flex pt-0">
-                {/* <button
-                  className="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                <button
+                  className="select-none rounded-lg bg-black  py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-ripple-light="true"
-                >
-                  Details
-                </button> */}
+                onClick={organizationEdit}>
+                  Edit
+                </button>
               </div>
             </div>
             {rentalDetails ? (
-              rentalDetails.map((item: any) => (
-                <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                  <div className="p-6">
-                    <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      PURCHASED STADIUMS
-                    </h5>
-                    <div className="flex gap-6  w-full h-20">
-                      {" "}
+              <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+              <div className="p-6">
+                <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                  PURCHASED STADIUMS
+                </h5>
+                <div className="overflow-y-auto h-40">
+                  {rentalDetails.map((item: any) => (
+                    <div key={item?.orderId} className="flex gap-6 w-full">
                       <div>
-                        {" "}
-                        <p className="mt-2"> ORDER ID : {item?.orderId}</p>
-                      </div>{" "}
+                        <p className="mt-2">ORDER ID : {item?.orderId}</p>
+                      </div>
                       <div>
-                        {" "}
                         <button
-                          className="bg-blue-300 px-3 py-2 rounded-md"
+                          className="bg-blue-300 px-3 py-2 mt-4 rounded-md"
                           onClick={() => RentedStadium(item.orderId)}
                         >
-                          {" "}
                           DETAILS
                         </button>
                       </div>
                     </div>
-                  </div>
-                  <div className="p-6 justify-center items-start flex pt-0"></div>
+                  ))}
                 </div>
-              ))
+              </div>
+            </div>
+            
             ) : (
-              <div className="border flex justify-center items-center text-center w-[24rem] rounded-xl bg-white shadow-2xl h-[16rem] mt-7 ml-6">
+              <div className="border flex justify-center items-center text-center  w-[24rem] rounded-xl bg-white shadow-2xl h-[16rem] mt-7 ml-6">
                 <p className="text-center">CURRENTLY NO RENTAL DETAILS</p>
               </div>
             )}
-            {isModalOpen &&
-              Rental.map((item: any) => (
-                <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
-                  <div className="bg-white rounded-lg w-full max-w-md p-6">
-                    <div className="mt-3 font-extrabold">
-                      Stadium Name :{" "}
-                      <span className="font-semibold">{item?.stadiumname}</span>
-                    </div>
-                    <div className="mt-3 font-extrabold">
-                      Price :{" "}
-                      <span className="font-semibold">
-                        {item?.stadiumPrice}
-                      </span>
-                    </div>
-                    <div className="mt-3 font-extrabold">
-                      From Date :{" "}
-                      <span className="font-semibold">{item?.startDate}</span>
-                    </div>
-                    <div className="mt-3 font-extrabold">
-                      To date :{" "}
-                      <span className="font-semibold">{item?.endDate}</span>
-                    </div>
-
-                    <div className="mt-3 font-extrabold">
-                      Rental Date :{" "}
-                      <span className="font-semibold">{item?.date}</span>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <button
-                        className="w-24 h-10 bg-cyan-300 rounded-lg text-center"
-                        onClick={handleClodeModal}
-                      >
-                        close
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
           </div>
+        </div>
+        <div>
+        {isModalOpen &&
+                  Rental.map((item: any) => (
+                    <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
+                      <div className="bg-white rounded-lg w-full max-w-md p-6">
+                        <div className="mt-3 font-extrabold">
+                          Stadium Name :{" "}
+                          <span className="font-semibold">{item?.stadiumname}</span>
+                        </div>
+                        <div className="mt-3 font-extrabold">
+                          Price :{" "}
+                          <span className="font-semibold">
+                            {item?.stadiumPrice}
+                          </span>
+                        </div>
+                        <div className="mt-3 font-extrabold">
+                          From Date :{" "}
+                          <span className="font-semibold">{item?.startDate}</span>
+                        </div>
+                        <div className="mt-3 font-extrabold">
+                          To date :{" "}
+                          <span className="font-semibold">{item?.endDate}</span>
+                        </div>
+    
+                        <div className="mt-3 font-extrabold">
+                          Rental Date :{" "}
+                          <span className="font-semibold">{item?.date}</span>
+                        </div>
+    
+                        <div className="flex justify-center items-center">
+                          <button
+                            className="w-24 h-10 bg-cyan-300 rounded-lg text-center"
+                            onClick={handleClodeModal}
+                          >
+                            close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
         </div>
       </div>
     </div>

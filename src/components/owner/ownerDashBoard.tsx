@@ -84,12 +84,12 @@ const OwnerDashBoard = () => {
         <OwnerNav />
 
         <div className="overflow-auto lg:grid grid-cols-2 sm:grid md:grid   gap-6 ">
-          <div className="flex w-full   h-[17.2rem]">
+          <div className="flex w-full  overflow-x-auto  h-[17.2rem]">
             <p className="text-6xl">
               <GiClick />
             </p>
             <div className="w-full   h-[17.2rem]">
-              <div className="relative  border border-black  overflow-scroll h-[17.2rem]  overflow-x-auto">
+              <div className="relative  border border-black   h-[17.2rem] ">
                 <table className="w-full  text-sm text-left  text-white-500 dark:text-gray-400">
                   <thead className="text-xs  text-gray-700 uppercase   dark:bg-white dark:text-black-400">
                     <tr>
@@ -200,75 +200,75 @@ const OwnerDashBoard = () => {
 
             <div></div>
           </div>
+ <div className="lg:flex md:flex sm:grid ">
+          <div className="   flex     h-[17.2rem]">
+  <p className="text-6xl">
+    <LiaMoneyBillWaveSolid />
+  </p>
+  <div className="lg:w-[53rem] border sm:w-[10rem] md:w-[20rem]  overflow-x-auto border-black h-[17.2rem]">
+    <div className="relative  h-[17.2rem] lg:w-[59rem] md:w-[45rem] sm:w-[20rem]">
+      <table className="lg:w-full md:w-1/2 sm:w-2/4 text-sm text-left text-white-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase dark:bg-white dark:text-black-400">
+          <tr className="lg:w-full md:w-1/2 sm:w-1/4">
+            <th scope="col" className="px-6 py-3">
+              Order Id
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Amount
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Payment Date
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Rent Start Date
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Ending Date
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {ownerInfo?.map((items: any) => (
+            <tr className="bg-white border-b dark:bg-slate-200 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
+              >
+                {items?.orderId}
+              </th>
+              <td className="px-6 py-4 dark:text-black">
+                {items?.stadiumPrice}
+              </td>
+              <td className="px-6 py-4 dark:text-black">
+                {items?.date}
+              </td>
+              <td className="px-6 py-4 dark:text-black">
+                {items?.startDate}
+              </td>
+              <td className="px-6 py-4 dark:text-black">
+                {items?.endDate}
+              </td>
+              <td className="px-6 py-4 dark:text-black">
+                <button
+                  className="bg-black py-2 px-3 rounded-sm text-white"
+                  onClick={() => fetchUserPayment(items?.userId)}
+                >
+                  User Details
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
 
-          <div className="flex w-[80rem]   h-[17.2rem]">
-            <p className="text-6xl">
-              <LiaMoneyBillWaveSolid />
-            </p>
-            <div className="lg:w-[59rem] border    border-black  h-[17.2rem]">
-              <div className="relative   overflow-scroll h-[17.2rem] lg:w-[59rem] md:w-[45rem] sm:w-[20rem]   overflow-x-auto">
-                <table className="lg:w-full md:1/2 sm:h-2/4 text-sm text-left text-white-500 dark:text-gray-400">
-                  <thead className="text-xs  text-gray-700 uppercase   dark:bg-white dark:text-black-400">
-                    <tr className="lg:w-full md:w-1/2 sm:h-1/4">
-                      <th scope="col" className="px-6 py-3">
-                        Order Id
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Amount
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Payment Date
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Rent Start Date
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Ending Date
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ownerInfo?.map((items: any) => (
-                      <tr className="bg-white border-b dark:bg-slate-200 dark:border-gray-700">
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
-                        >
-                          {items?.orderId}
-                        </th>
-                        <td className="px-6 py-4 dark:text-black">
-                          {items?.stadiumPrice}
-                        </td>
-                        <td className="px-6 py-4 dark:text-black">
-                          {items?.date}
-                        </td>
-                        <td className="px-6 py-4 dark:text-black">
-                          {items?.startDate}
-                        </td>
-                        <td className="px-6 py-4 dark:text-black">
-                          {items?.endDate}
-                        </td>
-                        <td className="px-6 py-4 dark:text-black">
-                          <button
-                            className="bg-black py-2 px-3 rounded-sm text-white"
-                            onClick={() => fetchUserPayment(items?.userId)}
-                          >
-                            User Details
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+
           {userDetails ? (
-            <div className="flex ml-8 w-[37.5rem]   h-[17.2rem]">
-              <p className="text-6xl text-white">
-                <BsGraphUpArrow />
-              </p>
-              <div className="w-[20rem] justify-center text-center  items-start flex  ml-[16rem] border border-black  h-[17.2rem]">
+            <div className=" ml-8 w-full  h-[17.2rem]">
+             
+              <div className="w-[20rem] justify-center text-center ml-7  items-start flex  border border-black  h-[17.2rem]">
                 <p className=" flex items-center mt-32 font-extrabold text-2xl ">
                   Click User Details
                 </p>
@@ -277,10 +277,8 @@ const OwnerDashBoard = () => {
             </div>
           ) : (
             userDetail && (
-              <div className="flex w-full h-[17.2rem]">
-                <p className="text-6xl text-white">
-                  <BsGraphUpArrow />
-                </p>
+              <div className="flex w-full bg-red-400 h-[17.2rem]">
+             
                 <div className="w-[20rem]   justify-center ml-[16rem] border border-black  h-[17.2rem]">
                   <div className="flex justify-center">
                     <div className="w-32 h-32 rounded-full flex justify-center items-center shadow-2xl shadow-gray-400 bg-gray-100">
@@ -305,7 +303,9 @@ const OwnerDashBoard = () => {
               </div>
             )
           )}
-        </div>
+       
+      </div>
+      </div>
       </div>
     </div>
   );

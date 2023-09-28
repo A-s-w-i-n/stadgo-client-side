@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import  { apiAuth } from "../../servises/api/axios interceptor ";
+import { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 // import { jwtPaylode } from "../../domain/modals/jwtDecode";
 import { useDispatch } from "react-redux";
@@ -24,6 +25,12 @@ const genarateError = (err: any) =>
 const UserLogin: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [otpEmail,setOptEmail] = useState('')
+  const [changedpassword,setChangedpassword] =useState('')
+  const [newPassword,setNewPassword] =useState('')
+  const [otp,setOtp] = useState('')
+  const [forgot,setForgot] = useState<any>("")
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
@@ -36,6 +43,16 @@ const UserLogin: React.FC = () => {
       navigate("/userHome");
     }
   }, []);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleClodeModal = () => {
+    setIsModalOpen(false);
+  };
+  console.log(forgot);
+  
 
   // const googleLogin = async (credentialResponse: GoogleCredentialResponse) => {
   //   const { credential } = credentialResponse as GoogleCredentialResponse;
@@ -66,7 +83,89 @@ const UserLogin: React.FC = () => {
   //   } else {
   //   }
   // };
+  const email = forgot
+  const manageForgotPassword =async () => {
+    handleModalOpen();
+  };
+  const handleForgotEmail =async() =>{
+    const {data} = await apiAuth.post("/forgotpassword",{email})
+    console.log(data);
+    
+    if(data.status){
+      setOptEmail(data.status)
+      
+     console.log(data);
+     
+    }else{
+      toast.error("You are not registered with us. Please sign up", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+    console.log(data);
+  }
+const validOtp =async ()=>{
+  if(otp.trim().length== 0 ){
+    toast.error("Enter otp", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  }else{
 
+    const {data} =await apiAuth.post("/verifyOtp",{email,otp})
+    console.log(data.success);
+    if(data.success){
+      setNewPassword(data.success)
+      
+    }else{
+    toast.error("Otp is invalid", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+    
+  }
+  
+}
+  // navigate('/login')
+  // handleClodeModal()
+}
+const spacePattern = /^\s+$/
+const changePassword =async () =>{
+ if(changedpassword.trim().length ===0 || spacePattern.test(changedpassword) ){
+  toast.error("Enter a password", {
+    position: "top-right",
+    autoClose: 3000,
+  });
+ }
+ else  if(changedpassword.trim().length<3){
+  toast.error("minium 3 character needed", {
+    position: "top-right",
+    autoClose: 3000,
+  });
+
+ }else if (changedpassword.trim().length >15){
+  toast.error("only 14 letters allowed", {
+    position: "top-right",
+    autoClose: 3000,
+  });
+ }else{
+
+ const data = await apiAuth.post('/updatePassword',{email,changedpassword})
+
+ if(data){
+  toast.success("password updated", {
+    position: "top-right",
+    autoClose: 3000,
+  });
+   navigate('/login')
+   handleClodeModal()
+   setNewPassword("")
+   setChangedpassword("")
+   setOptEmail("")
+ }
+}
+ }
+  
   const handleLoginUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     {
       setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -77,19 +176,26 @@ const UserLogin: React.FC = () => {
     e.preventDefault();
 
     try {
-      
       const { data } = await apiAuth.post("/login", { ...userLogin });
       if (data) {
         const LoginCheck = data.LoginCheck;
+      
+        
+        
         const token = data.accessToken;
         if (data.message) {
           if (data.message) genarateError(data.message);
+          console.log(data.message);
         }
 
         if (data.LoginCheck.isblocked == true) {
+          toast.error("user is blocked", {
+            position: "top-right",
+            autoClose: 3000,
+          });
           navigate("/login");
         } else {
-          localStorage.setItem("user", JSON.stringify({ token, LoginCheck }));
+          localStorage.setItem(`user`, JSON.stringify({ token, LoginCheck }));
 
           dispatch(
             userLogged({
@@ -98,6 +204,7 @@ const UserLogin: React.FC = () => {
               userId: data.LoginCheck._id,
             })
           );
+
           navigate("/userHome");
         }
       }
@@ -106,6 +213,7 @@ const UserLogin: React.FC = () => {
 
   return (
     <div className="relative h-screen  ">
+              <ToastContainer />
       <form action="" onSubmit={handleLogin}>
         <div className="flex justify-center h-full">
           <div className="w-1/2 p-4  bg-whilte-600"></div>
@@ -151,7 +259,7 @@ const UserLogin: React.FC = () => {
             </div>
 
             <p className="mt-7 text-center text-white ">
-              alredy have an account{" "}
+              create new account{" "}
               <span
                 className="text-black underline  cursor-pointer"
                 onClick={() => navigate("/Register")}
@@ -159,9 +267,113 @@ const UserLogin: React.FC = () => {
                 signup
               </span>
             </p>
+            <div className=" flex justify-center text-center"></div>
+            <p
+              className="text-center cursor-pointer"
+              onClick={manageForgotPassword}
+            >
+              Forgot password
+            </p>
           </div>
         </div>
       </form>
+          {isModalOpen && (
+           
+            
+            <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
+              <div className="bg-white rounded-lg w-full max-w-md p-6">
+                <div className="text-center font-semibold">
+                <p>Enter Your Email</p>
+                </div>
+                <div className="grid justify-center items-center">
+                  <div className="h-20">
+                    <input
+                      className="w-60 rounded-xl  border-gray-300 border m-14 p-2 mt-4"
+                      type="email"
+                      name="email"
+                      id="email"
+                      required
+                      pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                      placeholder="Email"
+                      onChange={(e)=>setForgot(e.target.value)}
+                    />
+                  </div>
+                  {otpEmail &&
+                  <div>
+
+                  <div className="h-20">
+                    <div className="text-center">
+                    <p className="font-bold">Enter Your OTP</p>
+                    </div>
+                    <input
+                      className="w-60 rounded-xl  border-gray-300 border m-14 p-2 mt-2"
+                      type="text"
+                      name="otp"
+                      // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                      required
+                      placeholder="Enter your otp"
+                      onChange={(e)=>setOtp(e.target.value)}
+                    />
+                  </div>
+                  {newPassword &&
+                  
+                  <div className="h-20">
+                    <div className="text-center">
+                    <p className="font-bold">Enter New password</p>
+                    </div>
+                    <input
+                      className="w-60 rounded-xl  border-gray-300 border m-14 p-2 mt-2"
+                      type="text"
+                      
+                      // title="Password must contain at least 8 characters, including at least one lowercase letter, one uppercase letter, one numeric digit, and one special character (!@#$%^&*)"
+                      name="password"
+                      // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                     
+                      placeholder="Enter Your New Password"
+                      onChange={(e)=>setChangedpassword(e.target.value)}
+                    />
+                  </div>
+                
+}
+                  </div>
+                  
+                  
+}
+                  <div className="flex justify-center gap-4">
+                  {newPassword ? <button
+                      className="w-24 h-10 bg-gray-500 hover:bg-transparent hover:text-black border border-black rounded-lg text-center"
+                      onClick={changePassword}
+>
+                      Submit
+                    </button>:
+                   otpEmail ? 
+                    <button
+                      className="w-24 h-10 bg-blue-500 hover:bg-transparent hover:text-black border border-black rounded-lg text-center"
+                      onClick={validOtp}
+>
+                      Submit
+                    </button>:
+                   <button
+                      className="w-24 h-10 bg-green-500 hover:bg-transparent hover:text-black border border-black rounded-lg text-center"
+                      onClick={handleForgotEmail}
+>
+                      Submit
+                    </button>
+
+}
+                    <button
+                      className="w-24 h-10 bg-black text-white hover:text-black hover:bg-transparent border border-black rounded-lg text-center"
+                      onClick={handleClodeModal}
+                    >
+                      close
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+           
+          )}
       <ToastContainer />
     </div>
   );

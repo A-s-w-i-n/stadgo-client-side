@@ -25,6 +25,7 @@ const AdminFetchUser: React.FC = () => {
     e.preventDefault();
     try {
       const UserUnblock = await apiAuth.post("/admin/unBlockUser", { id });
+      
 
     } catch (error) {}
   };
