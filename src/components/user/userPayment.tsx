@@ -20,8 +20,12 @@ const userId = userIdFind?.LoginCheck._id;
 const UserPayment = () => {
   const navigate = useNavigate();
   const { ownerId } = useSelector((state: any) => state.owner);
+  // const {stadiumId} = useSelector((state : any )=>state.owner)
+
+  
   const [stadium, setStadium] = useState<any>("");
   const [startDate, setStartDate] = useState<any>(null);
+  const [booked,setBooked] =useState()
   const [endDate, setEndDate] = useState<any>(null);
   const [showDateInput, setShowDateInput] = useState(false);
   const [owner, setOwner] = useState<any>("");
@@ -53,16 +57,26 @@ const UserPayment = () => {
   return date >= minDate && date <= maxDate;
 };
   const handleDateSelection = async () => {
-    if (startDate && endDate) {
+    if (startDate && endDate ) {
       const selectedStartDate = new Date(startDate);
       const selectedEndDate = new Date(endDate);
 
-     if (isDateValid(selectedStartDate) && isDateValid(selectedEndDate)) {
+      if (selectedEndDate < selectedStartDate) {
+       
+        toast.error("End date cannot be earlier than the start date.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        return; 
+      }
+
+     if (isDateValid(selectedStartDate) && isDateValid(selectedEndDate) ) {
+      
       // setLoding(true);
       setChecked(true);
       setShowDateInput(false);
-      setStartDate(minDate.toISOString().split('T')[0]);
-      setEndDate(maxDate.toISOString().split('T')[0]);
+      setStartDate(selectedStartDate.toISOString().split('T')[0]);
+      setEndDate(selectedEndDate.toISOString().split('T')[0]);
     }else{
       toast.error("Selected dates are not within the available date range.", {
         position: "top-right",
@@ -85,6 +99,10 @@ const UserPayment = () => {
   useEffect(() => {
     const stadiumDetails = async () => {
       const data = await api.post("/stadium/detaildView", { id });
+      setBooked(data.data.fetchDetails._id)
+      console.log(data.data.fetchDetails._id);
+      
+      
       
       setStadium(data.data.fetchDetails);
     };
@@ -100,7 +118,7 @@ const UserPayment = () => {
           <div className="w-full h-10 flex justify-center">
             <p className="text-3xl font-extrabold">AGREEMENT</p>
           </div>
-          <div className="w-full mt-5 bg-white rounded-2xl shadow-2xl h-[33.5rem]">
+          <div className="w-full mt-5   h-[33.5rem]">
             <p>
               This Stadium Booking Agreement is entered into between Stadium
               Owner {owner?.ownername} and Booking Party's {username} on{" "}
@@ -108,7 +126,7 @@ const UserPayment = () => {
             </p>
             <p className="mt-3"> Stadium Name: {stadium.stadiumname}</p>
             <p>Match Name: {stadium.sportstype} Match</p>
-            <p>Date of Booking: {stadium.fromdate}</p>
+            <p>Start Of Booking: {stadium.fromdate}</p>
             <p>End of Booking: {stadium.todate}</p>
             <p>Rental Fee: {stadium.price}</p>
 
@@ -153,7 +171,7 @@ const UserPayment = () => {
           <div className="w-full h-10 flex  justify-center ">
             <p className="text-3xl font-extrabold">RENT DETAILS</p>
           </div>
-          <div className=" flex justify-center mt-5  bg-white    w-full h-[33.5rem]">
+          <div className=" flex justify-center mt-5  boder border-black border-l-2      w-full h-[33.5rem]">
             <div className="w-full flex  h-full">
               <div className="  flex-row justify-end items-end    w-11/12 h-full">
                 <div className="w-full text-center  flex justify-end h-96 ">
@@ -269,13 +287,13 @@ const UserPayment = () => {
                                       endDate
                                     }
                                   );
-                                 
+                                  
+                                  await api.post('/stadium/bookedCheck',{booked})
                                   const changeStatus = await api.post(
                                     "/notification/updateStatusByUser",
                                     { ownerId, userId }
-                                  );
-                              
-
+                                    );
+                                    
                                   if (update) {
                                     toast.success("payment completed", {
                                       position: "top-right",

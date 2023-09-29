@@ -14,8 +14,12 @@ const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [Rental, setRental] = useState<any>();
   const [url, setUrl] = useState("");
+  const [stadiumDetail,setStadiumDetail] = useState<any>() 
   const [image, setImage] = useState("");
   const fileInputRef: any = useRef(null);
+  const [editOrgname,setEditOrgname] = useState<any>()
+  const [editSportstype,setEditSportstype] = useState<any>()
+  const [editOrgType,setOrgType] = useState<any>()
   const [loding, setLoding] = useState<boolean>(false);
   const user = JSON.parse(localStorage.getItem("user") as string);
   const check = user.LoginCheck;
@@ -30,6 +34,7 @@ const UserProfile = () => {
   };
 
   const organizationModalOpen =()=>{
+    setIsModalOpen(true)
    
   }
   const organizationModalclose =()=>{
@@ -102,18 +107,34 @@ const UserProfile = () => {
     userDetails();
   }, []);
 
-  const RentedStadium = async (orderId: any) => {
+  const RentedStadium = async (orderId: any,id : any) => {
+    const datas = await api.post('/stadium/detaildView',{id})
+    setStadiumDetail(datas.data.fetchDetails)
+    
+    
     const data = await api.post("/fetchUsers", { email });
     const detail = data.data.userDetail.paymentDetails;
     detail.map((item: any) => {
       if (item.orderId == orderId)
         setRental(data.data.userDetail.paymentDetails);
+      const stadium = data.data.userDetail.paymentDetails[0].stadiumId
+
+      ;
+      // console.log(data.data.userDetail.paymentDetails[0].stadiumId);
+      
     });
     handleModalOpen();
   };
   const organizationEdit = () =>{
     organizationModalOpen()
   }
+  const fetchData = () => {
+    
+       
+   
+      
+    
+    };
   useEffect(() => {
     fetchProfile();
     handleFecthOrg();
@@ -201,13 +222,13 @@ const UserProfile = () => {
                 </div>
               </div>
               <div className="p-6 justify-center items-center flex pt-0">
-                <button
-                  className="select-none rounded-lg bg-black  py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                {/* <button
+                  className="select-none cursor-pointer rounded-lg bg-black  py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-ripple-light="true"
                 onClick={organizationEdit}>
                   Edit
-                </button>
+                </button> */}
               </div>
             </div>
             {rentalDetails ? (
@@ -224,8 +245,8 @@ const UserProfile = () => {
                       </div>
                       <div>
                         <button
-                          className="bg-blue-300 px-3 py-2 mt-4 rounded-md"
-                          onClick={() => RentedStadium(item.orderId)}
+                          className="bg-blue-300 cursor-pointer px-3 py-2 mt-4 rounded-md"
+                          onClick={() => RentedStadium(item.orderId,item.stadiumId)}
                         >
                           DETAILS
                         </button>
@@ -243,46 +264,26 @@ const UserProfile = () => {
             )}
           </div>
         </div>
-        <div>
+        <div className="flex">
+          <div className="fixed inset-0 flex items-center justify-center z-50">
         {isModalOpen &&
-                  Rental.map((item: any) => (
-                    <div className="fixed inset-0 flex items-center justify-center z-[999] bg-black bg-opacity-50 ">
-                      <div className="bg-white rounded-lg w-full max-w-md p-6">
-                        <div className="mt-3 font-extrabold">
-                          Stadium Name :{" "}
-                          <span className="font-semibold">{item?.stadiumname}</span>
-                        </div>
-                        <div className="mt-3 font-extrabold">
-                          Price :{" "}
-                          <span className="font-semibold">
-                            {item?.stadiumPrice}
-                          </span>
-                        </div>
-                        <div className="mt-3 font-extrabold">
-                          From Date :{" "}
-                          <span className="font-semibold">{item?.startDate}</span>
-                        </div>
-                        <div className="mt-3 font-extrabold">
-                          To date :{" "}
-                          <span className="font-semibold">{item?.endDate}</span>
-                        </div>
-    
-                        <div className="mt-3 font-extrabold">
-                          Rental Date :{" "}
-                          <span className="font-semibold">{item?.date}</span>
-                        </div>
-    
-                        <div className="flex justify-center items-center">
-                          <button
-                            className="w-24 h-10 bg-cyan-300 rounded-lg text-center"
-                            onClick={handleClodeModal}
-                          >
-                            close
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+         <div>
+         <div className="mt-3">
+           Orgnization Name : <input type="text" placeholder={datas?.organizationname}  onChange={(e)=>setEditOrgname(e.target.value)} />
+         </div>
+         <div className="mt-3">
+           Orgnization Type : <input type="text" placeholder={datas?.sportstype} onChange={(e)=>setEditSportstype(e.target.value)}/>
+         </div>
+        
+         
+         
+         <div className="mt-3">
+           Sports Type : <input type="text"  placeholder={datas?.organizationtype}  onChange={(e)=>setOrgType(e.target.value)} />
+         </div>
+        
+       </div>
+                 }
+        </div>
         </div>
       </div>
     </div>

@@ -109,6 +109,27 @@ const updateStadiumList =async () =>{
     });
     return;
   }
+  if (
+    stadiumname?.trim() === "" ||
+    sportstype?.trim() === "" ||
+    fromdate?.trim() === "" ||
+    todate?.trim() === "" ||
+    price?.trim() === "" ||
+    discription?.trim() === ""
+  ) {
+    toast.error("All fields are required", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+    return;
+  }
+  if (parseFloat(price) <= 0) {
+    toast.error("Price must be greater than zero", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+    return;
+  }
   await api.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
   fetchData()
   handleModalClose()

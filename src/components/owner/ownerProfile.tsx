@@ -3,6 +3,7 @@ import OwnerNav from "../navbar/ownerNav";
 import api from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { CgProfile } from "react-icons/cg";
+import { toast ,ToastContainer } from "react-toastify";
 
 const OwnerProfile = () => {
   const [stadiumDetail, setStadiumDetail] = useState<stadim>();
@@ -29,11 +30,25 @@ const OwnerProfile = () => {
     handleFetchStadium();
   }, []);
 
+  const changeStatus =async () =>{
+    const {data} = await api.post('/stadium/changeStatus',{email})
+    
+    if(data.message){
+      toast.success("status changed successfully", {
+
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+    console.log(data);
+    
+  }
+
 
   return (
     <div>
       <OwnerNav />
-      
+      <ToastContainer/>
       <div className="bg-white  w-full h-screen  flex   ">
         
         <div className="bg-gray-400 bg-opacity-20 w-[68rem] fixed rounded-xl ml-48 h-[36rem] m flex">
@@ -85,56 +100,25 @@ const OwnerProfile = () => {
                   </p>
                 </div>
               </div>
-              <div className="p-6 justify-center items-center flex pt-0">
+              <div className="p-6 justify-center gap-2 items-center flex pt-0">
                 <button
-                  className="select-none rounded-lg bg-cyan-300 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  className="select-none rounded-lg bg-black py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:bg-transparent hover:border hover:border-black hover:text-black focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-ripple-light="true"
                onClick={handleModalOpen} >
                  FUll Details
                 </button>
+                <button
+                  className="select-none rounded-lg bg-white text-black py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase border-black border shadow-md  transition-all hover:shadow-lg hover:bg-black hover:text-white focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  type="button"
+                  data-ripple-light="true"
+               onClick={changeStatus} >
+                Change status
+                </button>
               </div>
             </div>
 <div>
-  {incomeDetails ?  <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-  <div className="flex flex-col justify-center items-center h-full p-6">
-    <p className="text-center">No Income Details Found</p>
-  </div>
-</div>
-
-               :
-            <div className="relative ml-6 mt-7 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-              <div className="p-6">
-                <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                  PURCHASED STADIUMS
-                </h5>
-                <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                  <span className="font-extrabold ">Name : </span> The place is
-                  close to
-                </p>
-                <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                  <span className="font-extrabold ">Name : </span> The place is
-                  close to
-                </p>
-                <p className="block font-sans text-center mt-4 text-base font-light leading-relaxed text-inherit antialiased">
-                  <span className="font-extrabold ">Name : </span> The place is
-                  close to
-                </p>
-              </div>
-
-              <div className="p-6 justify-center items-start flex pt-0">
-                <button
-                  className="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  type="button"
-                  data-ripple-light="true"
-                >
-                 Full Details
-                </button>
-                
-               
-              </div>
-              </div>
-}
+  
               {isModalOpen &&
                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                 <div className="bg-white rounded-lg w-full max-w-md p-6">

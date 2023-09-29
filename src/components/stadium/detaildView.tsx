@@ -14,11 +14,13 @@ import { stadim } from "../../domain/modals/stadium";
 // import { toast } from "react-toastify";
 import Loader from "../loader/loader";
 import { ownerLogged } from "../../Redux/owner/ownerSlice";
+import { toast ,ToastContainer} from "react-toastify";
 const DetaildView: React.FC = () => {
   const dispatch = useDispatch()
   // const [usersPremium, setUserPremium] = useState(false);
   // const [checkDetail, setCheckDetail] = useState<userData>();
   const [chatExist,setChatExist] = useState()
+  const [checkBokked,setCheckBooked] = useState<any>()
   const [loding,setLoding] = useState<boolean>(true)
   // const [stadiumLatLng, setStadiumLatLng] = useState<{ lat: number; lng: number }>({
   //   lat: 0, 
@@ -57,6 +59,9 @@ const DetaildView: React.FC = () => {
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
         setCarosal(result.data.fetchDetails);
+        // console.log(result.data.fetchDetails.isBooked);
+        setCheckBooked(result.data.fetchDetails.isBooked)
+        
         setLoding(false)
         dispatch(ownerLogged({
           ownerId :result.data.fetchDetails.id,
@@ -151,6 +156,12 @@ const DetaildView: React.FC = () => {
   //     }
   //   })
   // },[])
+  const isBooked = () =>{
+    toast.error("Stadium is Not Available", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  }
 
   
   
@@ -159,6 +170,7 @@ const DetaildView: React.FC = () => {
     <div className="">
       {loding&&<Loader/>}
     <UserNav />
+    <ToastContainer/>
     <div className="lg:flex md:flex sm:grid  w-full space-x-4 mt-8">
       <div className="flex-1 ">
      
@@ -205,8 +217,24 @@ const DetaildView: React.FC = () => {
         {carosal?.fromdate} / <span>{carosal?.todate}</span>
       </div>
       <div className="text-lg mt-2">{carosal?.discription}</div>
+      {checkBokked ? (
+  <button className="mt-4 py-2 px-4 rounded-lg bg-red-600 text-white" onClick={isBooked}>
+    STADIUM BOOKED
+  </button>
+) : chatExist === null ? (
+  <button className="mt-4 py-2 px-4 rounded-lg bg-black text-white" onClick={createChat}>
+    Start Chat
+  </button>
+) : (
+  <button
+    className={`mt-4 py-2 px-4 rounded-lg bg-black text-white`}
+    onClick={() => navigate(`/Chat/${carosal?._id}`)}
+  >
+    <p className="text-white">Continue Chat</p>
+  </button>
+)}
       {/* Other info */}
-      {chatExist == null ?
+      {/* {chatExist == null ?
       <button className="mt-4 py-2 px-4 rounded-lg bg-black text-white" onClick={createChat}>
        
         start chat
@@ -219,7 +247,7 @@ const DetaildView: React.FC = () => {
       onClick={()=>navigate(`/Chat/${carosal?._id}`)}>
        <p className="text-white">Countinue Chat</p> 
       </button>
-      }
+      } */}
         {/* {chatExist == null ? "START CHAT" : "Continue Chat"} */}
 
      

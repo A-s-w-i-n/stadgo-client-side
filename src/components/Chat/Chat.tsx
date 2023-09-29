@@ -11,6 +11,7 @@ import { Chats, message } from "../../domain/modals/chat";
 import Loader from "../loader/loader";
 import OwnerNav from "../navbar/ownerNav";
 import { useParams } from "react-router-dom";
+import { toast ,ToastContainer } from "react-toastify";
 
 interface role {
   role: string;
@@ -90,17 +91,17 @@ const Chat = (props: role) => {
     };
     fetch();
   }, []);
-  useEffect(() => {
-    chats.map((item: any) => {
-      if (ownerId == item?.Owner?._id && userId == item.User) {
-        const chatId = item._id;
+  // useEffect(() => {
+  //   chats.map((item: any) => {
+  //     if (ownerId == item?.Owner?._id && userId == item.User) {
+  //       const chatId = item._id;
 
-        apiAuth.get(`/message/${chatId}`).then((data) => {
-          setMessage(data.data.messages);
-        });
-      }
-    });
-  }, [chats]);
+  //       apiAuth.get(`/message/${chatId}`).then((data) => {
+  //         setMessage(data.data.messages);
+  //       });
+  //     }
+  //   });
+  // }, [chats]);
 
   // const initialChat =  () =>{
 
@@ -122,6 +123,10 @@ const Chat = (props: role) => {
       stadiumid,
     });
     findStatus();
+    toast.success("Request sended to owner", {
+      position: "top-right",
+      autoClose: 3000,
+    });
   };
   const findStatus = async () => {
     const data = await api.post("/notification/userNotification", {
@@ -203,9 +208,10 @@ const Chat = (props: role) => {
 
   return (
     <div className="h-screenflex flex-col">
+      
       {loding && <Loader />}
       {props.role === "user" ? <UserNav /> : <OwnerNav />}
-
+<ToastContainer/>
         <div className="container mx-auto  mt-[-128px]">
       <div className="mt-32    w-full">
           <div className=" ml-4 h-[36rem]   w-[78rem]">
@@ -246,7 +252,6 @@ const Chat = (props: role) => {
                                 setChatId(item._id);
                                 handleMessageFetch(item._id);
                                 setSelectedOwnerId(item.Owner._id);
-                                console.log(item.Owner?._id, "id");
                                 setOwnername(item.Owner);
                               }}
                             >
@@ -401,6 +406,7 @@ const Chat = (props: role) => {
                 {/* } */}
 
                 {/* Input */}
+                {chatId ?
                 <div className="bg-gray-300 px-4 py-4 flex items-center">
                   <div className="flex-1 mx-4">
                     <input
@@ -419,6 +425,8 @@ const Chat = (props: role) => {
                     <AiOutlineSend />
                   </div>
                 </div>
+:""}
+                 
               </div>
             </div>
           </div>

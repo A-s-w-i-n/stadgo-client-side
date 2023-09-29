@@ -11,6 +11,8 @@ const UserSatdiumList = () => {
   const [location, setLocation] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
+  const [selectedLocation, setSelectedLocation] = useState<string>("option1");
+  const [selectedCapacity, setSelectedCapacity] = useState<string>("option1");
   const [loading,setLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStadiums, setFilteredStadiums] =
@@ -37,27 +39,30 @@ const UserSatdiumList = () => {
   useEffect(() => {
     fetchStadium();
   }, []);
-  const handleLocationFilter =async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const filter = e.target.selectedOptions;
-    setLocation(filter[0].value);
-    if(filter[0].value == "option1"){
-      fetchStadium();
-    }else{
-      const stadiumlocationFilter = await api.post('/stadium/stadiumLocationFilter',{location})
-      setFilteredStadiums(stadiumlocationFilter.data.filter)
-    }
-  };
+  // const handleLocationFilter =async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const filter = e.target.selectedOptions;
+  //   setLocation(filter[0].value);
+  //   if(filter[0].value == "option1"){
+  //     fetchStadium();
+  //   }else{
+  //     const stadiumlocationFilter = await api.post('/stadium/stadiumLocationFilter',{location})
+  //     setFilteredStadiums(stadiumlocationFilter.data.filter)
+  //   }
+  // };
 
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const filter = e.target.selectedOptions;
+    const capacityValue = filter[0].value;
+    setSelectedCapacity(capacityValue);
 
     if (filter[0].value == "option1") {
-
+      
       fetchStadium();
     } else {
+      
       setSelectedFilter(filter[0].value);
       const [minValue, maxValue] = filter[0].value.split(" - ");
-
+      
       const firstValue = minValue;
       const secondValue = maxValue;
       const filterdata = await api.post("/stadium/stadFilter", {
@@ -86,7 +91,7 @@ const UserSatdiumList = () => {
     <option value="50000 - 70000">50000 - 70000</option>
     <option value="70000 - 100000">70000 - 100000</option>
   </select>
-  <select
+  {/* <select
     className="px-2 py-1 border rounded-md"
     onChange={handleLocationFilter}
   >
@@ -94,7 +99,7 @@ const UserSatdiumList = () => {
     {stadiumData.map((item) => (
       <option value={item.location}>{item.location}</option>
     ))}
-  </select>
+  </select> */}
 </div>
 <div className="w-100 h-10  flex justify-end items-center">
   <FiSearch/>
