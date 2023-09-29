@@ -249,7 +249,7 @@ const updateStadiumList =async () =>{
                       <div className="mt-3">
                         Price : <input type="text" placeholder={item.price} onChange={(e)=>setPrice(e.target.value)}/>
                       </div>
-                      <div className="mt-3">
+                      <div className="mt-3 truncate">
                         Discription : <input type="text"  placeholder={item.discription}  onChange={(e)=>setDiscription(e.target.value)} />
                       </div>
                      

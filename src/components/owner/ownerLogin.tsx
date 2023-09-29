@@ -172,7 +172,7 @@ const changePassword =async () =>{
           <div className=" h-20">
             <input
               className="w-60 rounded-xl border-gray-300 border m-14 p-2 mt-9"
-              type="text"
+              type="password"
               name="password"
               placeholder="password"
               onChange={handleLoginOwner}

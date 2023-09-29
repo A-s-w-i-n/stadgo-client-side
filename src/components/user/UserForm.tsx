@@ -88,7 +88,7 @@ const UserForm: React.FC = () => {
     };
   },[userOtp, otpTimer])
   const handleResendOtp = () => {
-    setOtpTimer(60); // Reset the timer
+    setOtpTimer(60); 
     setResendDisabled(true); 
     handleUserOtp()
   };
@@ -155,14 +155,14 @@ const UserForm: React.FC = () => {
                     onChange={addUser}
                   />
                  <input
-  type="password"
-  id="password"
-  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$"
-  required
-  title="Password must contain at least 8 characters, including at least one lowercase letter, one uppercase letter, one numeric digit, and one special character (!@#$%^&*)"
-  name="password"
+  type="taxt"
+  id="firstName"
+                    pattern="[A-Za-z]+"
+                    required
+                    title="Please enter a valid first name (letters only)"
+  name="lastname"
   className="w-60 rounded-xl border-gray-300 border p-2 mt-3"
-  placeholder="Password"
+  placeholder="lastname"
   onChange={addUser}
 />
                   <input
@@ -187,8 +187,11 @@ const UserForm: React.FC = () => {
                     onChange={addUser}
                   />
                   <input
-                    type="text"
+                    type="password"
                     name="password"
+                    id="password"
+                    required
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{3,}$"                    title="Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and be at least 3 characters long."
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-4"
                     placeholder="password"
                     onChange={addUser}
@@ -263,17 +266,17 @@ const UserForm: React.FC = () => {
                 </p>
               ) : (
                 <button
-                  className="bg-cyan-300 px-3 py-2 rounded-lg"
+                  className=" mt-2 px-3 py-2 rounded-lg"
                   onClick={handleResendOtp}
                   disabled={resendDisabled}
                 >
-                  Resend OTP
+                  <p className="hover:scale-110"> Resend OTP</p>
                 </button>
               )}
             </div>
             <div className="flex justify-center items-center">
               <button
-                className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
+                className="bg-black text-white hover:text-black hover:bg-transparent hover:border hover:border-black px-3 mt-3 py-2 rounded-lg just "
                 onClick={verifyOtp}
                 // disabled ={otpTimer >0}
               >

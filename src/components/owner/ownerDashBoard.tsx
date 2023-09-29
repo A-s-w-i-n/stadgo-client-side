@@ -277,9 +277,9 @@ const OwnerDashBoard = () => {
             </div>
           ) : (
             userDetail && (
-              <div className="flex w-full bg-red-400 h-[17.2rem]">
+              <div className="flex w-[25rem]  h-[17.2rem]">
              
-                <div className="w-[20rem]   justify-center ml-[16rem] border border-black  h-[17.2rem]">
+                <div className="w-[20rem]   justify-center ml-16 border border-black  h-[17.2rem]">
                   <div className="flex justify-center">
                     <div className="w-32 h-32 rounded-full flex justify-center items-center shadow-2xl shadow-gray-400 bg-gray-100">
                       <img

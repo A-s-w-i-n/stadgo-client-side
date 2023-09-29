@@ -81,11 +81,11 @@ const OwnerForm: React.FC = () => {
       clearTimeout(timeout);
     };
   }, [userOtp, otpTimer]);
-  // const handleResendOtp = () => {
-  //   setOtpTimer(60); // Reset the timer
-  //   setResendDisabled(true);
-  //   handleOwnerOtp()
-  // };
+  const handleResendOtp = () => {
+    setOtpTimer(60); 
+    setResendDisabled(true);
+    handleOwnerOtp()
+  };
 
   const verifyOtp = async () => {
     // e.preventDefault();
@@ -152,8 +152,11 @@ const OwnerForm: React.FC = () => {
                     onChange={addOwner}
                   />
                   <input
-                    type="text"
-                    
+                    type="password"
+                    id="password"
+  required
+  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).3,}$"
+  title="Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and be at least 3 characters long."
                     className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-4"
                     placeholder="password"
                     name="password"
@@ -185,9 +188,9 @@ const OwnerForm: React.FC = () => {
                     type="text"
                     className="w-60 rounded-xl border-gray-300 border p-2 mt-4"
                     id="phone"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                     required
-                    title="Please enter a valid phone number in the format XXX-XXX-XXXX"
+                    title="Please enter a valid phone number in the format XXXXXXXXXX"
                     placeholder="phone"
                     name="phone"
                     onChange={addOwner}
@@ -236,9 +239,19 @@ const OwnerForm: React.FC = () => {
               />
             </div>
             <div className="flex justify-center items-center">
-              <p className="text-gray-600 text-sm">
-                Resend OTP in {otpTimer} seconds
-              </p>
+            {otpTimer > 0 ? (
+                <p className="text-gray-600 text-sm">
+                  Resend OTP in {otpTimer} seconds
+                </p>
+              ) : (
+                <button
+                  className=" mt-2 px-3 py-2 rounded-lg"
+                  onClick={handleResendOtp}
+                  disabled={resendDisabled}
+                >
+                  <p className="hover:scale-110"> Resend OTP</p>
+                </button>
+              )}
             </div>
             <div className="flex justify-center items-center">
               <button

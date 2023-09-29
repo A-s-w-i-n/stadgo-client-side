@@ -235,7 +235,7 @@ const Chat = (props: role) => {
                 </div>
 
                 {/* Contacts */}
-                <div className="lg:w-full bg-gray-300 overflow-x-auto overflow-auto  flex-1 ">
+                <div className="lg:w-full bg-gray-300 overflow-x-auto   flex-1 ">
                   {props.role === "user"
                     ? filteredChats?.map((item: any) => (
                         <div>

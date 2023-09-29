@@ -58,7 +58,7 @@ const VideoUpload = () => {
         }
 
       }else{
-        toast.success("Upload video formate", {
+        toast.error("Upload video formate", {
           position: "top-right",
           autoClose: 3000,
         });
