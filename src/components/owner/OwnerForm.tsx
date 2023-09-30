@@ -52,7 +52,7 @@ const OwnerForm: React.FC = () => {
         await apiAuth.post("/owner/ownerRegister", {
           ...owner,
         });
-        console.log(owner);
+      
         
 
         handleOwnerOtp();

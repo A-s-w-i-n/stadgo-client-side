@@ -68,7 +68,7 @@ const OwnerHome = () => {
             </div>
             <div className="w-1/2 h-screen flex ml-10    items-center">
               <div className="w-full h-36 mt-10 ">
-                <p className="font-serif text-5xl">WELCOME TO STUD GO</p>
+                <p className="font-serif text-5xl">WELCOME TO STAD GO</p>
                 <p className="ml-2 mt-3">EXPLORE THE STADIUM’S </p>
               <div className="mt-2 ">
                 <button

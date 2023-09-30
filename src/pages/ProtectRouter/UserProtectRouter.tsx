@@ -23,7 +23,7 @@ useEffect(()=>{
   const userBlockCheck =async()=>{
     
     const data = await api.post("/fetchUsers", { email });
-    console.log(data.data.userDetail.isblocked);
+   
     // const isblocked =data.data.userDetail.isblocked
     // setBlock(isblocked)
     if(data.data.userDetail.isblocked ==true){

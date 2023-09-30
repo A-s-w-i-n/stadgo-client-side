@@ -100,7 +100,7 @@ const UserPayment = () => {
     const stadiumDetails = async () => {
       const data = await api.post("/stadium/detaildView", { id });
       setBooked(data.data.fetchDetails._id)
-      console.log(data.data.fetchDetails._id);
+    
       
       
       

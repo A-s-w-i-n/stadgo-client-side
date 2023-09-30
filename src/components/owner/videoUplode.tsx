@@ -13,8 +13,7 @@ const VideoUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File | null | any>(null);
   const [uplodeVideo, setVideoUplode] = useState<string>("");
   const [uplodeVideoModal, setuplodeVideoModal] = useState(false);
-  const [loding,setLoding] = useState<boolean>(false)
-  
+  const [loding, setLoding] = useState<boolean>(false);
 
   const openUplodeVideoModal = () => {
     setuplodeVideoModal(true);
@@ -23,57 +22,51 @@ const VideoUpload = () => {
     setuplodeVideoModal(false);
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-   
-    if (e.target.files && e.target.files.length>0 ) {
-      setSelectedFile(e.target.files[0]);
-      setLoding(true)
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]
       const maxSize = 25 * 1024 * 1024;
-      if (selectedFile?.size <= maxSize) {
-        setSelectedFile(selectedFile);
-      } else {
+       if(file.size<=maxSize){
+
+         setSelectedFile(e.target.files[0]);
+         setLoding(true);
+       }
+      else {
         // File size exceeds the limit
         toast.error("File size exceeds the 25MB limit.", {
           position: "top-right",
           autoClose: 3000,
         });
       }
-      
-      setLoding(false)
-      
+
+      setLoding(false);
     }
   };
-  
-  const handleUpload =async () => {
+
+  const handleUpload = async () => {
     if (selectedFile) {
-      if(selectedFile.type.startsWith('video/')){
-        setLoding(true)
+      if (selectedFile.type.startsWith("video/")) {
+        setLoding(true);
 
         try {
-         await uploadVideoToS3(selectedFile);
-          fetchVideo()
-          closeUplodeVideoModal()
-          
-        } catch (error) {
-          
-        }
-
-      }else{
+          await uploadVideoToS3(selectedFile);
+          fetchVideo();
+          closeUplodeVideoModal();
+        } catch (error) {}
+      } else {
         toast.error("Upload video formate", {
           position: "top-right",
           autoClose: 3000,
         });
-        
       }
     }
   };
   const uploadVideoToS3 = async (file: File) => {
-    
     const s3 = new AWS.S3({
       accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
       secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
     });
 
-    const params : any = {
+    const params: any = {
       Bucket: process.env.REACT_APP_S3BUCKET_NAME,
       Key: `videos/${file.name}`,
       Body: file,
@@ -81,34 +74,29 @@ const VideoUpload = () => {
     };
 
     try {
-      setLoding(true)
-      const response = await s3.upload(params ).promise();
+      setLoding(true);
+      const response = await s3.upload(params).promise();
       setVideoUplode(response.Location);
-      setLoding(false)
-    } catch (error) {
-    }
+      setLoding(false);
+    } catch (error) {}
   };
-
 
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
   const emailCheck = emailId.OwnerLoginCheck;
   const email = emailCheck.email;
 
-  const fetchVideo=()=>{
-      api.post("/stadium/fetchStadium", { email }).then((result) => {
-        setStadiumInfo(result.data.fetchStadiumData);
-         // setLoding(false)
+  const fetchVideo = () => {
+    api.post("/stadium/fetchStadium", { email }).then((result) => {
+      setStadiumInfo(result.data.fetchStadiumData);
+      // setLoding(false)
     });
-  
+  };
 
-}
-
-useEffect(()=>{
-  fetchVideo()
-},[])
+  useEffect(() => {
+    fetchVideo();
+  }, []);
 
   const uplodeVideos = async () => {
-
     const maxSize = 25 * 1024 * 1024;
     if (selectedFile?.size <= maxSize) {
       handleUpload();
@@ -118,20 +106,18 @@ useEffect(()=>{
           uplodeVideo,
           id,
         });
-        fetchVideo()
+        fetchVideo();
         if (uplode.status) {
           closeUplodeVideoModal();
           // stadiumInfo[0].video;
         }
-    }
-    }else{
+      }
+    } else {
       toast.error("File size exceeds the 25MB limit.", {
         position: "top-right",
         autoClose: 3000,
       });
-
-
-    } 
+    }
   };
   // useEffect(()=>{
 
@@ -139,50 +125,47 @@ useEffect(()=>{
 
   return (
     <div>
-      {loding&&<Loader/>}
+      {loding && <Loader />}
       <OwnerNav />
       <ToastContainer />
       <div className="">
         {stadiumInfo.map((item) => (
-          <div  className="flex w-full h-full   ">
+          <div className="flex w-full h-full   ">
             <div className="  w-full     rounded ">
               <div className="lg:flex gap-3 h-[36rem] md:grid">
-              <div className="flex">
-              <img
-                className="w-full rounded-2xl"
-                src={item.image[0]}
-                alt="Sunset in the mountains"
-              />
-              
-
-              </div>
-              <div className="lg:flex md:grid">
-              <div className="lg:flex justify-betwee items-center    px-6 py-4 md:grid">
-                <div className="font-bold  text-xl text-center mb-2">
-                  {item.stadiumname}
-              <div className=" items-center justify-center px-6 pt-4 pb-5">
-                <button
-                  className="bg-black text-white  px-3 py-2 rounded-2xl"
-                  onClick={openUplodeVideoModal}
-                >
-                  UPLOAD
-                </button>
-              </div>
+                <div className="flex">
+                  <img
+                    className="w-full rounded-2xl"
+                    src={item.image[0]}
+                    alt="Sunset in the mountains"
+                  />
+                </div>
+                <div className="lg:flex md:grid">
+                  <div className="lg:flex justify-betwee items-center    px-6 py-4 md:grid">
+                    <div className="font-bold  text-xl text-center mb-2">
+                      {item.stadiumname}
+                      <div className=" items-center justify-center px-6 pt-4 pb-5">
+                        <button
+                          className="bg-black text-white  px-3 py-2 rounded-2xl"
+                          onClick={openUplodeVideoModal}
+                        >
+                          UPLOAD
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex ">
+                  <video
+                    className="object-cover w-full rounded-2xl"
+                    controls
+                    width="400"
+                    height="400"
+                    src={item.video}
+                  />
                 </div>
               </div>
-              </div>
-              <div className="flex ">
-              <video
-                className="object-cover w-full rounded-2xl"
-                controls
-                width="400"
-                height="400"
-                src={item.video}
-                />
-                </div>
-                </div>
-                </div>
-
+            </div>
           </div>
         ))}
         {uplodeVideoModal && (
@@ -213,9 +196,7 @@ useEffect(()=>{
                       <span className="font-semibold">Click to upload</span> or
                       drag and drop
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                     
-                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400"></p>
                   </div>
                   <input
                     id="dropzone-file"

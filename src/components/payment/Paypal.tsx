@@ -50,25 +50,24 @@ const UserPremium: React.FC <UserPremiumProps>= ({stadium})  => {
             
               .capture()
               .then(async function () {
-             console.log(data);
-             console.log(stadium,"hhh");
+          
              
              const orderId =data?.orderID
              const stadiumId =stadium?._id
              const stadiumPrice = stadium?.price
              const date = new Date().toLocaleString()
-             console.log(date);
+           
                 const emailId = JSON.parse(
                   localStorage.getItem("user") as string
                 );
                 const email = emailId.LoginCheck.email;
 
                 const update = await api.post("/userPayment", {stadiumId,orderId,email,userId,stadiumPrice});
-                console.log(update);
+           
                 const ownerUpdate = await api.post('/owner/ownerPayment',{stadiumId,orderId,ownerId,userId,stadiumPrice})
-                console.log(ownerUpdate);
+             
                 const changeStatus = await api.post('/notification/updateStatusByUser',{ownerId,userId})
-                console.log(changeStatus);
+           
                 
                 
                 if (update) {

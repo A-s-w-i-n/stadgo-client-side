@@ -11,7 +11,7 @@ const OwnerProtectRouter: React.FC<OwnerProtectRouterProps> = ({
   children,
 }): any => {
   const owner = JSON.parse(localStorage.getItem("owner") as string);
-  console.log();
+  
   
   const navigate =useNavigate()
   

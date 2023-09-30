@@ -132,7 +132,7 @@ const UserProfile = () => {
     <div>
       {loding && <Loader />}
       <UserNav />
-      <div className="   w-full h-screen  flex   ">
+      <div className="w-full flex flex-col lg:flex-row md:flex-row sm:flex-col">
         <div
           className="flex items-center justify-center cursor-pointer  w-40 mb-6 bg-black h-10 mt-10 ml-5 rounded-lg "
           onClick={handleSvgClick}
@@ -160,7 +160,7 @@ const UserProfile = () => {
             onChange={handleProfileImageChange}
           /> */}
         </div>
-        <div className="bg-gray-400 bg-opacity-20 w-10/12 mt-3 rounded-xl ml-10 h-[36rem] m flex">
+        <div className="bg-gray-400 bg-opacity-20 w-full lg:w-10/12 md:w-10/12  sm:w-full mt-3 rounded-xl ml-10 h-[36rem] m flex">
           <div className="w-[30%] p-5">
             <div className="relative mt-1 h-[540px] flex w-[30rem]  z-[997] flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
@@ -188,6 +188,7 @@ const UserProfile = () => {
             </div>
           </div>
           <div className="w-[35%] ml-48 p-4 pt-6">
+  
             <div className="relative ml-6 flex w-96 h-64 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className="p-6 ">
                 <h5 className="mb-2 block text-center font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
@@ -211,13 +212,13 @@ const UserProfile = () => {
                 </div>
               </div>
               <div className="p-6 justify-center items-center flex pt-0">
-                <button
+                {/* <button
                   className="select-none rounded-lg bg-black  py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
                   data-ripple-light="true"
                 onClick={organizationEdit}>
                   Edit
-                </button>
+                </button> */}
               </div>
             </div>
             {rentalDetails ? (
@@ -234,7 +235,7 @@ const UserProfile = () => {
                       </div>
                       <div>
                         <button
-                          className="bg-blue-300 px-3 py-2 mt-4 rounded-md"
+                          className="bg-black text-white hover:bg-transparent hover:border hover:border-black hover:text-black px-3 py-2 mt-4 rounded-md"
                           onClick={() => RentedStadium(item.orderId,item.stadiumId)}
                         >
                           DETAILS
@@ -252,6 +253,7 @@ const UserProfile = () => {
               </div>
             )}
           </div>
+          
         </div>
         <div>
         {isModalOpen &&

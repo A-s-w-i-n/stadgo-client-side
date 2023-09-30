@@ -28,7 +28,7 @@ const AdminFetchOwner: React.FC = () => {
     try {
       const OwnerUnblock = await apiAuth.post("/admin/unBlockOwner", { id });
     } catch (error) {
-      console.log(error);
+      
       
     }
   };

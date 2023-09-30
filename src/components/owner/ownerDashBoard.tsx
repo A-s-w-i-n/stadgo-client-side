@@ -36,7 +36,7 @@ const OwnerDashBoard = () => {
 
   const fetchOwnerById = async (item: any) => {
     const { data } = await api.post("/owner/fetchOwner", { email, item });
-    console.log(data);
+   
     setPagination(data.ownerDetail.totalCount);
     const totalCount =data.ownerDetail.totalCount
 
@@ -44,7 +44,7 @@ const OwnerDashBoard = () => {
     for (let i = 0; i <= totalCount; i++) {
       count.push(i);
     }
-    console.log(count);
+    
     setCounts(count);
     setUserInfo(data.ownerDetail.modifiedOwners[0].User);
     setOnwerInfo(data.ownerDetail.modifiedOwners[0].paymentDetails);

@@ -57,7 +57,7 @@ const OwnerLogin: React.FC = () => {
         const accessToken = data.accessToken;
         if (data.message) {
           if (data.message) genarateError(data.message);
-          console.log(data.message);
+          
         }
         if (data.ownerLoginCheck.isblocked == true) {
           toast.error("owner is blocked", {
@@ -91,7 +91,7 @@ const OwnerLogin: React.FC = () => {
     if(data.status){
       setOptEmail(data.status)
       
-     console.log(data);
+     
      
     }else{
       toast.success("Enter valid email", {
@@ -99,11 +99,11 @@ const OwnerLogin: React.FC = () => {
         autoClose: 3000,
       });
     }
-    console.log(data);
+   
   }
   const validOtp =async ()=>{
     const {data} =await apiAuth.post("/verifyOtp",{email,otp})
-    console.log(data.success);
+   
     if(data.success){
       setNewPassword(data.success)
       

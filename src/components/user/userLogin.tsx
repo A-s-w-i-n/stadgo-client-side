@@ -51,7 +51,7 @@ const UserLogin: React.FC = () => {
   const handleClodeModal = () => {
     setIsModalOpen(false);
   };
-  console.log(forgot);
+  
   
 
   // const googleLogin = async (credentialResponse: GoogleCredentialResponse) => {
@@ -89,12 +89,12 @@ const UserLogin: React.FC = () => {
   };
   const handleForgotEmail =async() =>{
     const {data} = await apiAuth.post("/forgotpassword",{email})
-    console.log(data);
+    
     
     if(data.status){
       setOptEmail(data.status)
       
-     console.log(data);
+    
      
     }else{
       toast.error("You are not registered with us. Please sign up", {
@@ -102,7 +102,7 @@ const UserLogin: React.FC = () => {
         autoClose: 3000,
       });
     }
-    console.log(data);
+    
   }
 const validOtp =async ()=>{
   if(otp.trim().length== 0 ){
@@ -113,7 +113,7 @@ const validOtp =async ()=>{
   }else{
 
     const {data} =await apiAuth.post("/verifyOtp",{email,otp})
-    console.log(data.success);
+   
     if(data.success){
       setNewPassword(data.success)
       
@@ -185,7 +185,7 @@ const changePassword =async () =>{
         const token = data.accessToken;
         if (data.message) {
           if (data.message) genarateError(data.message);
-          console.log(data.message);
+       
         }
 
         if (data.LoginCheck.isblocked == true) {

@@ -9,7 +9,7 @@ const AdminLogin: React.FC = () => {
     password: "",
   });
   const admin =JSON.parse( localStorage.getItem("admins")as string)
-  console.log(admin);
+ 
 
  useEffect(()=>{
    if(admin){

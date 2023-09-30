@@ -40,7 +40,7 @@ const OwnerProfile = () => {
         autoClose: 3000,
       });
     }
-    console.log(data);
+   
     
   }
 
